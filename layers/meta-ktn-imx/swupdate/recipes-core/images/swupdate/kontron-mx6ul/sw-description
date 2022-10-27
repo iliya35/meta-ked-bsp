@@ -1,0 +1,58 @@
+software =
+{
+	version = "@@DISTRO_VERSION@@";
+
+	@@MACHINE@@ = {
+		hardware-compatibility: ["1"];
+
+		stable = {
+			root_A: {
+				files:(
+					{
+						filename = "@@IMAGE_LINK_NAME@@.tar.gz";
+						sha256="@@@IMAGE_LINK_NAME@@.tar.gz";
+						device = "/dev/ubi0_1";
+						filesystem = "ubifs";
+						compressed = "zlib";
+						type = "archive";
+						path = "/";
+					},
+					{
+						filename = "fitImage";
+						device = "/dev/ubi0_0";
+						path = "/fitImage_active";
+						filesystem = "ubifs";
+					}
+				);
+			}
+
+			root_B: {
+				files:(
+					{
+						filename = "@@IMAGE_LINK_NAME@@.tar.gz";
+						sha256="@@@IMAGE_LINK_NAME@@.tar.gz";
+						device = "/dev/ubi0_2";
+						filesystem = "ubifs";
+						compressed = "zlib";
+						type = "archive";
+						path = "/";
+					},
+					{
+						filename = "fitImage";
+						device = "/dev/ubi0_0";
+						path = "/fitImage_active" ;
+						filesystem = "ubifs";
+					}
+				);
+			}
+		}
+
+		scripts: (
+			{
+				filename = "pre_post_script.sh";
+				sha256="@pre_post_script.sh";
+				type = "shellscript";
+			}
+		);
+	}
+}

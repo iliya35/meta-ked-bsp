@@ -1,0 +1,14 @@
+# image directory set by recipe
+FW_DIR="./.."
+
+TFA_IMG="tf-a-stm32mp-t1000-trusted.stm32"
+UBOOT_IMG="u-boot-stm32mp-t1000-k-sdcard.stm32"
+UBOOT_IMG_PROD="u-boot-stm32mp-t1000-k-trusted.stm32"
+
+# borootfs (boot + rootfs)
+BOROOTFS_IMG="image-ktn-sparkle-stm32mp-t1000-multi.tar.gz"
+BOROOTFS_SIZE="400"
+
+# userfs
+USERFS_IMG="image-ktn-sparkle-userfs-stm32mp-t1000-multi-thud.tar.gz"
+USERFS_SIZE="50"

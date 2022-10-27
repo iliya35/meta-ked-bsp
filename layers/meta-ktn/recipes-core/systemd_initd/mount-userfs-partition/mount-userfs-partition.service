@@ -1,0 +1,16 @@
+[Unit]
+Description=Mount partitions
+DefaultDependencies=false
+Before=local-fs.target
+ConditionPathExists=/etc/mount-userfs-partition.conf
+
+[Service]
+Type=oneshot
+RemainAfterExit=Yes
+StandardOutput=syslog
+TimeoutSec=0
+ExecStart=-/sbin/mount-userfs-partition.sh start
+ExecStop=/sbin/mount-userfs-partition.sh stop
+
+[Install]
+WantedBy=local-fs.target

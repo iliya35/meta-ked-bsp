@@ -1,0 +1,8 @@
+#Opt	Id	Name	Type	IP	Offset	Binary
+-	0x01	fsbl1-boot	Binary	none	0x0	tf-a-stm32mp-t1001-trusted.stm32
+-	0x03	ssbl-boot	Binary	none	0x0	u-boot-stm32mp-t1001-trusted.stm32
+PD	0x02	fsbl1	Binary	nor0	0x00000000	tf-a-stm32mp-t1001-trusted.stm32
+PD	0x04	fsbl2	Binary	nor0	0x00040000	tf-a-stm32mp-t1001-trusted.stm32
+PD	0x05	ssbl	Binary	nor0	0x00080000	u-boot-stm32mp-t1001-trusted.stm32
+PDE	0x06	env	Binary	nor0	0x00180000	none
+PDE	0x07	nor_user	Binary	nor0	0x00190000	none

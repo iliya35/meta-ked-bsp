@@ -1,0 +1,7 @@
+APPLICATION=/usr/bin/qtwebbrowser
+
+# set the startup URL (this seems to work only with BROWSER_APP_MODE=1 at the moment)
+APPLICATION_OPTIONS=" https://kontron-electronics.de"
+
+# uncomment the following line to start in fullscreen without controls
+#export BROWSER_APP_MODE=1

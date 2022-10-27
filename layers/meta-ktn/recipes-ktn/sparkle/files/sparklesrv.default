@@ -1,0 +1,5 @@
+# This is the default configuration for sparklesrv
+# 
+# Uncomment this to change the configuration file. The default configuration
+# file is /etc/sparkle.cfg 
+#SCRIPT_ARGS="-c /usr/share/sparkle/etc/sparkle.cfg"

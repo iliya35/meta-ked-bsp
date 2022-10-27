@@ -1,0 +1,41 @@
+From 80ecb929ee04b72e741ba4e9b9bf5668c8942ef2 Mon Sep 17 00:00:00 2001
+From: Jacky Bai <ping.bai@nxp.com>
+Date: Fri, 27 Mar 2020 20:42:21 +0800
+Subject: [PATCH] plat: imx8m: update the wdog config for system reset
+
+Current reset uses WDOG timeout function and default timeout
+value is set to 0.5 second. However, it is better to trigger
+reset immediately to speed up reboot process as well as prevent
+the scenario of WDOG_B toggling later than CPU reset and PMIC
+does NOT reset.
+
+Set the WDE bit when IMX_WDOG_B_RESET is not enabled, or
+reboot will fail.
+
+Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+---
+ plat/imx/imx8m/imx8m_psci_common.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/plat/imx/imx8m/imx8m_psci_common.c b/plat/imx/imx8m/imx8m_psci_common.c
+index dbb772dc1..5abc4bc59 100644
+--- a/plat/imx/imx8m/imx8m_psci_common.c
++++ b/plat/imx/imx8m/imx8m_psci_common.c
+@@ -160,10 +160,11 @@ void __dead2 imx_system_reset(void)
+ 	/* WDOG_B reset */
+ 	val = mmio_read_16(wdog_base);
+ #ifdef IMX_WDOG_B_RESET
+-	val = (val & 0x00FF) | WDOG_WCR_WDZST | WDOG_WCR_WDE |
+-		WDOG_WCR_WDT | WDOG_WCR_SRS;
++	val = (val & 0x001F) | WDOG_WCR_WDZST | WDOG_WCR_WDE |
++		WDOG_WCR_WDT | WDOG_WCR_SRS | BIT(8);
+ #else
+-	val = (val & 0x00FF) | WDOG_WCR_WDZST | WDOG_WCR_SRS;
++	val = (val & 0x00FF) | WDOG_WCR_WDZST | WDOG_WCR_WDE |
++		WDOG_WCR_WDA;
+ #endif
+ 	mmio_write_16(wdog_base, val);
+ 
+-- 
+2.25.1
+

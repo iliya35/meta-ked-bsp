@@ -1,0 +1,39 @@
+software =
+{
+	version = "@@DISTRO_VERSION@@";
+
+	kontron-stm32mp = {
+		hardware-compatibility: [ "1" ];
+		
+		files: (
+			{
+				# Rootfilesystem
+				filename = "@@IMAGE_DEPENDS@@-stm32mp-t1000-multi.tar.gz";
+				sha256="@@@IMAGE_DEPENDS@@-t1000-multi.tar.gz"
+				compressed = "zlib";
+				type = "archive";
+				# Update root filesystem has to be mounted here. This has to be done
+				# either outside of swupdate or in pre_post_script.sh
+				# Clean contents before update in pre_post_script.sh 
+				path = "/mnt/update";
+			},{
+				# Boot files
+				filename = "@@IMAGE_DEPENDS@@-bootfiles-stm32mp-t1000-multi.tar.gz";
+				sha256="@@@IMAGE_DEPENDS@@-bootfiles-stm32mp-t1000-multi.tar.gz"
+				compressed = "zlib";
+				type = "archive";
+				# Boot filesystem is normally already mounted on boot. So only update link
+				# to root_A or root_B has to be set outside of swupdate or in pre_post_script.sh
+				# Clean contents before update in pre_post_script.sh 
+				path = "/boot/update";
+			}
+		);
+		scripts: (
+			{
+				filename = "pre_post_script.sh"
+				sha256="@pre_post_script.sh"
+				type = "shellscript"
+			}
+		);
+	}
+}

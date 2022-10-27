@@ -1,0 +1,1 @@
+EGLFS_DEVICE_INTEGRATION=eglfs_kms

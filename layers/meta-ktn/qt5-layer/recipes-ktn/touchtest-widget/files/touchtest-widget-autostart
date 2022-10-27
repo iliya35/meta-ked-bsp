@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Starting touchtest-widget"
+logger -p user.info "touchtest started"
+
+echo 0 > /sys/class/graphics/fbcon/cursor_blink
+(
+    /opt/touchtest-widget/touchtest-widget -platform linuxfb
+    logger -p user.info "touchtest finished"
+)&
+

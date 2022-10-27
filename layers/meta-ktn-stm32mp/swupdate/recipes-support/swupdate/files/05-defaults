@@ -1,0 +1,24 @@
+
+# Reboot after update (sensible only for web interface ?!)
+SWUPDATE_ARGS="-v -p reboot"
+
+# To disable swupdate web interface uncomment this line and also unset
+# SWUPDATE_WEBSERVER_ARGS and SWUPDATE_SURICATTA_ARGS. This leads the
+# swupdate server to only print out its version number and exit.
+# Else you can create a separate conf file in the swupdate/conf.d
+# directory to overwrite this settings for your configuration.
+#SWUPDATE_ARGS="-v --version"
+
+# HACK to disable swupdate for images without AB boot
+if test ! -d /boot/root_A; then
+    SWUPDATE_ARGS="--version"
+fi
+
+# Reboot after update (sensible for web interface)
+SWUPDATE_EXTRA_ARGS="-p reboot"
+
+# Set special webserver args
+SWUPDATE_WEBSERVER_ARGS=""
+
+# Enable suricatta and set special args for it
+SWUPDATE_SURICATTA_ARGS=""

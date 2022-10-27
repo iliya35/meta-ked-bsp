@@ -1,0 +1,9 @@
+# Default settings for touchtest-emv application
+
+# To disable starting set to 0
+START=1
+QML_SOFTWARE_RENDERING=1
+
+
+
+

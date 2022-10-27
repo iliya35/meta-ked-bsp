@@ -1,0 +1,282 @@
+OPTIND=1
+ARGS=""
+
+remove_sdk=""
+
+usage() {
+    echo 'Usage: qtcreator-setup-sdk.sh [options]'
+    echo 'Options:'
+    echo '  -h :               show this help'
+    echo '  -r :               remove existing components and kits'
+}
+
+while [ $# -gt 0 ]
+do
+    unset OPTIND
+    unset OPTARG
+    while getopts ":hr" FLAG; do
+        case $FLAG in
+            h)
+                usage
+                exit 0
+            ;;
+            r)
+                remove_sdk="1"
+            ;;
+            \?)
+                echo "Invalid option: -$OPTARG"
+                usage
+                exit 1
+            ;;
+            :)
+                echo "Option -$OPTARG requires an argument." >&2
+                usage
+                exit 1
+            ;;
+        esac
+    done
+    shift $((OPTIND-1))
+    ARGS+="$1"
+    shift
+done
+
+slugify () {
+	echo "$1" |
+		iconv -t ascii//TRANSLIT |
+		sed -E 's/[~\^]+//g' |
+		sed -E 's/[^a-zA-Z0-9]+/-/g' |
+		sed -E 's/^-+\|-+$//g' |
+		sed -E 's/^-+//g' |
+		sed -E 's/-+$//g' |
+		tr A-Z a-z
+}
+
+print_err () {
+	tput setaf 1; echo $1; tput init;
+}
+
+print_success () {
+	tput setaf 2; echo $1; tput init;
+}
+
+read -p "Please enter the path to the QtCreator sdktool from your QtCreator
+installation or press enter for default
+(~/Qt/Tools/QtCreator/libexec/qtcreator/sdktool): " sdktool
+
+if [ "$sdktool" = "" ]; then
+	echo "Using default path ~/Qt/Tools/QtCreator/libexec/qtcreator/sdktool"
+	sdktool="$HOME/Qt/Tools/QtCreator/libexec/qtcreator/sdktool"
+fi
+
+if [ ! -x $sdktool ]; then
+	print_err "Error: sdktool $sdktool not found"
+	exit 1
+fi
+
+####################################################
+# Add a toolchain/compiler to the QtCreator config #
+####################################################
+
+tcslug=$(slugify "$SDK_NAME")
+tcid="$TC_ID_PREFIX:$tcslug"
+tc=$($sdktool find toolchains QString:"$tcid")
+skip=0
+
+if grep -q "/ProjectExplorer.ToolChain.Id" <<< "$tc"; then
+	read -p "Found existing toolchain with id '$tcid', remove it? (y/n): " yn
+	case $yn in
+	[Yy]* )
+		$sdktool rmTC --id $tcid
+		ret=$?
+		if [ "$ret" != "0" ]; then
+			print_err "Error: Failed to remove component, sdktool returned status $ret"
+			exit $ret
+		else
+			print_success "Removed toolchain/compiler with id '$tcid'"
+		fi
+		;;
+	[Nn]* )
+		skip=1
+		;;
+	* ) echo "Please answer yes or no.";;
+	esac
+elif [ "$remove_sdk" == "1" ]; then
+	echo "No toolchain/compiler with id '$tcid' found"
+fi
+
+if [ "$skip" != "1" ] && [ "$remove_sdk" != "1" ]; then
+	$sdktool addTC \
+	    --id "$tcid" \
+	    --language 2 \
+	    --name "GCC $SDK_NAME" \
+	    --path "$CXX_PATH" \
+	    --abi "$TC_ABI" \
+	    --supportedAbis "$TC_ABI"
+
+	ret=$?
+
+	if [ "$ret" != "0" ]; then
+		print_err "Error: Failed to add component, sdktool returned status $ret"
+		exit $ret
+	fi
+
+	print_success "Created toolchain/compiler with id '$tcid'"
+fi
+
+##########################################
+# Add a debugger to the QtCreator config #
+##########################################
+
+dbid="$tcslug"
+db=$($sdktool find debuggers QString:"$dbid")
+skip=0
+
+if grep -q "/Id" <<< "$db"; then
+	read -p "Found existing debugger with id '$dbid', remove it? (y/n): " yn
+	case $yn in
+	[Yy]* )
+		$sdktool rmDebugger --id $dbid
+		ret=$?
+		if [ "$ret" != "0" ]; then
+			print_err "Error: Failed to remove component, sdktool returned status $ret"
+			exit $ret
+		else
+			print_success "Removed debugger with id '$dbid'"
+		fi
+		;;
+	[Nn]* )
+		skip=1
+		;;
+	* ) echo "Please answer yes or no.";;
+	esac
+elif [ "$remove_sdk" = "1" ]; then
+	echo "No debugger with id '$dbid' found"
+fi
+
+if [ "$skip" != "1" ] && [ "$remove_sdk" != "1" ]; then
+	$sdktool addDebugger \
+	    --id "$dbid" \
+	    --engine 1 \
+	    --name "GDB $SDK_NAME" \
+	    --binary "$GDB_PATH" \
+	    --abis "$TC_ABI"
+
+	ret=$?
+
+	if [ "$ret" != "0" ]; then
+		print_err "Error: sdktool returned status $ret"
+		exit $ret
+	fi
+
+	print_success "Created debugger with id '$dbid'"
+fi
+
+############################################
+# Add a Qt version to the QtCreator config #
+############################################
+
+qtid="$tcslug"
+qtname="Qt %{Qt:Version} $SDK_NAME"
+# sdktool reports the Qt id incorrectly as '-1', therefore we look for the name
+qt=$($sdktool find qtversion QString:"$qtname")
+skip=0
+
+if grep -q "/Name" <<< "$qt"; then
+	read -p "Found existing Qt version with name '$qtname', remove it? (y/n): " yn
+	case $yn in
+	[Yy]* )
+		qtkey=$(echo $qt | cut -d "/" -f 1)
+		$sdktool rmKeys qtversion $qtkey
+		ret=$?
+		if [ "$ret" != "0" ]; then
+			print_err "Error: Failed to remove component, sdktool returned status $ret"
+			exit $ret
+		else
+			print_success "Removed Qt version with id '$qtid'"
+		fi
+		;;
+	[Nn]* )
+		skip=1
+		;;
+	* ) echo "Please answer yes or no.";;
+	esac
+elif [ "$remove_sdk" = "1" ]; then
+	echo "No Qt version with id '$qtid' found"
+fi
+
+if [ "$skip" != "1" ] && [ "$remove_sdk" != "1" ]; then
+	$sdktool addQt \
+	    --id "$qtid" \
+	    --name "$qtname" \
+	    --qmake "$QMAKE_PATH" \
+	    --type "RemoteLinux.EmbeddedLinuxQt"
+
+	ret=$?
+
+	if [ "$ret" != "0" ]; then
+		print_err "Error: sdktool returned status $ret"
+		exit $ret
+	fi
+
+	print_success "Created Qt version with id '$qtid'"
+fi
+
+#############################################################
+# Add a kit with all the components to the QtCreator config #
+#############################################################
+
+kitid="$tcslug"
+kitname="Kit Qt %{Qt:Version} $SDK_NAME"
+kit=$($sdktool find profiles QString:"$kitid")
+skip=0
+
+if grep -q "/PE.Profile.Id" <<< "$kit"; then
+	read -p "Found existing kit with id '$kitid', remove it? (y/n): " yn
+	case $yn in
+	[Yy]* )
+		$sdktool rmKit --id $kitid
+		ret=$?
+		if [ "$ret" != "0" ]; then
+			print_err "Error: Failed to remove component, sdktool returned status $ret"
+			exit $ret
+		else
+			print_success "Removed kit with id '$kitid'"
+		fi
+		;;
+	[Nn]* )
+		skip=1
+		;;
+	* ) echo "Please answer yes or no.";;
+	esac
+elif [ "$remove_sdk" = "1" ]; then
+	echo "No kit with id '$kitid' found"
+fi
+
+if [ "$skip" != "1" ] && [ "$remove_sdk" != "1" ]; then
+	env=""
+
+	while read -r line ; do
+		env="$env --env \"$line\""
+	done < <(source "$ENV_SCRIPT" && env)
+
+	cmd="$sdktool addKit \
+		--id \"$kitid\" \
+		--name \"$kitname\" \
+		--debuggerid \"$dbid\" \
+		--Cxxtoolchain \"$tcid\" \
+		--qt \"$qtid\" \
+		--Ctoolchain \"$tcid\" \
+		--sysroot \"$SYSROOT_PATH\" \
+		--devicetype GenericLinuxOsType \
+		$env"
+
+	eval $cmd
+	ret=$?
+
+	if [ "$ret" != "0" ]; then
+		print_err "Error: sdktool returned status $ret"
+		exit $ret
+	fi
+
+	print_success "Created kit with id '$kitid'"
+fi

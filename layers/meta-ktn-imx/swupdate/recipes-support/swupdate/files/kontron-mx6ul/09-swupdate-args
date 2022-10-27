@@ -1,0 +1,31 @@
+#!/bin/sh
+rootfs_a="ubi0:root_A"
+rootfs_b="ubi0:root_B"
+update_A="stable,root_A"
+update_B="stable,root_B"
+UPDATE_FS=""
+UPDATE_CFG="/etc/swupdate.cfg"
+SWUPDATE_WEBSERVER_ARGS="--document-root /www --port 8080"
+target_ip=$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+static_ip=192.168.1.11
+export LANG=en_US.UTF8
+
+rootfs=`swupdate -g`
+
+if test "${rootfs}" == "${rootfs_a}" ||
+   test "${rootfs}" == "/dev/${rootfs_a}"; then
+	UPDATE_FS="${update_B}"
+elif test "${rootfs}" == "${rootfs_b}" ||
+     test "${rootfs}" == "/dev/${rootfs_b}"; then
+	UPDATE_FS="${update_A}"
+else  
+	logger "Fatal: Can not determine active A/B Bootslot. Canceling update attempt."
+	exit 1
+fi
+
+SWUPDATE_ARGS="-e ${UPDATE_FS} -f ${UPDATE_CFG}"
+
+if [ -z "$target_ip" ]; then
+	target_ip=$static_ip
+	ifconfig eth0 $target_ip
+fi

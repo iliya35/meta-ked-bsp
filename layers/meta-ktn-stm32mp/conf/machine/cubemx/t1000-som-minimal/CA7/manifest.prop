@@ -1,0 +1,4 @@
+MANIFEST_VERSION = openstlinux-5.10-dunfell-mp1-21-03-31
+KERNEL_DT = ./DeviceTree/t1000-som-minimal/kernel
+UBOOT_DT = ./DeviceTree/t1000-som-minimal/u-boot
+TFA_DT = ./DeviceTree/t1000-som-minimal/tf-a

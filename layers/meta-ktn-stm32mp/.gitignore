@@ -1,0 +1,25 @@
+*.dts.bak
+.project
+.vscode*
+
+conf/machine/cubemx/t1000-k/*
+!conf/machine/cubemx/t1000-k/*.ioc
+!conf/machine/cubemx/t1000-k/CA7
+
+conf/machine/cubemx/t1000-som-minimal/*
+!conf/machine/cubemx/t1000-som-minimal/*.ioc
+!conf/machine/cubemx/t1000-som-minimal/CA7
+
+conf/machine/cubemx/t1001-som-minimal/*
+!conf/machine/cubemx/t1001-som-minimal/*.ioc
+!conf/machine/cubemx/t1001-som-minimal/CA7
+
+conf/machine/cubemx/t1002-som-minimal/*
+!conf/machine/cubemx/t1002-som-minimal/*.ioc
+!conf/machine/cubemx/t1002-som-minimal/CA7
+
+# Ignore CubeIDE workspace files
+conf/machine/cubemx/.metadata/*
+
+# To remove
+conf/_*

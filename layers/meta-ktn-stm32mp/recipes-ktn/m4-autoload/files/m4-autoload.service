@@ -1,0 +1,13 @@
+[Unit] 
+Description = start and stop M4 application
+
+[Service]
+Type=oneshot
+
+ExecStart=/usr/bin/m4-autoload start
+RemainAfterExit=true
+ExecStop=/usr/bin/m4-autoload stop
+
+[Install]
+WantedBy=multi-user.target
+

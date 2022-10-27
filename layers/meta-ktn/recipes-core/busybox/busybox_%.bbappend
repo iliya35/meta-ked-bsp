@@ -1,0 +1,6 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"
+SRC_URI += "file://tftp_enable_blksize.cfg"
+SRC_URI += "file://enable_dd_conv.cfg"
+SRC_URI += "file://pimp-less.cfg"
+SRC_URI += "file://pstree.cfg"
+SRC_URI += "file://enable_vfat_support.cfg"

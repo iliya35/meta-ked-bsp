@@ -1,0 +1,8 @@
+#!/bin/sh
+
+stty -onlcr -echo -F /dev/ttyRPMSG1 
+cat /dev/ttyRPMSG1 &
+PID=$!
+sleep 0.3s					#somehow necessary
+        echo "$*" > /dev/ttyRPMSG1		#write arg 1
+	sleep 0.3s				#wait for response

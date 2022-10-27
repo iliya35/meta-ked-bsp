@@ -1,0 +1,17 @@
+# Configure which Qt application should be started
+
+# Simple webbrowser based on Qt
+#APPLICATION=/opt/webengine-vk/webengine-vk
+#APPLICATION_OPTIONS=http://www.kontron-electronics.de
+
+# Kontron graphical demo application
+#APPLICATION=/usr/bin/kontron-demo
+
+# Another demo application
+#APPLICATION=/usr/bin/animatedtiles
+
+# High sophisticated graphical application
+#APPLICATION=/usr/bin/Qt5_CinematicExperience
+
+#QT_QPA_PLATFORM=linuxfb
+#QT_QPA_PLATFORM=eglfs

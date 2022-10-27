@@ -1,0 +1,43 @@
+From 3862cec314de4a82821d9694ae2eec6f629ec782 Mon Sep 17 00:00:00 2001
+From: Lucas Stach <l.stach@pengutronix.de>
+Date: Thu, 29 Oct 2020 18:09:49 +0100
+Subject: etnaviv: pass correct layout to etna_resource_alloc for scanout
+ resources
+
+Since b96277653033 (etnaviv: rework compatible render base) the base resource
+may be linear and a render compatible resource is allocated as needed. As
+scanout surfaces without a modifier are always assumed to be linear, make
+sure to pass the correct layout to etna_resource_alloc().
+
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
+Part-of: <https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/7367>
+---
+ src/gallium/drivers/etnaviv/etnaviv_resource.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/gallium/drivers/etnaviv/etnaviv_resource.c b/src/gallium/drivers/etnaviv/etnaviv_resource.c
+index 07224ca301d..78c4e493e6d 100644
+--- a/src/gallium/drivers/etnaviv/etnaviv_resource.c
++++ b/src/gallium/drivers/etnaviv/etnaviv_resource.c
+@@ -352,7 +352,7 @@ etna_resource_create(struct pipe_screen *pscreen,
+     * and a texture-compatible base buffer in other cases
+     *
+     */
+-   if (templat->bind & (PIPE_BIND_SCANOUT | PIPE_BIND_DEPTH_STENCIL)) {
++   if (templat->bind & PIPE_BIND_DEPTH_STENCIL) {
+       if (screen->specs.pixel_pipes > 1 && !screen->specs.single_buffer)
+          layout |= ETNA_LAYOUT_BIT_MULTI;
+       if (screen->specs.can_supertile)
+@@ -362,7 +362,8 @@ etna_resource_create(struct pipe_screen *pscreen,
+       layout |= ETNA_LAYOUT_BIT_SUPER;
+    }
+ 
+-   if ((templat->bind & PIPE_BIND_LINEAR) || /* linear base requested */
++   if (/* linear base or scanout without modifier requested */
++       (templat->bind & (PIPE_BIND_LINEAR | PIPE_BIND_SCANOUT)) ||
+        templat->target == PIPE_BUFFER || /* buffer always linear */
+        /* compressed textures don't use tiling, they have their own "tiles" */
+        util_format_is_compressed(templat->format)) {
+-- 
+cgit v1.2.1

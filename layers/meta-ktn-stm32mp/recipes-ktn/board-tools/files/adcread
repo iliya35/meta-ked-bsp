@@ -1,0 +1,85 @@
+#!/bin/sh
+
+# example:
+#    read first adc channel of t1000 eval board
+#    >  adcread 0 5
+
+ADC_ID=${1}
+ADC_CHANNEL=${2}
+SYSFS_DIR=/sys/bus/iio/devices/iio:device${ADC_ID}
+SYSFS_VIN=${SYSFS_DIR}/in_voltage${ADC_CHANNEL}_raw
+ADC_REGS="/sys/kernel/debug/iio/iio:device${ADC_ID}/direct_reg_access"
+BOARD_SCALE_DEFAULT=1.0
+#BOARD_SCALE_CONFIG_BASE="./"
+BOARD_SCALE_CONFIG_BASE="/proc/device-tree/adc-board-scale"
+BOARD_SCALE_CONFIG="${BOARD_SCALE_CONFIG_BASE}/adc${ADC_ID}/scale${ADC_CHANNEL}"
+
+print_help ()
+{
+    echo "Usage"
+    echo "    adcread ADC-INSTANCE ADC-CHANNEL"
+	echo ""
+    echo "Read ADC inputs with board prescaler"
+    echo ""
+    echo "Example:"
+    echo "          adcread 1 15"
+    echo ""
+    echo "The following ADC channels are supported on your board:"
+    print_channels
+}
+
+print_channels()
+{
+    for adc in 0 1; do
+        local sysfs=/sys/bus/iio/devices/iio:device${adc}
+        if test -d ${sysfs}; then
+            echo "adc${adc}"
+        fi
+        for channel in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19; do
+            local sysfs=/sys/bus/iio/devices/iio:device${adc}
+            local vin=${sysfs}/in_voltage${channel}_raw
+            local label=${BOARD_SCALE_CONFIG_BASE}/adc${adc}/label${channel}
+            local scale=${BOARD_SCALE_CONFIG_BASE}/adc${adc}/scale${channel}
+            if test -f ${vin}; then
+                scale_val=$(cat ${scale} 2> /dev/null | tr -d '\000')
+                label_val=$(cat ${label} 2> /dev/null | tr -d '\000')
+                echo "  adc${adc} ${channel} [${label_val}] (prescaler ${scale_val})"
+            fi
+        done
+    done
+}
+
+case ${1} in
+	-h|--help|help)
+		print_help
+		exit 0
+		;;
+esac
+
+if test ! -e "${SYSFS_DIR}"; then
+    echo "ERROR: ADC device ${ADC_ID} doesn't exist"
+    exit 1
+fi
+
+if test ! -e "${SYSFS_VIN}"; then
+    echo "ERROR: ADC channel ${ADC_CHANNEL} on device ${ADC_ID} doesn't exist"
+    exit 1
+fi
+
+if test -f "${BOARD_SCALE_CONFIG}"; then
+    BOARD_SCALE=$(cat ${BOARD_SCALE_CONFIG} | tr -d '\000')
+else
+    echo "WARNING: Using default board scale (${BOARD_SCALE_DEFAULT}) for ADC channel adc${ADC_ID} ${ADC_CHANNEL}"
+    BOARD_SCALE=${BOARD_SCALE_DEFAULT}
+fi
+
+VIN_RAW=$(cat ${SYSFS_VIN})
+VIN_SCALE=$(cat ${SYSFS_DIR}/in_voltage_scale)
+VIN_OFFSET=$(cat ${SYSFS_DIR}/in_voltage_offset)
+VIN=$(awk "BEGIN{ printf (\"%d\", ( ${VIN_RAW} + ${VIN_OFFSET} ) * ${VIN_SCALE} * ${BOARD_SCALE} ) }")
+
+#echo "VIN_RAW ${VIN_RAW}"
+#echo "VIN_SCALE ${VIN_SCALE}"
+#echo "VIN_OFFSET ${VIN_OFFSET}"
+#echo "ADC${ADC_ID}:${ADC_CHANNEL}: ${VIN} mV (offset ${VIN_OFFSET}, scale ${VIN_SCALE})" 
+echo "ADC${ADC_ID}.${ADC_CHANNEL}: ${VIN} mV"

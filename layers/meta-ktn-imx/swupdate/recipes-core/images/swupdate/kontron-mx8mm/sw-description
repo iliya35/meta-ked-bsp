@@ -1,0 +1,142 @@
+software =
+{
+	version = "@@DISTRO_VERSION@@";
+	@@MACHINE@@ = {
+		hardware-compatibility: ["1"];
+
+		stable = {
+			root_A: {
+				files:(
+					{
+						filename = "@@IMAGE_LINK_NAME@@.tar.gz";
+						sha256="@@@IMAGE_LINK_NAME@@.tar.gz";
+						device = "/dev/mmcblk0p2";
+						filesystem = "ext4";
+						compressed = "zlib";
+						type = "archive";
+						path = "/";
+					},
+					{
+						filename = "fitImage";
+						device = "/dev/mmcblk0p1";
+						path = "/fitImage_active" ;
+						filesystem = "ext4";
+					}
+				);
+			}
+
+			root_B: {
+				files:(
+					{
+						filename = "@@IMAGE_LINK_NAME@@.tar.gz";
+						sha256="@@@IMAGE_LINK_NAME@@.tar.gz";
+						device = "/dev/mmcblk0p3";
+						filesystem = "ext4";
+						compressed = "zlib";
+						type = "archive";
+						path = "/";
+					},
+					{
+						filename = "fitImage";
+						device = "/dev/mmcblk0p1";
+						path = "/fitImage_active" ;
+						filesystem = "ext4";
+					}
+				);
+			}
+
+			setup: {
+				partitions: (
+					{
+						type = "diskpart";
+						device = "/dev/mmcblk0";
+						properties: {
+							labeltype = "dos";
+							partition-1 = [
+								"size=50M",
+								"start=2048",
+								"name=boot",
+								"type=0x83",
+								"fstype=ext4"
+							];
+							partition-2 = [
+								"size=9G",
+								"start=104448",
+								"name=root_A",
+								"type=0x83",
+								"fstype=ext4"
+							];
+							partition-3 = [
+								"size=9G",
+								"start=20584448",
+								"name=root_B",
+								"type=0x83",
+								"fstype=ext4"
+							];
+							partition-4 = [
+								"size=9G",
+								"start=41064448",
+								"name=data",
+								"type=0x83",
+								"fstype=ext4"
+							];
+						}
+					}
+				);
+
+				files:(
+					{
+						filename = "@@IMAGE_LINK_NAME@@.tar.gz";
+						sha256="@@@IMAGE_LINK_NAME@@.tar.gz";
+						device = "/dev/mmcblk0p2";
+						filesystem = "ext4";
+						compressed = "zlib";
+						type = "archive";
+						path = "/";
+					},
+					{
+						filename = "@@IMAGE_LINK_NAME@@.tar.gz";
+						sha256="@@@IMAGE_LINK_NAME@@.tar.gz";
+						device = "/dev/mmcblk0p3";
+						filesystem = "ext4";
+						compressed = "zlib";
+						type = "archive";
+						path = "/";
+					},
+					{
+						filename = "@@IMAGE_BOOTFS_NAME@@.tar.gz";
+						sha256="@@@IMAGE_BOOTFS_NAME@@.tar.gz";
+						device = "/dev/mmcblk0p1";
+						filesystem = "ext4";
+						compressed = "zlib";
+						type = "archive";
+						path = "/";
+					}
+				);
+
+				images: (
+					{
+						filename = "@@UBOOT_BINARY@@";
+						sha256="@@@UBOOT_BINARY@@";
+						mtdname = "u-boot";
+						offset = "1024";
+						type = "flash";
+					},
+					{
+						filename = "@@UBOOT_INITIAL_ENV@@-@@MACHINE@@";
+						sha256="@@@UBOOT_INITIAL_ENV@@-@@MACHINE@@";
+						type = "bootloader";
+					}
+				);
+			}
+		}
+
+		scripts: (
+			{
+				filename = "pre_post_script.sh";
+				sha256="@pre_post_script.sh";
+				type = "shellscript";
+			}
+		);
+	}
+}

@@ -1,0 +1,19 @@
+include:
+  - project: 'sw/yocto/yocto-ktn'
+    ref: 24cb378341b3db63d64abb69c95b5b90ea5f6f98
+    file: '/ci/yocto-ktn-meta.yml'
+
+build-imx:
+  extends: .meta-build-trigger
+  trigger:
+    project: sw/yocto/build-ktn-imx
+    branch: develop-dunfell
+
+build-mp1:
+  extends: .meta-build-trigger
+  trigger:
+    project: sw/yocto/build-stm32mp
+    branch: develop-dunfell
+
+stages:
+  - build

@@ -1,0 +1,12 @@
+
+# Start abootctl 
+#DISABLED=0
+
+# Commandline args to use
+# -v prints a AB boot system summary message
+# -r resets the boot counter
+# The default configuration is -vr
+#PROGRAM_ARGS="-vr"
+
+# Update /etc/motd
+#UPDATE_MOTD=1

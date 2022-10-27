@@ -1,0 +1,14 @@
+[Unit]
+Description=Common start script for graphical Qt applications
+
+[Service]
+Type=simple
+
+ExecStartPre=chvt 7
+ExecStart=/usr/bin/autostart-app.sh
+ExecStartPost=-/usr/bin/psplash-drm-quit
+RestartSec=1s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
