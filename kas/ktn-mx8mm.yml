@@ -7,3 +7,5 @@ header:
     - ktn-imx.yml
 
 machine: kontron-mx8mm
+target:
+  - image-ktn-qt

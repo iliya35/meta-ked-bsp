@@ -7,3 +7,5 @@ header:
     - ktn-imx.yml
 
 machine: kontron-mx6ul
+target:
+  - image-ktn
