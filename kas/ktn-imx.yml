@@ -22,6 +22,12 @@ repos:
     url: https://github.com/meta-qt5/meta-qt5
     path: layers/meta-qt5
     refspec: master
+  meta-python2:
+    url: git://git.openembedded.org/meta-python2
+    path: layers/meta-python2
+  meta-swupdate:
+    url: https://github.com/sbabic/meta-swupdate
+    path: layers/meta-swupdate
 
 local_conf_header:
   accept_eula:
