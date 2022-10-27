@@ -1,0 +1,24 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+  includes:
+    - ktn-common.yml
+
+repos:
+  meta-ktn-imx:
+    path: layers/meta-ktn-imx
+  meta-arm:
+    url: https://git.yoctoproject.org/git/meta-arm
+    path: layers/meta-arm
+    layers:
+      meta-arm:
+      meta-arm-toolchain:
+  meta-freescale:
+    url: https://git.yoctoproject.org/git/meta-freescale
+    path: layers/meta-freescale
+
+local_conf_header:
+  accept_eula:
+    ACCEPT_FSL_EULA = "1"

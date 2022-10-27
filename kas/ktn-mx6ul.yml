@@ -1,0 +1,9 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+  includes:
+    - ktn-imx.yml
+
+machine: kontron-mx6ul

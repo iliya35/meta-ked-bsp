@@ -1,0 +1,15 @@
+include:
+  - '/ci/container-build.yml'
+
+.container-vars: &container-vars
+  variables:
+    CONTAINERFILE: ktn-kas.Containerfile
+    TAG: kas-ktn
+
+container:build:
+  extends: .build-container
+  <<: *container-vars
+
+container:build-deploy:
+  extends: .build-deploy-container
+  <<: *container-vars

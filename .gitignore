@@ -1,0 +1,4 @@
+build/
+layers/*
+!layers/meta-ktn
+!layers/meta-ktn-imx

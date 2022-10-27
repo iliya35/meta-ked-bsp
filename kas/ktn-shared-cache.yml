@@ -1,0 +1,14 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+
+#
+# This allows to use a remote sstate mirror that needs to be mounted to
+# /mnt/mirrors.
+#
+local_conf_header:
+  shared_cache: |
+    SSTATE_MIRRORS ?= " \
+      file://.* file:///mnt/mirrors/sstate/PATH"

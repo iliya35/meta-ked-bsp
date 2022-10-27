@@ -1,0 +1,29 @@
+# Build/push the container images
+
+.build-container:
+  tags:
+    - server
+  image: quay.io/podman/stable
+  stage: build
+  script:
+    - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - podman pull $CI_REGISTRY_IMAGE/$TAG || true
+    - podman build --cache-from $CI_REGISTRY_IMAGE/$TAG -t $CI_REGISTRY_IMAGE/$TAG -f $CONTAINERFILE .
+  # In case we are not on the main branch, we only want to do build testing for
+  # the image, without pushing anything to the registry.
+  rules:
+    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+
+.build-deploy-container:
+  tags:
+    - server
+  image: quay.io/podman/stable
+  stage: build
+  script:
+    - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - podman pull $CI_REGISTRY_IMAGE/$TAG || true
+    - podman build --cache-from $CI_REGISTRY_IMAGE/$TAG -t $CI_REGISTRY_IMAGE/$TAG -f $CONTAINERFILE .
+    - podman push $CI_REGISTRY_IMAGE/$TAG
+  # In case we are on the main branch, we want to build and push the image.
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
