@@ -14,9 +14,6 @@ workflow:
       when: never
     - when: always
 
-stages:
-  - build
-
 .init:
   #
   # This script does preparation work for the CI jobs.

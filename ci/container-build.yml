@@ -4,7 +4,7 @@
   tags:
     - server
   image: quay.io/podman/stable
-  stage: build
+  stage: build-container
   script:
     - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - podman pull $CI_REGISTRY_IMAGE/$TAG || true
@@ -18,7 +18,7 @@
   tags:
     - server
   image: quay.io/podman/stable
-  stage: build
+  stage: build-container
   script:
     - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - podman pull $CI_REGISTRY_IMAGE/$TAG || true

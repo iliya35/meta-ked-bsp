@@ -2,6 +2,10 @@ include:
   - '/ci/yocto-ktn-build.yml'
   - '/ci/container-build.yml'
 
+stages:
+  - build-container
+  - build
+
 .build-matrix: &build-matrix
   - KAS_CONFIG: kas/ktn-mx8mm.yml
     BUILD_TARGETS: image-ktn-qt $BUILD_TARGETS_EXTRA
