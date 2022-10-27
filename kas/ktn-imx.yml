@@ -18,6 +18,10 @@ repos:
   meta-freescale:
     url: https://git.yoctoproject.org/git/meta-freescale
     path: layers/meta-freescale
+  meta-qt5:
+    url: https://github.com/meta-qt5/meta-qt5
+    path: layers/meta-qt5
+    refspec: master
 
 local_conf_header:
   accept_eula:
