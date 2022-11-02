@@ -6,9 +6,11 @@ stages:
   - build-container
   - build
 
+# Build Yocto BSPs
 .build-matrix: &build-matrix
   - KAS_CONFIG: kas/ktn-mx8mm.yml
   - KAS_CONFIG: kas/ktn-mx6ul.yml
+  - KAS_CONFIG: kas/ktn-mp1.yml
 
 build:
   extends: .build-config
