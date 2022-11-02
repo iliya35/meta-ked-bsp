@@ -4,7 +4,7 @@
 header:
   version: 12
   includes:
-    - ktn-common.yml
+    - kas/inc/common.yml
 
 repos:
   meta-ktn-imx:
@@ -18,16 +18,6 @@ repos:
   meta-freescale:
     url: https://git.yoctoproject.org/git/meta-freescale
     path: layers/meta-freescale
-  meta-qt5:
-    url: https://github.com/meta-qt5/meta-qt5
-    path: layers/meta-qt5
-    refspec: master
-  meta-python2:
-    url: git://git.openembedded.org/meta-python2
-    path: layers/meta-python2
-  meta-swupdate:
-    url: https://github.com/sbabic/meta-swupdate
-    path: layers/meta-swupdate
 
 local_conf_header:
   accept_eula:

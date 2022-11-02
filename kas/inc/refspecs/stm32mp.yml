@@ -1,0 +1,11 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+  includes:
+    - kas/inc/refspecs/common.yml
+
+repos:
+  meta-st-stm32mp:
+    refspec: 73632fb844b6ebbef2a9d2acc7cc4783083a14a3

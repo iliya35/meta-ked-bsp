@@ -1,0 +1,14 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+  includes:
+    - kas/inc/common.yml
+
+repos:
+  meta-ktn-stm32mp:
+    path: layers/meta-ktn-stm32mp
+  meta-st-stm32mp:
+    url: http://github.com/STMicroelectronics/meta-st-stm32mp
+    path: layers/meta-st-stm32mp
