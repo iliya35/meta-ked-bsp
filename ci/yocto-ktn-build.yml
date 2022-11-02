@@ -51,11 +51,11 @@ workflow:
   # runs bitbake for the given targets.
   #
   kas:
-    - kas build $KAS_CONFIG:kas/ktn-shared-cache.yml
+    - kas build $KAS_CONFIG:kas/inc/shared-cache.yml
     - |
       if test "$BUILD_SDK" == "yes"; then
         export KAS_TASK="$BUILD_SDK_TASK"
-        kas build $KAS_CONFIG:kas/ktn-shared-cache.yml
+        kas build $KAS_CONFIG:kas/inc/shared-cache.yml
       fi
 #
 # This is a template for the build job that runs the build for the requested
