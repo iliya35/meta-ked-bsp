@@ -15,7 +15,7 @@
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: never
     - changes:
-        - ktn-kas.Containerfile
+        - $CONTAINERFILE
         - ci/container-build.yml
 
 .build-deploy-container:
@@ -33,5 +33,5 @@
     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
       when: never
     - changes:
-        - ktn-kas.Containerfile
+        - $CONTAINERFILE
         - ci/container-build.yml

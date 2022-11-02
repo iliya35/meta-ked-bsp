@@ -16,9 +16,10 @@ build:
     matrix:
       *build-matrix
 
+# Build Container Image
 .container-vars: &container-vars
   variables:
-    CONTAINERFILE: ktn-kas.Containerfile
+    CONTAINERFILE: Containerfile
     TAG: kas-ktn
 
 container:build:
