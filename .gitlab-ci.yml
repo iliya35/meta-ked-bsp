@@ -22,6 +22,27 @@ bsp-mp1:build:
   variables:
     KAS_CONFIG: kas/ktn-mp1.yml
 
+bsp-mx8mm:build-head:
+  extends: .yocto-build-template
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  variables:
+    KAS_CONFIG: kas/ktn-mx8mm.yml
+
+bsp-mx6ul:build-head:
+  extends: .yocto-build-template
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  variables:
+    KAS_CONFIG: kas/ktn-mx6ul.yml
+
+bsp-mp1:build-head:
+  extends: .yocto-build-template
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  variables:
+    KAS_CONFIG: kas/ktn-mp1.yml
+
 # Build Container Image
 .container-vars: &container-vars
   variables:
