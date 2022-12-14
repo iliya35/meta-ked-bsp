@@ -7,16 +7,20 @@ stages:
   - build
 
 # Build Yocto BSPs
-.build-matrix: &build-matrix
-  - KAS_CONFIG: kas/ktn-mx8mm.yml
-  - KAS_CONFIG: kas/ktn-mx6ul.yml
-  - KAS_CONFIG: kas/ktn-mp1.yml
+bsp-mx8mm:build:
+  extends: .yocto-build-template
+  variables:
+    KAS_CONFIG: kas/ktn-mx8mm.yml
 
-build:
-  extends: .build-config
-  parallel:
-    matrix:
-      *build-matrix
+bsp-mx6ul:build:
+  extends: .yocto-build-template
+  variables:
+    KAS_CONFIG: kas/ktn-mx6ul.yml
+
+bsp-mp1:build:
+  extends: .yocto-build-template
+  variables:
+    KAS_CONFIG: kas/ktn-mp1.yml
 
 # Build Container Image
 .container-vars: &container-vars

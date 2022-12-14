@@ -14,7 +14,7 @@ workflow:
       when: never
     - when: always
 
-.init:
+.scripts:
   #
   # This script does preparation work for the CI jobs.
   #
@@ -45,7 +45,6 @@ workflow:
     - export SEMVER=$SEMVER
     - 'echo "SemVer from GitVersion is: ${SEMVER}"'
 
-.build:
   #
   # This scripts sets some options required for building in local.conf and then
   # runs bitbake for the given targets.
@@ -61,7 +60,7 @@ workflow:
 # This is a template for the build job that runs the build for the requested
 # targets. The resulting artifacts expire after some time.
 #
-.build-config:
+.yocto-build-template:
   tags:
     - server-autoscale
   stage: build
@@ -73,10 +72,10 @@ workflow:
       when: never
     - when: always
   script:
-    - !reference [.init, ci-prep]
-    - !reference [.init, gitversion]
-    - !reference [.init, cache]
-    - !reference [.build, kas]
+    - !reference [.scripts, ci-prep]
+    - !reference [.scripts, gitversion]
+    - !reference [.scripts, cache]
+    - !reference [.scripts, kas]
   artifacts:
     name: "$CI_PROJECT_NAME $CI_COMMIT_REF_NAME $MACHINE"
     paths:
