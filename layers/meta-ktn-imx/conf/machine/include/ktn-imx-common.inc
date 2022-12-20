@@ -32,9 +32,6 @@ PREFERRED_VERSION_u-boot-fw-utils ?= "2021.07"
 
 PREFERRED_PROVIDER_virtual/trusted-firmware-a ?= "imx-atf"
 
-PREFERRED_PROVIDER_jpeg ?= "jpeg"
-PREFERRED_PROVIDER_jpeg-native ?= "jpeg-native"
-
 IMAGE_BOOT_FILES = " \
     fitImage \
 "
@@ -44,12 +41,6 @@ UBOOT_CONFIG = "${MACHINE}"
 UBOOT_ENTRYPOINT = "${UBOOT_LOADADDRESS}"
 UBOOT_INITIAL_ENV = "u-boot-initial-env"
 
-#UBOOT_EXTLINUX ?= "1"
-#UBOOT_EXTLINUX_LABELS ?= "default"
-#UBOOT_EXTLINUX_KERNEL_IMAGE ?= "../fitImage"
-#UBOOT_EXTLINUX_FDTDIR ?= ""
-#UBOOT_EXTLINUX_KERNEL_ARGS ?= "rootwait"
-#UBOOT_EXTLINUX_TIMEOUT = "8"
 SOC_DEFAULT_IMAGE_FSTYPES = "wic.gz wic.bmap tar.gz"
 
 KERNEL_CLASSES ?= " kernel-fitimage "
