@@ -15,6 +15,7 @@ UBOOT_MAKE_TARGET ?= "flash.bin"
 TFA_PLATFORM = "imx8mm"
 TFA_BINARY = "bl31-imx8mm.bin"
 TFA_BUILD_TARGET = "bl31"
+ATF_BOOT_UART_BASE = "0x30880000"
 DDR_FIRMWARE_NAME = "lpddr4_pmu_train_1d_imem.bin \
 		     lpddr4_pmu_train_1d_dmem.bin \
 		     lpddr4_pmu_train_2d_imem.bin \

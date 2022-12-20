@@ -1,6 +1,6 @@
-From 44c34697156ca934bb00f96eacf1fb1d18821e92 Mon Sep 17 00:00:00 2001
+From 2ad00e398fd37b924fdf9cc5e0a7445aa73593d3 Mon Sep 17 00:00:00 2001
 From: Frieder Schrempf <frieder.schrempf@kontron.de>
-Date: Thu, 5 Sep 2019 11:54:54 +0200
+Date: Thu, 12 Jan 2023 16:35:31 +0100
 Subject: [PATCH] i.MX8MM: Change debug UART from UART2 to UART3
 
 ---
@@ -8,10 +8,10 @@ Subject: [PATCH] i.MX8MM: Change debug UART from UART2 to UART3
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/plat/imx/imx8m/imx8mm/include/platform_def.h b/plat/imx/imx8m/imx8mm/include/platform_def.h
-index de9e3b5c..6ba5a50e 100644
+index 42b03613e..d3468d869 100644
 --- a/plat/imx/imx8m/imx8mm/include/platform_def.h
 +++ b/plat/imx/imx8m/imx8mm/include/platform_def.h
-@@ -48,7 +48,7 @@
+@@ -51,7 +51,7 @@
  
  #define HAB_RVT_BASE			U(0x00000900) /* HAB_RVT for i.MX8MM */
  
@@ -21,5 +21,5 @@ index de9e3b5c..6ba5a50e 100644
  
  #define PLAT_CRASH_UART_BASE		IMX_BOOT_UART_BASE
 -- 
-2.17.1
+2.39.0
 
