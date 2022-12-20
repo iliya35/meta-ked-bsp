@@ -8,6 +8,7 @@ IMAGE_EXTRA_INSTALL += " \
 	alsa-utils-aplay \
 	alsa-utils-speakertest \
 	devmem2 \
+	fb-test \
 	glmark2 \
 	gstreamer1.0 \
 	gstreamer1.0-plugins-bad \
