@@ -2,22 +2,6 @@
 
 include conf/machine/include/imx-base.inc
 
-# We want to keep the SOC overrides even for the mainline BSP instead of
-# removing them as in meta-freescale. Therefore we only remove the feature
-# overrides, so the graphic stack (mesa, etc.) works as intended in
-# meta-freescale.
-MACHINEOVERRIDES_EXTENDER_FILTER_OUT_use-mainline-bsp = " \
-    imxdrm \
-    imxdpu \
-    imxpxp \
-    imxgpu \
-    imxgpu2d \
-    imxgpu3d \
-    imxvpu \
-    imxfbdev \
-    imxipu \
-    "
-
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-ktn"
 PREFERRED_PROVIDER_virtual/kernel_realtime ?= "linux-ktn-rt"
 PREFERRED_VERSION_linux-ktn ?= "5.10"

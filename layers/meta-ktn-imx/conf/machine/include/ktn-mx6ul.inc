@@ -1,7 +1,7 @@
 include conf/machine/include/tune-cortexa7.inc
 include conf/machine/include/arm/armv7a/tune-cortexa7.inc
 
-MACHINEOVERRIDES =. "mx6:mx6ul:ktn-mx6ul:"
+MACHINEOVERRIDES =. "ktn-mx6ul:ktn-mx6:ktn-imx:mx6ul:mx6:"
 
 UBOOT_MAKE_TARGET ?= "flash.bin"
 UBOOT_BINARY ?= "flash.bin"
@@ -17,5 +17,5 @@ WKS_FILE = "image-imx-ktn.wks"
 IMX_BOOT_SEEK = "1"
 WICVARS:append = " IMX_BOOT_SEEK UBOOT_BINARY"
 
-UBOOT_ENTRYPOINT:mx6ul:remove = "0x10008000"
+UBOOT_ENTRYPOINT:mx6ul-generic-bsp:remove = "0x10008000"
 UBOOT_ENTRYPOINT:ktn-mx6ul:append = "${UBOOT_LOADADDRESS}"

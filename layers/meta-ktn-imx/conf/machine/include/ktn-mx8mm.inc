@@ -1,7 +1,7 @@
 include conf/machine/include/tune-cortexa53.inc
 include conf/machine/include/arm/armv8a/tune-cortexa53.inc
 
-MACHINEOVERRIDES =. "mx8:mx8m:mx8mm:ktn-mx8mm:"
+MACHINEOVERRIDES =. "ktn-mx8mm:ktn-mx8m:ktn-imx:mx8mm:mx8m:"
 
 # Mainline BSP defaults to "generic" cortexa53 configuration,
 # adjust it here to include crypto extension which enables
@@ -29,5 +29,5 @@ IMX_BOOT_SEEK = "33"
 WICVARS:append = " IMX_BOOT_SEEK UBOOT_BINARY"
 WKS_FILE_DEPENDS:remove = "imx-boot"
 
-UBOOT_ENTRYPOINT:mx8mm:remove = "0x40480000"
+UBOOT_ENTRYPOINT:mx8m-generic-bsp:remove = "0x40480000"
 UBOOT_ENTRYPOINT:ktn-mx8mm:append = "0x40400000"
