@@ -1,4 +1,5 @@
-require conf/machine/include/tune-cortexa7.inc
+include conf/machine/include/tune-cortexa7.inc
+include conf/machine/include/arm/armv7a/tune-cortexa7.inc
 
 MACHINEOVERRIDES =. "mx6:mx6ul:ktn-mx6ul:"
 

@@ -1,4 +1,5 @@
-require conf/machine/include/tune-cortexa53.inc
+include conf/machine/include/tune-cortexa53.inc
+include conf/machine/include/arm/armv8a/tune-cortexa53.inc
 
 MACHINEOVERRIDES =. "mx8:mx8m:mx8mm:ktn-mx8mm:"
 
