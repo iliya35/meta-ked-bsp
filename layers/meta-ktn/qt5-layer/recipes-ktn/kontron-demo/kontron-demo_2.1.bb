@@ -23,8 +23,8 @@ SRCBRANCH = "master"
 SRCREV = "0450237684cdd7333c113ee7e0bc7558e81c6b29"
 
 SRC_URI = "git://${KTN_GIT_APPS}/kontron-demo.git;protocol=https;branch=${SRCBRANCH}"
-SRC_URI:append += " file://video/*"
-SRC_URI:append += " file://slideshow/*"
+SRC_URI:append += " file://video/"
+SRC_URI:append += " file://slideshow/"
 SRC_URI:append += " file://autostart-app.env"
 
 PACKAGES += "${PN}-autostart ${PN}-video ${PN}-slideshow"
