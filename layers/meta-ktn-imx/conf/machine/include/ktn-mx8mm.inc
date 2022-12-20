@@ -3,6 +3,11 @@ include conf/machine/include/arm/armv8a/tune-cortexa53.inc
 
 MACHINEOVERRIDES =. "mx8:mx8m:mx8mm:ktn-mx8mm:"
 
+# Mainline BSP defaults to "generic" cortexa53 configuration,
+# adjust it here to include crypto extension which enables
+# inline NEON and FPU code generation
+DEFAULTTUNE:use-mainline-bsp = "cortexa53-crypto"
+
 UBOOT_BINARY ?= "flash.bin"
 UBOOT_SUFFIX ?= "bin"
 
