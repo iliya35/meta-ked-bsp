@@ -4,7 +4,7 @@ require recipes-core/images/core-image-minimal.bb
 include recipes-core/images/image-ktn-platform.inc
 include ${@bb.utils.contains('BBFILE_COLLECTIONS', 'swupdate', 'swupdate/recipes-core/images/image-ktn-swupdate.inc', '', d)}
 
-inherit features_check extrausers userfs
+inherit extrausers userfs
 
 IMAGE_FEATURES ?= ""
 IMAGE_LINGUAS = "en-us"
