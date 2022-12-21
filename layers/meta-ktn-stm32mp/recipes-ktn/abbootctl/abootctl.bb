@@ -9,14 +9,14 @@ FILES:${PN} = "/etc/default/* /etc/init.d/* /usr/bin/* "
  
 S = "${WORKDIR}/git"
 
-SRC_URI = "git://${KTN_GIT_SERVER_SSH}/sw/misc/apps/abootctl.git;protocol=ssh;branch=${SRCBRANCH}"
-SRCREV = "944581d01e15d1cda4efa6b7fd8c143e906842c3"
-SRCBRANCH = "develop"
-
-SRC_URI:append += "\
+SRC_URI = " \
+     git://${KTN_GIT_SERVER_SSH}/sw/misc/apps/abootctl.git;protocol=ssh;branch=${SRCBRANCH} \
      file://abootctl.sh \
      file://abootctl.default \
-     "
+"
+
+SRCREV = "944581d01e15d1cda4efa6b7fd8c143e906842c3"
+SRCBRANCH = "develop"
 
 inherit cmake update-rc.d systemd
 
