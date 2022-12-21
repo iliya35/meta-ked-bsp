@@ -106,6 +106,7 @@ EXTRA_IMAGEDEPENDS += "u-boot-stm32mp"
 # Chip architecture
 DEFAULTTUNE = "cortexa7thf-neon-vfpv4"
 include conf/machine/include/tune-cortexa7.inc
+include conf/machine/include/arm/armv7a/tune-cortexa7.inc
 
 # Kernel settings
 ST_KERNEL_LOADADDR   = "0xC2000040"
