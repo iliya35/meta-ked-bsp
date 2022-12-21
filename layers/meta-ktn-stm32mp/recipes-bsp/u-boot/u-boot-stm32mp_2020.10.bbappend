@@ -1,7 +1,3 @@
-# OpenST v2020.10-stm32mp-r2.1 + KTN Patches
-# Based on OpenST 3.1.1 (22-06-08)
-# -> u-boot 2020.10 + Patches
-
 U_BOOT_VERSION = "v2020.10"
 U_BOOT_SUBVERSION = "stm32mp"
 U_BOOT_RELEASE = "r2.1-ktn"
