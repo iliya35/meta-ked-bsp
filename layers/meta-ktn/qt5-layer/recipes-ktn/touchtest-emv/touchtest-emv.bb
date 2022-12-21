@@ -16,10 +16,12 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRCBRANCH = "master"
 SRCREV = "8b68dc8e4ab4604fd3a622837cd4732057e97832"
-SRC_URI = "git://${KTN_GIT_APPS}/touchtest-emv.git;protocol=http;branch=${SRCBRANCH}"
 
-SRC_URI:append += " file://start-touchtest-emv.sh"
-SRC_URI:append += " file://settings-touchtest-emv"
+SRC_URI = " \
+	git://${KTN_GIT_APPS}/touchtest-emv.git;protocol=http;branch=${SRCBRANCH} \
+	file://start-touchtest-emv.sh \
+	file://settings-touchtest-emv \
+"
 
 PACKAGES += "${PN}-autostart"
 
