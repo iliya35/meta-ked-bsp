@@ -41,8 +41,8 @@ ST_USERFS   = "0"
 # Improve build speed
 ENABLE_IMAGE_LICENSE_SUMMARY = "0"
 
-# Currently fib is not supported
-MACHINE_FEATURES:remove = "fip"
+# Remove unsupported machine features
+MACHINE_FEATURES:remove = "fip fw-update"
 
 # =========================================================================
 # Machine specific software packages
