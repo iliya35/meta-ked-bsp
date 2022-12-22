@@ -10,6 +10,7 @@ DEFAULTTUNE:use-mainline-bsp = "cortexa53-crypto"
 
 UBOOT_BINARY ?= "flash.bin"
 UBOOT_SUFFIX ?= "bin"
+UBOOT_MAKE_TARGET ?= "flash.bin"
 
 TFA_PLATFORM = "imx8mm"
 TFA_BINARY = "bl31-imx8mm.bin"
