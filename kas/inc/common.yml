@@ -9,8 +9,14 @@ distro: ktn
 defaults:
   repos:
     refspec: ${YOCTO_SERIES}
+    patches:
+      repo: yocto-ktn-bsp
 
 repos:
+  # Add base repo, so we can use it as base for patch files
+  yocto-ktn-bsp:
+    layers:
+      layer-path: disabled
   meta-ktn:
     path: layers/meta-ktn
   poky:

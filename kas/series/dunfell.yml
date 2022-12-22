@@ -12,6 +12,9 @@ env:
 repos:
   poky:
     refspec: eb5651b44399737c7357a6a225676f695dace80e
+    patches:
+      license-compat:
+        path: patches/poky/license-compat.patch
   meta-openembedded:
     refspec: 7203130ed8b58c0df75cb72222ac2bcf546bce44
   meta-qt5:
