@@ -51,7 +51,7 @@ MACHINE_FEATURES:remove = "fip"
 # HACK: Remove imx specific ptool. production-tool is included in image-ktn-minimal by default
 IMAGE_INSTALL:remove = "production-tool"
 
-CORE_IMAGE_EXTRA_INSTALL:append += ""
+CORE_IMAGE_EXTRA_INSTALL:append = ""
 
 # List of packages required to boot the device
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "\

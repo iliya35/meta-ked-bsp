@@ -18,8 +18,11 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRCBRANCH = "master"
 SRCREV = "972776a3c57673311c05f6a5f941d531b268fcda"
 
-SRC_URI = "git://${KTN_GIT_APPS}/widgets-demo.git;protocol=https;branch=${SRCBRANCH};subpath=${PN}"
-SRC_URI:append += " file://autostart-eglfs.env"
+SRC_URI = " \
+	git://${KTN_GIT_APPS}/widgets-demo.git;protocol=https;branch=${SRCBRANCH};subpath=${PN} \
+	file://autostart-eglfs.env \
+"
+
 PACKAGES += "${PN}-autostart"
 
 FILES:${PN} =  "/usr/bin/*"

@@ -1,3 +1,3 @@
-IMAGE_INSTALL:append += "		\
-	devregs				\
+IMAGE_INSTALL:append = " \
+	devregs \
 "

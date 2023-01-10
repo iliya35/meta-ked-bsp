@@ -11,7 +11,7 @@ DEPENDS += "qtbase qtdeclarative qtmultimedia qtwebengine"
 RDEPENDS:${PN} += "qtxmlpatterns qtdeclarative-qmlplugins qtbase-plugins ttf-dejavu-sans qtquickcontrols qtquickcontrols2 qtfreevirtualkeyboard"
 
 RDEPENDS:${PN}-video += "gstreamer1.0-plugins-base qtmultimedia"
-RDEPENDS:${PN}-video:append:imx += "gstreamer1.0-plugins-imx"
+RDEPENDS:${PN}-video:append:imx = " gstreamer1.0-plugins-imx"
 RDEPENDS:${PN}-video:remove:use-mainline-bsp = "gstreamer1.0-plugins-imx"
 RDEPENDS:${PN}-autostart += "autostart-app"
 
@@ -22,10 +22,12 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRCBRANCH = "master"
 SRCREV = "0450237684cdd7333c113ee7e0bc7558e81c6b29"
 
-SRC_URI = "git://${KTN_GIT_APPS}/kontron-demo.git;protocol=https;branch=${SRCBRANCH}"
-SRC_URI:append += " file://video/*"
-SRC_URI:append += " file://slideshow/*"
-SRC_URI:append += " file://autostart-app.env"
+SRC_URI = " \
+	git://${KTN_GIT_APPS}/kontron-demo.git;protocol=https;branch=${SRCBRANCH} \
+	file://video/ \
+	file://slideshow/ \
+	file://autostart-app.env \
+"
 
 PACKAGES += "${PN}-autostart ${PN}-video ${PN}-slideshow"
 

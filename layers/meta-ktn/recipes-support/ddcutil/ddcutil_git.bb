@@ -11,8 +11,8 @@ PACKAGECONFIG:append = " ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '
 
 PACKAGECONFIG[x11] = "--enable-x11=yes,--enable-x11=no,"
 
-SRCREV = "1834de60e8658c3c86f9d1e27b1e94830ffcab27"
-SRC_URI = "git://github.com/rockowitz/ddcutil;protocol=git"
+SRCREV = "828fc4d5fd398e829f9609c56ed0e9a6e825e772"
+SRC_URI = "git://github.com/rockowitz/ddcutil;protocol=https;branch=1.3.2-release"
 
 PV = "0.9.4+${SRCPV}"
 

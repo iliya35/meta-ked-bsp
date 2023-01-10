@@ -34,7 +34,7 @@ SRC_URI:append = "\
 	"
 
 # Add extra EMMC configuration for Eval-Kits
-SRC_URI:append:stm32mp-t1000-multi += "file://mptool_EMMC.config;subdir=git"
+SRC_URI:append:stm32mp-t1000-multi = " file://mptool_EMMC.config;subdir=git"
 
 FILES:${PN} += "\
 	/usr \
