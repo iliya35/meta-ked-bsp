@@ -8,7 +8,7 @@ distro: ktn
 
 defaults:
   repos:
-    refspec: dunfell
+    refspec: ${YOCTO_SERIES}
 
 repos:
   meta-ktn:
@@ -36,6 +36,22 @@ repos:
   meta-swupdate:
     url: https://github.com/sbabic/meta-swupdate
     path: layers/meta-swupdate
+  meta-ktn-imx:
+    path: layers/meta-ktn-imx
+  meta-arm:
+    url: https://git.yoctoproject.org/git/meta-arm
+    path: layers/meta-arm
+    layers:
+      meta-arm:
+      meta-arm-toolchain:
+  meta-freescale:
+    url: https://git.yoctoproject.org/git/meta-freescale
+    path: layers/meta-freescale
+  meta-ktn-stm32mp:
+    path: layers/meta-ktn-stm32mp
+  meta-st-stm32mp:
+    url: http://github.com/STMicroelectronics/meta-st-stm32mp
+    path: layers/meta-st-stm32mp
 
 env:
   SEMVER: 0.0.0-dev
@@ -43,3 +59,5 @@ env:
 local_conf_header:
   set_semver:
     DISTRO_VERSION = "${SEMVER}"
+  yocto_base_series: |
+    BASE_SERIES = "${YOCTO_SERIES}"

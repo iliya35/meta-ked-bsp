@@ -3,21 +3,14 @@
 
 header:
   version: 12
-  includes:
-    - kas/inc/common.yml
 
 repos:
-  meta-ktn-imx:
-    path: layers/meta-ktn-imx
-  meta-arm:
-    url: https://git.yoctoproject.org/git/meta-arm
-    path: layers/meta-arm
+  meta-ktn-stm32mp:
     layers:
-      meta-arm:
-      meta-arm-toolchain:
-  meta-freescale:
-    url: https://git.yoctoproject.org/git/meta-freescale
-    path: layers/meta-freescale
+      layer-path: disabled
+  meta-st-stm32mp:
+    layers:
+      layer-path: disabled
 
 local_conf_header:
   accept_eula:

@@ -1,0 +1,23 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+
+repos:
+  poky:
+    refspec: ${YOCTO_SERIES}
+  meta-openembedded:
+    refspec: ${YOCTO_SERIES}
+  meta-qt5:
+    refspec: ${YOCTO_SERIES}
+  meta-swupdate:
+    refspec: ${YOCTO_SERIES}
+  meta-python2:
+    refspec: ${YOCTO_SERIES}
+  meta-arm:
+    refspec: ${YOCTO_SERIES}
+  meta-freescale:
+    refspec: ${YOCTO_SERIES}
+  meta-st-stm32mp:
+    refspec: ${YOCTO_SERIES}

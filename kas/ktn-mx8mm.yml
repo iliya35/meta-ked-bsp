@@ -4,5 +4,8 @@
 header:
   version: 12
   includes:
-    - kas/ktn-mx8mm-head.yml
-    - kas/inc/refspecs/imx.yml
+    - kas/inc/imx.yml
+
+machine: kontron-mx8mm
+target:
+  - image-ktn-qt
