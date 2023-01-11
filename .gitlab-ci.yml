@@ -14,6 +14,12 @@ stages:
     YOCTO_SERIES: dunfell
   - PLATFORM: mp1
     YOCTO_SERIES: dunfell
+  - PLATFORM: mx8mm
+    YOCTO_SERIES: kirkstone
+  - PLATFORM: mx6ul
+    YOCTO_SERIES: kirkstone
+  - PLATFORM: mp1
+    YOCTO_SERIES: kirkstone
 
 bsp:build:
   extends: .yocto-build-template
