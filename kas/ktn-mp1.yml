@@ -4,5 +4,13 @@
 header:
   version: 12
   includes:
-    - kas/ktn-mp1-head.yml
-    - kas/inc/refspecs/stm32mp.yml
+    - kas/inc/stm32mp.yml
+
+machine: stm32mp-t1000-multi
+target:
+  - image-ktn
+  - image-ktn-swu
+  - swupdate-img
+  - image-ktn-qt
+  - image-ktn-qt-swu
+  - swupdate-img-qt

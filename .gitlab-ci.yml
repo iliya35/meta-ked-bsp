@@ -7,41 +7,26 @@ stages:
   - build
 
 # Build Yocto BSPs
-bsp-mx8mm:build:
-  extends: .yocto-build-template
-  variables:
-    KAS_CONFIG: kas/ktn-mx8mm.yml
+.build-matrix: &build-matrix
+  - PLATFORM: mx8mm
+    YOCTO_SERIES: dunfell
+  - PLATFORM: mx6ul
+    YOCTO_SERIES: dunfell
+  - PLATFORM: mp1
+    YOCTO_SERIES: dunfell
 
-bsp-mx6ul:build:
+bsp:build:
   extends: .yocto-build-template
+  parallel:
+    matrix:
+      *build-matrix
   variables:
-    KAS_CONFIG: kas/ktn-mx6ul.yml
-
-bsp-mp1:build:
-  extends: .yocto-build-template
-  variables:
-    KAS_CONFIG: kas/ktn-mp1.yml
-
-bsp-mx8mm:build-head:
-  extends: .yocto-build-template
+    KAS_CONFIG: "kas/ktn-${PLATFORM}.yml:kas/series/${YOCTO_SERIES}.yml"
   rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-  variables:
-    KAS_CONFIG: kas/ktn-mx8mm.yml
-
-bsp-mx6ul:build-head:
-  extends: .yocto-build-template
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-  variables:
-    KAS_CONFIG: kas/ktn-mx6ul.yml
-
-bsp-mp1:build-head:
-  extends: .yocto-build-template
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-  variables:
-    KAS_CONFIG: kas/ktn-mp1.yml
+    - if: $HEAD_BUILD == "1"
+      variables:
+        KAS_CONFIG: "${KAS_CONFIG}:kas/dev/head.yml"
+    - when: always
 
 # Build Container Image
 .container-vars: &container-vars

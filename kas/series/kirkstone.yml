@@ -1,0 +1,28 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+  includes:
+    - kas/inc/common.yml
+
+env:
+  YOCTO_SERIES: kirkstone
+
+repos:
+  poky:
+    refspec: c4e08719a782fd4119eaf643907b80cebf57f88f
+  meta-openembedded:
+    refspec: 50d4a8d2a983a68383ef1ffec2c8e21adf0c1a79
+  meta-qt5:
+    refspec: c22b8fac9ca18687c3a163807dd74853101945a8
+  meta-swupdate:
+    refspec: f27a63f42d124676a07401462b1c4a64f38b768b
+  meta-python2:
+    refspec: f02882e2aa9279ca7becca8d0cedbffe88b5a253
+  meta-arm:
+    refspec: 904f8e82c2772986fad500af4f72f5211a7ff831
+  meta-freescale:
+    refspec: 7123a9c0cf3f74fc13873028f108ed4bc439c5f2
+  meta-st-stm32mp:
+    refspec: ca501bd7dbe023682903ceedddaacd940b0898f4
