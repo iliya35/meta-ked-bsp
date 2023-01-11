@@ -1,7 +1,7 @@
 DESCRIPTION = "A demo webapp to provide a simple dynamic website via webserver"
 HOMEPAGE = ""
 LICENSE = "GPL-2.0"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
 
 RDEPENDS:${PN} = "lighttpd hostapd dnsmasq lighttpd-module-fastcgi lighttpd-module-redirect php-cgi"
 

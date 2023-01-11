@@ -1,5 +1,5 @@
 SUMMARY = "Marvell/NXP sdio8977 Kernel Module"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=aabffeed19e84f5c15020056b4c36d59"
 
 # Driver Release 16679 (Version C4X16679_V2)
@@ -26,4 +26,3 @@ KERNEL_MODULE_PROBECONF += "sd8xxx"
 # cal_data_cfg=none is necessary to use the calibration data stored on the module.
 # See PAN9026 Software Guide and driver manual for more information.
 module_conf_sd8xxx = "options sd8xxx drv_mode=7 fw_name=mrvl/sdsd8977_combo_v2.bin cal_data_cfg=none cfg80211_wext=0xf cfg80211_drcs=0"
-
