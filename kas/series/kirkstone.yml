@@ -15,11 +15,11 @@ defaults:
 
 repos:
   poky:
-    refspec: c4e08719a782fd4119eaf643907b80cebf57f88f
+    refspec: d3e378397395542179a8497fbff4b610f6f7e802
   meta-openembedded:
-    refspec: 50d4a8d2a983a68383ef1ffec2c8e21adf0c1a79
+    refspec: 1f31570d0795da90083d1dbf28127c90908e30ee
   meta-qt5:
-    refspec: c22b8fac9ca18687c3a163807dd74853101945a8
+    refspec: 44d44933200287f7d17cf6981af4b4a0961c308d
   meta-swupdate:
     refspec: f27a63f42d124676a07401462b1c4a64f38b768b
   meta-python2:
@@ -27,7 +27,7 @@ repos:
   meta-arm:
     refspec: 904f8e82c2772986fad500af4f72f5211a7ff831
   meta-freescale:
-    refspec: 7123a9c0cf3f74fc13873028f108ed4bc439c5f2
+    refspec: 3f5fc5810cfb7be61b487ade0a7ecfaeafa3d2aa
     patches:
       entrypoint-overwrite:
         path: patches/meta-freescale/0001-imx-base.inc-Make-UBOOT_ENTRYPOINT-overwriteable.patch
