@@ -14,6 +14,15 @@ UBOOT_IMAGE_DEPS = ""
 UBOOT_IMAGE_DEPS_mx8m = "virtual/trusted-firmware-a:do_deploy firmware-imx-8m:do_deploy"
 do_configure[depends] = "${UBOOT_IMAGE_DEPS}"
 
+do_compile:prepend:mx8m() {
+	for config in ${UBOOT_MACHINE}; do
+		install -D -m 0644 ${DEPLOY_DIR_IMAGE}/${TFA_BINARY} ${B}/${config}/bl31.bin
+	done
+	for ddr_firmware in ${DDR_FIRMWARE_NAME}; do
+		install -D -m 0644 ${DEPLOY_DIR_IMAGE}/${ddr_firmware} ${B}/${config}/${ddr_firmware}
+	done
+}
+
 # For i.MX8M, we need to pass the correct load address for the ATF to the
 # mkimage_fit_atf.sh script, by setting the ATF_LOAD_ADDR environment variable.
 EXTRA_OEMAKE:append:mx8m = " 'ATF_LOAD_ADDR=0x00920000'"
