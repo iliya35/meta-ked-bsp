@@ -25,7 +25,7 @@ bsp:build:
   rules:
     - if: $HEAD_BUILD == "1"
       variables:
-        KAS_CONFIG: "${KAS_CONFIG}:kas/dev/head.yml"
+        KAS_CONFIG: "${KAS_CONFIG}:kas/dev/head-${YOCTO_SERIES}.yml"
     - when: always
 
 # Build Container Image

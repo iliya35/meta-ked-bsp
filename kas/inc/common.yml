@@ -6,9 +6,11 @@ header:
 
 distro: ktn
 
+env:
+  SEMVER: 0.0.0-dev
+
 defaults:
   repos:
-    refspec: ${YOCTO_SERIES}
     patches:
       repo: yocto-ktn-bsp
 
@@ -58,12 +60,3 @@ repos:
   meta-st-stm32mp:
     url: http://github.com/STMicroelectronics/meta-st-stm32mp
     path: layers/meta-st-stm32mp
-
-env:
-  SEMVER: 0.0.0-dev
-
-local_conf_header:
-  set_semver:
-    DISTRO_VERSION = "${SEMVER}"
-  yocto_base_series: |
-    BASE_SERIES = "${YOCTO_SERIES}"

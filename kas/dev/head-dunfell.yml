@@ -1,0 +1,23 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+
+repos:
+  poky:
+    refspec: dunfell
+  meta-openembedded:
+    refspec: dunfell
+  meta-qt5:
+    refspec: dunfell
+  meta-swupdate:
+    refspec: dunfell
+  meta-python2:
+    refspec: dunfell
+  meta-arm:
+    refspec: dunfell
+  meta-freescale:
+    refspec: dunfell
+  meta-st-stm32mp:
+    refspec: dunfell
