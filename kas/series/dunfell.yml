@@ -15,21 +15,21 @@ defaults:
 
 repos:
   poky:
-    refspec: eb5651b44399737c7357a6a225676f695dace80e
+    refspec: fcaac4852d849692c4500a32d75df3aba984859b
     patches:
       license-compat:
         path: patches/poky/license-compat.patch
   meta-openembedded:
-    refspec: 7203130ed8b58c0df75cb72222ac2bcf546bce44
+    refspec: 7952135f650b4a754e2255f5aa03973a32344123
   meta-qt5:
-    refspec: c22b8fac9ca18687c3a163807dd74853101945a8
+    refspec: 1d1b19ff577835bf847152eed44d52e8267d9093
   meta-swupdate:
     refspec: c08ae4b515538baf7d07aa0c152ad78e482ecc3c
   meta-python2:
     refspec: b901080cf57d9a7f5476ab4d96e56c30db8170a8
   meta-arm:
-    refspec: 58dbad789d5fa0dc0283e16f1f6944210820d40b
+    refspec: d13be36099aff7ea2975a1a197564e2e801707a3
   meta-freescale:
-    refspec: ae2001935fdd7cf7ee7e3b8a4826d7b59202be6d
+    refspec: 325c08c0773a2f1c54d28ea8aeda7c3d110d88a3
   meta-st-stm32mp:
     refspec: 73632fb844b6ebbef2a9d2acc7cc4783083a14a3
