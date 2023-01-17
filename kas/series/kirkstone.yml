@@ -27,9 +27,6 @@ repos:
   meta-arm:
     refspec: 904f8e82c2772986fad500af4f72f5211a7ff831
   meta-freescale:
-    refspec: 3f5fc5810cfb7be61b487ade0a7ecfaeafa3d2aa
-    patches:
-      entrypoint-overwrite:
-        path: patches/meta-freescale/0001-imx-base.inc-Make-UBOOT_ENTRYPOINT-overwriteable.patch
+    refspec: a2881a7a5d9ed753f53c7721cc2e7bb9ba637bcd
   meta-st-stm32mp:
     refspec: ca501bd7dbe023682903ceedddaacd940b0898f4
