@@ -2,6 +2,27 @@ inherit userfs-settings
 
 IMAGE_INSTALL += "mount-userfs-partition"
 
+parse_userfs_list() {
+    bbnote "Processing ${1}"
+    image_userfs_partition_name=$(echo ${1} | cut -d':' -sf1)
+    image_userfs_dir=$(echo ${1} | cut -d':' -sf2)
+    image_userfs_name=$(echo ${1} | cut -d':' -sf3)
+    image_userfs="${IMAGE_USERFS}${image_userfs_partition_name}"
+    image_userfs_src="${IMAGE_ROOTFS}${image_userfs_dir}"
+
+    [ -z "${image_userfs_partition_name}" ] && \
+        bbfatal "Configuration error: No partition entry found in '${1}'"
+    [ -z "${image_userfs_dir}" ] && \
+        bbfatal "Configuration error: No mountpoint entry found in '${1}'"
+    [ -z "${image_userfs_name}" ] && \
+        bbfatal "Configuration error: No package entry found in '${1}'"
+
+    bbnote "Partname  : ${image_userfs_partition_name}"
+    bbnote "Mountpoint: ${image_userfs_dir}"
+    bbnote "Package   : ${image_userfs_name}"
+    bbnote "Workdir   : ${image_userfs}"
+}
+
 fakeroot do_userfs() {
     if [ ${IMAGE_CREATE_USERFS} -eq 0 ]; then
         exit 0
@@ -10,41 +31,27 @@ fakeroot do_userfs() {
     # Check basic configuration
     if [ -z "${IMAGE_USERFS_MOUNT_LIST}" -a -z "${IMAGE_USERFS_LIST}" ]; then
         bbfatal "Please set either IMAGE_USERFS_MOUNT_LIST or IMAGE_USERFS_LIST with expected partition labels and mount point."
-        exit 0
     fi
 
     # Generate images
-    for part in ${IMAGE_USERFS_LIST}; do
-        bbnote "Processing ${part}"
-        image_userfs_partition_name=$(echo ${part} | cut -d':' -sf1)
-        image_userfs_dir=$(echo ${part} | cut -d':' -sf2)
-        image_userfs_name=$(echo ${part} | cut -d':' -sf3)
-        image_userfs="${IMAGE_USERFS}/${image_userfs_partition_name}"
+    for userfs in ${IMAGE_USERFS_LIST}; do
+        parse_userfs_list $userfs
 
-        [ -z "${image_userfs_partition_name}" ] && bbfatal "Configuration error: No partition entry found in ${part}"
-        [ -z "${image_userfs_dir}" ] && bbfatal "Configuration error: No mountpoint entry found in ${part}"
-        [ -z "${image_userfs_name}" ] && bbfatal "Configuration error: No package entry found in ${part}"
-
-        bbnote "Partname  : ${image_userfs_partition_name}"
-        bbnote "Mountpoint: ${image_userfs_dir}"
-        bbnote "Package   : ${image_userfs_name}"
-        bbnote "Workdir   : ${image_userfs}"
-
-        if [ ! -d ${IMAGE_ROOTFS}${image_userfs_dir} ]; then
+        if [ ! -d ${image_userfs_src} ]; then
             if test "${IMAGE_USERFS_CREATE}" != "1"; then
-                bberror "${image_userfs_partition_name} directory ${IMAGE_ROOTFS}${IMAGE_USERFS_DIR} does not exist"
+                bberror "${image_userfs_partition_name} directory ${image_userfs_src} does not exist"
                 exit 0
             else
-                mkdir -p "${IMAGE_ROOTFS}${image_userfs_dir}"
+                mkdir -p "${image_userfs_src}"
             fi
         fi
 
-        if test -z "$(ls ${IMAGE_ROOTFS}${image_userfs_dir}/)"; then
+        if test -z "$(ls ${image_userfs_src}/)"; then
             if test "${IMAGE_USERFS_CREATE}" != "1"; then
-                bberror "${image_userfs_partition_name} directory ${IMAGE_ROOTFS}${image_userfs_dir} is empty"
+                bberror "${image_userfs_partition_name} directory ${image_userfs_src} is empty"
                 exit 0
             else
-                touch "${IMAGE_ROOTFS}${image_userfs_dir}/dummy"
+                touch "${image_userfs_src}/dummy"
             fi
         fi
 
