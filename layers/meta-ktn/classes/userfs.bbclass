@@ -112,4 +112,4 @@ fakeroot do_userfs() {
 }
 
 addtask userfs after do_rootfs before do_image_qa
-userfs[depends] += "virtual/fakeroot-native:do_populate_sysroot"
+do_userfs[depends] += "virtual/fakeroot-native:do_populate_sysroot"
