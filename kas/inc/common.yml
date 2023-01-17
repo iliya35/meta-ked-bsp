@@ -14,6 +14,10 @@ defaults:
     patches:
       repo: meta-kontron
 
+local_conf_header:
+  dev-build: |
+    EXTRA_IMAGE_FEATURES = "debug-tweaks"
+
 repos:
   # Add base repo, so we can use it as base for patch files
   meta-kontron:

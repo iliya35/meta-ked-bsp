@@ -1,0 +1,9 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+
+local_conf_header:
+  dev-build: |
+    EXTRA_IMAGE_FEATURES = ""
