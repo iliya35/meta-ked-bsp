@@ -33,7 +33,7 @@ fakeroot do_userfs() {
         bbfatal "Please set either IMAGE_USERFS_MOUNT_LIST or IMAGE_USERFS_LIST with expected partition labels and mount point."
     fi
 
-    # Generate images
+    # Copy userfs files
     for userfs in ${IMAGE_USERFS_LIST}; do
         parse_userfs_list $userfs
 
@@ -58,40 +58,31 @@ fakeroot do_userfs() {
         mkdir ${image_userfs}
         cp -r ${IMAGE_ROOTFS}${image_userfs_dir}/* ${image_userfs}
         rm -rf ${IMAGE_ROOTFS}${image_userfs_dir}/*
+    done
+}
 
-        if [ -e ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ];then
+do_image_userfs() {
+    for userfs in ${IMAGE_USERFS_LIST}; do
+        parse_userfs_list $userfs
+
+        if [ -e ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ]; then
             rm -r ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz
         fi
         ( cd ${image_userfs}; tar cvfz ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ./* )
 
     done
+}
 
-    # Here we generate the mount-userfs-partition.conf file
-    # So it is not a part of the mount-userfs-partition package. The reason for that is, that
-    # if it is generated in the package recipe, the image configuration is contained in this
-    # package. But this is not valid! The image configuration belongs to the image recipe.
-    # There might be cases where mount-userfs-partition is used in different images. So this
-    # Recipe should have different contents, but the same version. This is also not handled
-    # by yocto!
-
+do_userfs_mounts() {
     # use a shell variable
     image_userfs_mount_list="${IMAGE_USERFS_MOUNT_LIST}"
 
     if [ -z "${image_userfs_mount_list}" ]; then
-        # generate defaul list
-        bbnote "IMAGE_USERFS_IMAGE_LIST is empty. Generate defaults from ${IMAGE_USERFS_LIST}"
-        for part in ${IMAGE_USERFS_LIST}; do
-
-            partname=$(echo ${part} | cut -d':' -sf1)
-            mountpoint=$(echo ${part} | cut -d':' -sf2)
-            archive=$(echo ${part} | cut -d':' -sf3)
-            [ -z "${partname}" ] && bbfatal "Configuration error: No partition entry found in ${part}"
-            [ -z "${mountpoint}" ] && bbfatal "Configuration error: No mountpoint entry found in ${part}"
-            [ -z "${archive}" ] && bbfatal "Configuration error: No archive entry found in ${part}"
-            image_userfs_mount_list="${image_userfs_mount_list}${partname},${mountpoint} "
-            bbnote "partname ${partname}"
-            bbnote "mountpoint ${mountpoint}"
-            bbnote "archive ${archive}"
+        # generate default list
+        bbnote "IMAGE_USERFS_IMAGE_LIST is empty. Generate defaults from \${IMAGE_USERFS_LIST}"
+        for userfs in ${IMAGE_USERFS_LIST}; do
+            parse_userfs_list $userfs
+            image_userfs_mount_list="${image_userfs_mount_list} ${image_userfs_partition_name},${image_userfs_dir}"
             bbnote "image_userfs_mount_list ${image_userfs_mount_list}"
         done
     fi
@@ -106,13 +97,15 @@ fakeroot do_userfs() {
     done
 
     # write image config file
-    echo "MOUNT_PARTITIONS_LIST=\"${image_userfs_mount_list}\"" > ${WORKDIR}/mount-userfs-partition.conf
+    echo "MOUNT_PARTITIONS_LIST=\"${image_userfs_mount_list}\"" > ${WORKDIR}${IMAGE_USERFS_MOUNT_CONF}
     install -d ${IMAGE_ROOTFS}/${sysconfdir}
 
     # extend rootfs with config file
-    install -m 644 ${WORKDIR}/mount-userfs-partition.conf ${IMAGE_ROOTFS}${sysconfdir}/
+    install -m 644 ${WORKDIR}${IMAGE_USERFS_MOUNT_CONF} ${IMAGE_ROOTFS}${sysconfdir}/
 }
 
 addtask userfs after do_rootfs before do_image_qa
+addtask image_userfs after do_userfs before do_image_qa
+addtask userfs_mounts after do_image_userfs before do_image_qa
 do_userfs[depends] += "virtual/fakeroot-native:do_populate_sysroot"
 do_userfs[cleandirs] = "${IMAGE_USERFS}"

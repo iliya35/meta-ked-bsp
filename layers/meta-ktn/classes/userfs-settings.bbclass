@@ -17,6 +17,9 @@ IMAGE_USERFS_NAME ?= "${IMAGE_BASENAME}-${IMAGE_USERFS_PARTITION_NAME}-${MACHINE
 # userfs working directory
 IMAGE_USERFS = "${WORKDIR}/userfs-class/"
 
+# name of mount configuration file
+IMAGE_USERFS_MOUNT_CONF = "mount-userfs-partition.conf"
+
 # the name for the userfs partition
 IMAGE_USERFS_PARTITION_NAME ?= "userfs"
 
