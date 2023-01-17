@@ -28,5 +28,8 @@ repos:
     refspec: 904f8e82c2772986fad500af4f72f5211a7ff831
   meta-freescale:
     refspec: 7123a9c0cf3f74fc13873028f108ed4bc439c5f2
+    patches:
+      entrypoint-overwrite:
+        path: patches/meta-freescale/0001-imx-base.inc-Make-UBOOT_ENTRYPOINT-overwriteable.patch
   meta-st-stm32mp:
     refspec: ca501bd7dbe023682903ceedddaacd940b0898f4

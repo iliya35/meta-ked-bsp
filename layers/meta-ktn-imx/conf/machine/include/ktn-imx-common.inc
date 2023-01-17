@@ -22,7 +22,6 @@ IMAGE_BOOT_FILES = " \
 
 UBOOT_CONFIG = "${MACHINE}"
 
-UBOOT_ENTRYPOINT = "${UBOOT_LOADADDRESS}"
 UBOOT_INITIAL_ENV = "u-boot-initial-env"
 
 SOC_DEFAULT_IMAGE_FSTYPES = "wic.gz wic.bmap tar.gz"
