@@ -12,11 +12,11 @@ env:
 defaults:
   repos:
     patches:
-      repo: yocto-ktn-bsp
+      repo: meta-kontron
 
 repos:
   # Add base repo, so we can use it as base for patch files
-  yocto-ktn-bsp:
+  meta-kontron:
     layers:
       layer-path: disabled
   meta-ktn:
