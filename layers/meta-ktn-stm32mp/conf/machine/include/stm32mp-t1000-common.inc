@@ -10,7 +10,7 @@ PREFERRED_PROVIDER_virtual/kernel ?= "linux-stm32mp"
 #PREFERRED_VERSION_linux-stm32mp ?= "5.10"
 PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot-stm32mp"
 #PREFERRED_VERSION_u-boot-stm32mp ?= "2020.10"
-PREFERRED_PROVIDER_virtual/trusted-firmware-a ?= "tf-a-stm32mp"
+PREFERRED_PROVIDER_virtual/trusted-firmware-a ?= "tf-a-stm32mp-ktn"
 PREFERRED_VERSION_trusted-firmware-a ?= "2.4"
 
 include conf/machine/include/st-machine-common-stm32mp.inc
@@ -41,8 +41,8 @@ ST_USERFS   = "0"
 # Improve build speed
 ENABLE_IMAGE_LICENSE_SUMMARY = "0"
 
-# Currently fib is not supported
-MACHINE_FEATURES:remove = "fip"
+# Remove unsupported machine features
+MACHINE_FEATURES:remove = "fip fw-update"
 
 # =========================================================================
 # Machine specific software packages
@@ -100,12 +100,13 @@ SERIAL_CONSOLES = "115200;ttySTM0"
 SERIAL_CONSOLE = "115200 ttySTM0"
 
 # What should be built alongside this image
-EXTRA_IMAGEDEPENDS += "tf-a-stm32mp"
+EXTRA_IMAGEDEPENDS += "tf-a-stm32mp-ktn"
 EXTRA_IMAGEDEPENDS += "u-boot-stm32mp"
 
 # Chip architecture
 DEFAULTTUNE = "cortexa7thf-neon-vfpv4"
 include conf/machine/include/tune-cortexa7.inc
+include conf/machine/include/arm/armv7a/tune-cortexa7.inc
 
 # Kernel settings
 ST_KERNEL_LOADADDR   = "0xC2000040"

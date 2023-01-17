@@ -1,0 +1,23 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+
+repos:
+  poky:
+    refspec: kirkstone
+  meta-openembedded:
+    refspec: kirkstone
+  meta-qt5:
+    refspec: kirkstone
+  meta-swupdate:
+    refspec: kirkstone
+  meta-python2:
+    refspec: kirkstone
+  meta-arm:
+    refspec: kirkstone
+  meta-freescale:
+    refspec: kirkstone
+  meta-st-stm32mp:
+    refspec: kirkstone

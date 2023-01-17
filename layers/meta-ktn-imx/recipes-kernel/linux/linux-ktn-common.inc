@@ -1,6 +1,6 @@
 SUMMARY = "The Linux kernel with Kontron patches and hardware support"
 DESCRIPTION = ""
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 
 inherit kernel
 
@@ -27,4 +27,4 @@ DEPENDS += "lzop-native bc-native"
 
 KBRANCH = "${SRCBRANCH}"
 
-COMPATIBLE_MACHINE = "(imx)"
+COMPATIBLE_MACHINE = "(ktn-imx|imx-mainline-bsp)"

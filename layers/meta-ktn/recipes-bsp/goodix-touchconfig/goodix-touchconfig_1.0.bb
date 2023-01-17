@@ -1,7 +1,7 @@
 DESCRIPTION = "Generates configuration file for Goodix TS and puts it in rootfs for driver to load"
 
 LICENSE = "GPL-2.0"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
