@@ -3,74 +3,74 @@ inherit userfs-settings
 IMAGE_INSTALL += "mount-userfs-partition"
 
 fakeroot do_userfs() {
-	if [ ${IMAGE_CREATE_USERFS} -eq 0 ]; then
-		exit 0
-	fi
+    if [ ${IMAGE_CREATE_USERFS} -eq 0 ]; then
+        exit 0
+    fi
 
-	# Check basic configuration
-	if [ -z "${IMAGE_USERFS_MOUNT_LIST}" -a -z "${IMAGE_USERFS_LIST}" ]; then
+    # Check basic configuration
+    if [ -z "${IMAGE_USERFS_MOUNT_LIST}" -a -z "${IMAGE_USERFS_LIST}" ]; then
         bbfatal "Please set either IMAGE_USERFS_MOUNT_LIST or IMAGE_USERFS_LIST with expected partition labels and mount point."
         exit 0
     fi
 
-	# Generate images
-	for part in ${IMAGE_USERFS_LIST}; do
-		bbnote "Processing ${part}"
-		image_userfs_partition_name=$(echo ${part} | cut -d':' -sf1)
-		image_userfs_dir=$(echo ${part} | cut -d':' -sf2)
-		image_userfs_name=$(echo ${part} | cut -d':' -sf3)
-		image_userfs="${IMAGE_ROOTFS}/../userfs.bbclass/${image_userfs_partition_name}"
-		
-		[ -z "${image_userfs_partition_name}" ] && bbfatal "Configuration error: No partition entry found in ${part}"
-		[ -z "${image_userfs_dir}" ] && bbfatal "Configuration error: No mountpoint entry found in ${part}"
-		[ -z "${image_userfs_name}" ] && bbfatal "Configuration error: No package entry found in ${part}"
+    # Generate images
+    for part in ${IMAGE_USERFS_LIST}; do
+        bbnote "Processing ${part}"
+        image_userfs_partition_name=$(echo ${part} | cut -d':' -sf1)
+        image_userfs_dir=$(echo ${part} | cut -d':' -sf2)
+        image_userfs_name=$(echo ${part} | cut -d':' -sf3)
+        image_userfs="${IMAGE_ROOTFS}/../userfs.bbclass/${image_userfs_partition_name}"
 
-		bbnote "Partname  : ${image_userfs_partition_name}"
-		bbnote "Mountpoint: ${image_userfs_dir}"
-		bbnote "Package   : ${image_userfs_name}"
-		bbnote "Workdir   : ${image_userfs}"
+        [ -z "${image_userfs_partition_name}" ] && bbfatal "Configuration error: No partition entry found in ${part}"
+        [ -z "${image_userfs_dir}" ] && bbfatal "Configuration error: No mountpoint entry found in ${part}"
+        [ -z "${image_userfs_name}" ] && bbfatal "Configuration error: No package entry found in ${part}"
 
-		if [ -d ${image_userfs} ]; then
-			rm -rf ${image_userfs}/*
-		else
-			mkdir -p ${image_userfs}
-		fi
+        bbnote "Partname  : ${image_userfs_partition_name}"
+        bbnote "Mountpoint: ${image_userfs_dir}"
+        bbnote "Package   : ${image_userfs_name}"
+        bbnote "Workdir   : ${image_userfs}"
 
-		if [ ! -d ${IMAGE_ROOTFS}${image_userfs_dir} ]; then
-			if test "${IMAGE_USERFS_CREATE}" != "1"; then
-				bberror "${image_userfs_partition_name} directory ${IMAGE_ROOTFS}${IMAGE_USERFS_DIR} does not exist"
-				exit 0
-			else
-				mkdir -p "${IMAGE_ROOTFS}${image_userfs_dir}"
-			fi
-		fi
+        if [ -d ${image_userfs} ]; then
+            rm -rf ${image_userfs}/*
+        else
+            mkdir -p ${image_userfs}
+        fi
 
-		if test -z "$(ls ${IMAGE_ROOTFS}${image_userfs_dir}/)"; then
-			if test "${IMAGE_USERFS_CREATE}" != "1"; then
-				bberror "${image_userfs_partition_name} directory ${IMAGE_ROOTFS}${image_userfs_dir} is empty"
-				exit 0
-			else
-				touch "${IMAGE_ROOTFS}${image_userfs_dir}/dummy"
-			fi
-		fi
+        if [ ! -d ${IMAGE_ROOTFS}${image_userfs_dir} ]; then
+            if test "${IMAGE_USERFS_CREATE}" != "1"; then
+                bberror "${image_userfs_partition_name} directory ${IMAGE_ROOTFS}${IMAGE_USERFS_DIR} does not exist"
+                exit 0
+            else
+                mkdir -p "${IMAGE_ROOTFS}${image_userfs_dir}"
+            fi
+        fi
 
-		cp -r ${IMAGE_ROOTFS}${image_userfs_dir}/* ${image_userfs}
-		rm -rf ${IMAGE_ROOTFS}${image_userfs_dir}/*
+        if test -z "$(ls ${IMAGE_ROOTFS}${image_userfs_dir}/)"; then
+            if test "${IMAGE_USERFS_CREATE}" != "1"; then
+                bberror "${image_userfs_partition_name} directory ${IMAGE_ROOTFS}${image_userfs_dir} is empty"
+                exit 0
+            else
+                touch "${IMAGE_ROOTFS}${image_userfs_dir}/dummy"
+            fi
+        fi
 
-		if [ -e ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ];then
-			rm -r ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz
-		fi
-		( cd ${image_userfs}; tar cvfz ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ./* )
+        cp -r ${IMAGE_ROOTFS}${image_userfs_dir}/* ${image_userfs}
+        rm -rf ${IMAGE_ROOTFS}${image_userfs_dir}/*
 
-	done
+        if [ -e ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ];then
+            rm -r ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz
+        fi
+        ( cd ${image_userfs}; tar cvfz ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ./* )
 
-	# Here we generate the mount-userfs-partition.conf file
-	# So it is not a part of the mount-userfs-partition package. The reason for that is, that
-	# if it is generated in the package recipe, the image configuration is contained in this
-	# package. But this is not valid! The image configuration belongs to the image recipe.
-	# There might be cases where mount-userfs-partition is used in different images. So this
-	# Recipe should have different contents, but the same version. This is also not handled
-	# by yocto!
+    done
+
+    # Here we generate the mount-userfs-partition.conf file
+    # So it is not a part of the mount-userfs-partition package. The reason for that is, that
+    # if it is generated in the package recipe, the image configuration is contained in this
+    # package. But this is not valid! The image configuration belongs to the image recipe.
+    # There might be cases where mount-userfs-partition is used in different images. So this
+    # Recipe should have different contents, but the same version. This is also not handled
+    # by yocto!
 
     # use a shell variable
     image_userfs_mount_list="${IMAGE_USERFS_MOUNT_LIST}"
@@ -105,9 +105,9 @@ fakeroot do_userfs() {
 
     # write image config file
     echo "MOUNT_PARTITIONS_LIST=\"${image_userfs_mount_list}\"" > ${WORKDIR}/mount-userfs-partition.conf
-	install -d ${IMAGE_ROOTFS}/${sysconfdir}
+    install -d ${IMAGE_ROOTFS}/${sysconfdir}
 
-	# extend rootfs with config file
+    # extend rootfs with config file
     install -m 644 ${WORKDIR}/mount-userfs-partition.conf ${IMAGE_ROOTFS}${sysconfdir}/
 }
 
