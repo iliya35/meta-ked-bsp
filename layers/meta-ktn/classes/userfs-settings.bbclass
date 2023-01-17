@@ -29,10 +29,16 @@ IMAGE_USERFS_DIR ?= "/usr/local"
 # create userfs if it not already exists
 IMAGE_USERFS_CREATE ?= "1"
 
+# image types to create (tar.gz and/or ext4)
+IMAGE_USERFS_TYPES ?= "tar.gz"
+
+# Size of the generated ext4 partition image in KiB
+IMAGE_USERFS_SIZE ?= "100000"
+
 # Normally let this list empty. With an empty value it is automatically generated out of
 # IMAGE_USERFS_LIST. In very rare cases when the directory and mount point differs, this
 # list can be adapted to your needs.
 IMAGE_USERFS_MOUNT_LIST ?= ""
 
-# list of all configurations of IMAGE_DIR:IMAGE_PARTITION_NAME:IMAGE_NAME
-IMAGE_USERFS_LIST ?= "${IMAGE_USERFS_PARTITION_NAME}:${IMAGE_USERFS_DIR}:${IMAGE_USERFS_NAME}"
+# list of all configurations of IMAGE_DIR:IMAGE_PARTITION_NAME:IMAGE_NAME:IMAGE_SIZE
+IMAGE_USERFS_LIST ?= "${IMAGE_USERFS_PARTITION_NAME}:${IMAGE_USERFS_DIR}:${IMAGE_USERFS_NAME}:${IMAGE_USERFS_SIZE}"

@@ -1,5 +1,6 @@
 inherit userfs-settings
 
+# install mount script in image
 IMAGE_INSTALL += "mount-userfs-partition"
 
 parse_userfs_list() {
@@ -7,6 +8,7 @@ parse_userfs_list() {
     image_userfs_partition_name=$(echo ${1} | cut -d':' -sf1)
     image_userfs_dir=$(echo ${1} | cut -d':' -sf2)
     image_userfs_name=$(echo ${1} | cut -d':' -sf3)
+    image_userfs_size=$(echo ${1} | cut -d':' -sf4)
     image_userfs="${IMAGE_USERFS}${image_userfs_partition_name}"
     image_userfs_src="${IMAGE_ROOTFS}${image_userfs_dir}"
 
@@ -16,6 +18,11 @@ parse_userfs_list() {
         bbfatal "Configuration error: No mountpoint entry found in '${1}'"
     [ -z "${image_userfs_name}" ] && \
         bbfatal "Configuration error: No package entry found in '${1}'"
+
+    if [ "$(echo ${IMAGE_USERFS_TYPES} | grep -w ext4)" != "" ]; then
+        [ -z "${image_userfs_size}" ] && \
+            bbfatal "Configuration error: No image size set in '${1}'"
+    fi
 
     bbnote "Partname  : ${image_userfs_partition_name}"
     bbnote "Mountpoint: ${image_userfs_dir}"
@@ -68,8 +75,35 @@ do_image_userfs() {
         if [ -e ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ]; then
             rm -r ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz
         fi
-        ( cd ${image_userfs}; tar cvfz ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ./* )
-
+        if [ -e ${IMGDEPLOYDIR}/${image_userfs_name}.ext4 ]; then
+            rm -r ${IMGDEPLOYDIR}/${image_userfs_name}.ext4
+        fi
+        (
+            cd ${image_userfs};
+            for type in "${IMAGE_USERFS_TYPES}"; do
+                case $type in
+                tar.gz)
+                    tar cvfz ${IMGDEPLOYDIR}/${image_userfs_name}.tar.gz ./*
+                    ;;
+                ext4)
+                    # If generating an empty image the size of the sparse block
+                    # should be large enough to allocate an ext4 filesystem
+                    # using 4096 bytes per inode, this is about 60K, so dd needs
+                    # a minimum count of 60, with bs=1024 (bytes per IO)
+                    eval local COUNT=\"0\"
+                    eval local MIN_COUNT=\"60\"
+                    if [ ${image_userfs_size} -lt $MIN_COUNT ]; then
+                        eval COUNT=\"$MIN_COUNT\"
+                    fi
+                    dd if=/dev/zero of=${IMGDEPLOYDIR}/${image_userfs_name}.ext4 seek=${image_userfs_size} count=$COUNT bs=1024
+                    mkfs.ext4 ${IMGDEPLOYDIR}/${image_userfs_name}.ext4 -d .
+                    # Error codes 0-3 indicate successfull operation of fsck
+                    # (no errors or errors corrected)
+                    fsck.ext4 -pvfD ${IMGDEPLOYDIR}/${image_userfs_name}.ext4 || [ $? -le 3 ]
+                    ;;
+                esac
+            done
+        )
     done
 }
 
@@ -108,4 +142,5 @@ addtask userfs after do_rootfs before do_image_qa
 addtask image_userfs after do_userfs before do_image_qa
 addtask userfs_mounts after do_image_userfs before do_image_qa
 do_userfs[depends] += "virtual/fakeroot-native:do_populate_sysroot"
+do_image_userfs[depends] += "e2fsprogs-native:do_populate_sysroot"
 do_userfs[cleandirs] = "${IMAGE_USERFS}"
