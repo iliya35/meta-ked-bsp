@@ -19,7 +19,7 @@ fakeroot do_userfs() {
         image_userfs_partition_name=$(echo ${part} | cut -d':' -sf1)
         image_userfs_dir=$(echo ${part} | cut -d':' -sf2)
         image_userfs_name=$(echo ${part} | cut -d':' -sf3)
-        image_userfs="${IMAGE_ROOTFS}/../userfs.bbclass/${image_userfs_partition_name}"
+        image_userfs="${IMAGE_USERFS}/${image_userfs_partition_name}"
 
         [ -z "${image_userfs_partition_name}" ] && bbfatal "Configuration error: No partition entry found in ${part}"
         [ -z "${image_userfs_dir}" ] && bbfatal "Configuration error: No mountpoint entry found in ${part}"
@@ -29,12 +29,6 @@ fakeroot do_userfs() {
         bbnote "Mountpoint: ${image_userfs_dir}"
         bbnote "Package   : ${image_userfs_name}"
         bbnote "Workdir   : ${image_userfs}"
-
-        if [ -d ${image_userfs} ]; then
-            rm -rf ${image_userfs}/*
-        else
-            mkdir -p ${image_userfs}
-        fi
 
         if [ ! -d ${IMAGE_ROOTFS}${image_userfs_dir} ]; then
             if test "${IMAGE_USERFS_CREATE}" != "1"; then
@@ -54,6 +48,7 @@ fakeroot do_userfs() {
             fi
         fi
 
+        mkdir ${image_userfs}
         cp -r ${IMAGE_ROOTFS}${image_userfs_dir}/* ${image_userfs}
         rm -rf ${IMAGE_ROOTFS}${image_userfs_dir}/*
 
@@ -113,3 +108,4 @@ fakeroot do_userfs() {
 
 addtask userfs after do_rootfs before do_image_qa
 do_userfs[depends] += "virtual/fakeroot-native:do_populate_sysroot"
+do_userfs[cleandirs] = "${IMAGE_USERFS}"

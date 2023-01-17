@@ -14,6 +14,9 @@
 IMAGE_CREATE_USERFS ?= "1"
 IMAGE_USERFS_NAME ?= "${IMAGE_BASENAME}-${IMAGE_USERFS_PARTITION_NAME}-${MACHINE}-${DISTRO_CODENAME}"
 
+# userfs working directory
+IMAGE_USERFS = "${WORKDIR}/userfs-class/"
+
 # the name for the userfs partition
 IMAGE_USERFS_PARTITION_NAME ?= "userfs"
 
