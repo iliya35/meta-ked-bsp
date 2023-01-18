@@ -11,7 +11,7 @@ SRC_URI = " \
     file://${BPN}.sh         \
     "
 
-inherit systemd update-rc.d userfs-settings
+inherit systemd update-rc.d
 
 INITSCRIPT_NAME = "${PN}.sh"
 INITSCRIPT_PARAMS = "start 22 5 3 ."
