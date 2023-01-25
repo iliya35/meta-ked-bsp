@@ -7,6 +7,7 @@ RUN wget https://github.com/GitTools/GitVersion/releases/download/5.9.0/gitversi
     rm -rf gitversion-linux-x64-5.9.0.tar.gz
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-        cifs-utils nfs-common && \
+        cifs-utils nfs-common jq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN pip install --upgrade python-gitlab
