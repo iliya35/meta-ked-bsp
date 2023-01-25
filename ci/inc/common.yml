@@ -7,6 +7,12 @@ variables:
       - "false"
       - "true"
     description: "Disable the build job and all subsequent jobs depending on it."
+  CONTAINER_BUILD_DISABLED:
+    value: "false"
+    options:
+      - "false"
+      - "true"
+    description: "Disable the container build job."
   HEAD_BUILD:
     value: "false"
     options:
