@@ -19,6 +19,10 @@ SRC_URI = " \
 
 S = "${WORKDIR}/git"
 
+# Fix missing gmp.h issues on kernel >= 5.8
+DEPENDS += "gmp-native"
+EXTRA_OEMAKE += "HOSTCXX="${BUILD_CXX} ${BUILD_CXXFLAGS} ${BUILD_LDFLAGS}""
+
 # We need to pass it as param since kernel might support more then one
 # machine, with different entry points
 KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"

@@ -4,7 +4,7 @@ include conf/machine/include/imx-base.inc
 
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-ktn"
 PREFERRED_PROVIDER_virtual/kernel_realtime ?= "linux-ktn-rt"
-PREFERRED_VERSION_linux-ktn ?= "5.10"
+PREFERRED_VERSION_linux-ktn ?= "6.1"
 PREFERRED_VERSION_linux-ktn-rt ?= "5.4"
 
 PREFERRED_PROVIDER_u-boot ?= "u-boot-ktn"

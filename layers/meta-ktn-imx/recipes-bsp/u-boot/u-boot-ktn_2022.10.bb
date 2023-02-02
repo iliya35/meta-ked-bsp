@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://Licenses/README;md5=2ca5f2c35c8cc335f0a19756634782f1"
 DEPENDS += "bc-native dtc-native gnutls-native"
 
 # v2022.10 + KTN Patches
-SRCREV = "64881a09dbd2efe3cba0d0582ac1963c33d62899"
+SRCREV = "a8b6ae1b3e1dedf112291bac6108ff8ec5c0de92"
 SRCBRANCH = "develop-v2022.10-ktn-imx"
 
 SRC_URI[md5sum] = "d86276b74616cc9945e38fc1412772c9"
