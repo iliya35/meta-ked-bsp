@@ -9,12 +9,17 @@ IMAGE_EXTRA_INSTALL += " \
 	alsa-utils-speakertest \
 	devmem2 \
 	glmark2 \
+	gstreamer1.0 \
+	gstreamer1.0-plugins-bad \
+	gstreamer1.0-plugins-base \
+	gstreamer1.0-plugins-good \
 	htop \
 	i2c-tools \
 	iotop \
 	iperf3 \
 	iptables \
 	iputils-ping \
+	libcamera \
 	libdrm-tests \
 	libegl-mesa \
 	libgles2-mesa \
@@ -30,4 +35,5 @@ IMAGE_EXTRA_INSTALL += " \
 	stress \
 	stress-ng \
 	sysbench \
+	v4l-utils \
 	"
