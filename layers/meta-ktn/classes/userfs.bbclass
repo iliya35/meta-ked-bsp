@@ -131,11 +131,11 @@ do_userfs_mounts() {
     done
 
     # write image config file
-    echo "MOUNT_PARTITIONS_LIST=\"${image_userfs_mount_list}\"" > ${WORKDIR}${IMAGE_USERFS_MOUNT_CONF}
+    echo "MOUNT_PARTITIONS_LIST=\"${image_userfs_mount_list}\"" > ${WORKDIR}/${IMAGE_USERFS_MOUNT_CONF}
     install -d ${IMAGE_ROOTFS}/${sysconfdir}
 
     # extend rootfs with config file
-    install -m 644 ${WORKDIR}${IMAGE_USERFS_MOUNT_CONF} ${IMAGE_ROOTFS}${sysconfdir}/
+    install -m 644 ${WORKDIR}/${IMAGE_USERFS_MOUNT_CONF} ${IMAGE_ROOTFS}${sysconfdir}/
 }
 
 addtask userfs after do_rootfs before do_image_qa
