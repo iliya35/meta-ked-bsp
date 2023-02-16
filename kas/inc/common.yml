@@ -35,6 +35,7 @@ repos:
     url: https://github.com/openembedded/meta-openembedded.git
     path: layers/meta-openembedded
     layers:
+      meta-multimedia:
       meta-networking:
       meta-oe:
       meta-python:
