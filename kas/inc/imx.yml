@@ -3,14 +3,16 @@
 
 header:
   version: 12
+  includes:
+    - kas/inc/common.yml
 
 repos:
-  meta-ktn-stm32mp:
+  meta-kontron:
     layers:
-      layer-path: disabled
+      layers/meta-ktn-stm32mp: excluded
   meta-st-stm32mp:
     layers:
-      layer-path: disabled
+      .: excluded
 
 local_conf_header:
   accept_eula:

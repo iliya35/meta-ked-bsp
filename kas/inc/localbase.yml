@@ -1,0 +1,12 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+
+repos:
+  meta-kontron:
+    layers:
+      layers/meta-ktn:
+      layers/meta-ktn-imx:
+      layers/meta-ktn-stm32mp:

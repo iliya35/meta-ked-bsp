@@ -3,8 +3,6 @@
 
 header:
   version: 12
-  includes:
-    - kas/inc/common.yml
 
 env:
   BASE_SERIES: dunfell
