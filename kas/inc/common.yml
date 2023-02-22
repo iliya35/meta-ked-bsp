@@ -3,6 +3,8 @@
 
 header:
   version: 12
+  includes:
+    - kas/inc/localbase.yml
 
 distro: ktn
 
@@ -19,12 +21,6 @@ local_conf_header:
     EXTRA_IMAGE_FEATURES = "debug-tweaks"
 
 repos:
-  # Add base repo, so we can use it as base for patch files
-  meta-kontron:
-    layers:
-      layer-path: disabled
-  meta-ktn:
-    path: layers/meta-ktn
   poky:
     url: "https://git.yoctoproject.org/git/poky"
     path: layers/poky
@@ -49,8 +45,6 @@ repos:
   meta-swupdate:
     url: https://github.com/sbabic/meta-swupdate
     path: layers/meta-swupdate
-  meta-ktn-imx:
-    path: layers/meta-ktn-imx
   meta-arm:
     url: https://git.yoctoproject.org/git/meta-arm
     path: layers/meta-arm
@@ -60,8 +54,6 @@ repos:
   meta-freescale:
     url: https://git.yoctoproject.org/git/meta-freescale
     path: layers/meta-freescale
-  meta-ktn-stm32mp:
-    path: layers/meta-ktn-stm32mp
   meta-st-stm32mp:
     url: http://github.com/STMicroelectronics/meta-st-stm32mp
     path: layers/meta-st-stm32mp

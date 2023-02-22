@@ -7,12 +7,12 @@ header:
     - kas/inc/common.yml
 
 repos:
-  meta-ktn-imx:
+  meta-kontron:
     layers:
-      layer-path: disabled
+      layers/meta-ktn-imx: excluded
   meta-arm:
     layers:
-      layer-path: disabled
+      .: excluded
   meta-freescale:
     layers:
-      layer-path: disabled
+      .: excluded
