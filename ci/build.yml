@@ -14,6 +14,9 @@ include:
   - PLATFORM: mx8mm
     YOCTO_SERIES: kirkstone
     TARGETS: "image-ked-qt"
+  - PLATFORM: mx8mp
+    YOCTO_SERIES: kirkstone
+    TARGETS: "image-ked-qt"
   - PLATFORM: mx6ul
     YOCTO_SERIES: kirkstone
     TARGETS: "image-ked-qt"
