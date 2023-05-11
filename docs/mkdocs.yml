@@ -1,0 +1,32 @@
+site_name: Kontron Electronics Docs - Meta Kontron
+
+repo_url: 'https://git.kontron-electronics.de/sw/ked/meta-kontron'
+docs_dir: src
+
+theme:
+  name: material
+  custom_dir: /ked-overrides
+  logo: assets/images/kontron.svg
+  favicon: assets/images/favicon.png
+  features:
+    - content.code.copy
+    - navigation.instant
+    - navigation.tracking
+
+extra_css:
+  - assets/stylesheets/snt-fonts.css
+  - assets/stylesheets/snt-colors.css
+
+markdown_extensions:
+ - admonition
+ - attr_list
+ - pymdownx.details
+ - pymdownx.highlight
+ - pymdownx.keys
+ - pymdownx.mark
+ - pymdownx.superfences
+
+nav:
+ - Prerequisites: prerequisites.md
+ - Build: build.md
+ - Customization: customization.md
