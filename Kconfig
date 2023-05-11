@@ -1,0 +1,60 @@
+mainmenu "Meta Kontron Build Configuration"
+
+choice
+    prompt "Hardware Platform"
+    default HW_IMX6UL
+
+config HW_IMX6UL
+    bool "Kontron Electronics SL/BL i.MX6UL/ULL"
+
+config HW_IMX8MM
+    bool "Kontron Electronics SL/BL/OSM i.MX8MM"
+
+endchoice
+
+choice
+    prompt "Yocto/OE Series"
+    default SERIES_KIRKSTONE
+
+config SERIES_DUNFELL
+    bool "Yocto Dunfell"
+
+config SERIES_KIRKSTONE
+    bool "Yocto Kirkstone"
+
+endchoice
+
+config HEAD_BUILD
+    bool "Use latest HEAD of all layers"
+
+config SHARED_CACHE
+    bool "Use a shared sstate cache mirror"
+
+config PRODUCTION
+    bool "Enable Production Build Options"
+
+config KAS_INCLUDE_HW
+    string
+    default "kas/ktn-mx6ul.yml" if HW_IMX6UL
+    default "kas/ktn-mx8mm.yml" if HW_IMX8MM
+
+config KAS_INCLUDE_SERIES
+    string
+    default "kas/series/dunfell.yml" if SERIES_DUNFELL
+    default "kas/series/kirkstone.yml" if SERIES_KIRKSTONE
+
+config KAS_INCLUDE_HEAD
+    string
+    default "kas/dev/head-dunfell.yml" if SERIES_DUNFELL && HEAD_BUILD
+    default "kas/dev/head-kirkstone.yml" if SERIES_KIRKSTONE && HEAD_BUILD
+    depends on PRODUCTION
+
+config KAS_INCLUDE_CACHE
+    string
+    default "kas/dev/shared-cache.yml"
+    depends on SHARED_CACHE
+
+config KAS_INCLUDE_PROD
+    string
+    default "kas/production.yml"
+    depends on PRODUCTION
