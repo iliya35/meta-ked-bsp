@@ -1,0 +1,48 @@
+
+variables:
+  TEST_TARGET: "image-ktn-test"
+  LG_CROSSBAR: "ws://testserver.local:20408/ws"
+
+.test-image-prepare:
+  script:
+    - TARGET_BASENAME=$(parse_bitbake_env $TEST_TARGET IMAGE_LINK_NAME)
+    - IMAGE_FILE="deploy/$BUILD_NAME/$DEPLOY_DIR_REL/$TARGET_BASENAME.wic"
+    - gunzip -f "$IMAGE_FILE.gz"
+
+.yocto-test-template:
+  stage: test
+  image: $CI_REGISTRY/sw/misc/infra/ci-testing/labgrid/client:latest
+  tags:
+    - test
+  variables:
+    LG_PLACE: place
+    WRITE_IMAGE_ARGS: ""
+  script:
+    - BASE_DIR=$(pwd)
+    - !reference [.parse-bbenv, script]
+    - DEPLOY_DIR_IMAGE=$(parse_bitbake_env $TEST_TARGET DEPLOY_DIR_IMAGE)
+    - DEPLOY_DIR=$(parse_bitbake_env $TEST_TARGET DEPLOY_DIR)
+    - DEPLOY_DIR_REL=${DEPLOY_DIR_IMAGE#*"$DEPLOY_DIR/"}
+    - !reference [.test-image-prepare, script]
+    - labgrid-client -p $LG_PLACE acquire
+    - labgrid-client -p $LG_PLACE sd-mux host
+    - labgrid-client -p $LG_PLACE write-image $WRITE_IMAGE_ARGS $IMAGE_FILE
+    - labgrid-client -p $LG_PLACE ssh sudo rm -r /var/cache/labgrid/root/
+    - labgrid-client -p $LG_PLACE sd-mux dut
+    - mkdir reports
+    - mkdir logs
+    - cd tests/
+    - pytest --lg-env=local.yaml --lg-log=../logs --lg-colored-steps --junitxml=../reports/report.xml -vv tests.py
+    - echo "Printing test log to the console:"
+    - cat ../logs/console_main
+  after_script:
+    - labgrid-client -p $LG_PLACE release
+  artifacts:
+    paths:
+      - reports/
+    reports:
+      junit: reports/*.xml
+  rules:
+    - if: $TESTING != "true"
+      when: never
+    - when: on_success

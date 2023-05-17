@@ -1,0 +1,24 @@
+include:
+  - '/ci/inc/test.yml'
+
+.vars:mx8mm: &vars-mx8mm
+  - PLATFORM: mx8mm
+    YOCTO_SERIES: kirkstone
+    TARGETS: "image-ked-test"
+
+.test-build-matrix:
+  parallel:
+    matrix:
+      *vars-mx8mm
+
+bsp:test:bl-mx8mm:
+  extends: .yocto-test-template
+  variables:
+    LG_PLACE: imx8mm
+    TEST_TARGET: "image-ked-test"
+    BUILD_NAME: mx8mm-kirkstone
+  needs:
+    - job: bsp:build:testing
+      parallel:
+        matrix:
+          *vars-mx8mm

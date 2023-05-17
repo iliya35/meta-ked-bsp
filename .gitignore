@@ -2,5 +2,7 @@ layers/*
 !layers/meta-ked
 !layers/meta-ked-imx
 !layers/meta-ked-stm32mp
+__pycache__
 .config.yaml*
 build/
+tests/*.xml

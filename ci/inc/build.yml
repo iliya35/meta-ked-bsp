@@ -96,6 +96,8 @@ variables:
     - if: $HEAD_BUILD == "true"
       variables:
         KAS_CONFIG: "${KAS_CONFIG}:${KAS_CONFIG_HEAD}"
+    - if: $TESTING == "true"
+      when: never
     - when: on_success
   script:
     - !reference [.scripts, ci-prep]
@@ -109,6 +111,19 @@ variables:
     reports:
        dotenv: ci.env
     expire_in: 3 days
+
+#
+# This is a template for the build release job that runs the build for the
+# requested targets. The resulting artifacts expire after some time.
+#
+.yocto-build-testing-template:
+  extends: .yocto-build-template
+  rules:
+    - if: $BUILD_DISABLED == "true"
+      when: never
+    - if: $TESTING != "true"
+      when: never
+    - when: on_success
 
 #
 # This is a template for the build release job that runs the build for the
