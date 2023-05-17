@@ -87,7 +87,7 @@ workflow:
     - !reference [.scripts, cache]
     - !reference [.scripts, kas]
   artifacts:
-    name: "$CI_PROJECT_NAME $CI_COMMIT_REF_NAME $MACHINE"
+    name: "$CI_PROJECT_NAME $CI_COMMIT_REF_NAME $PLATFORM $YOCTO_SERIES"
     paths:
       - build/tmp/deploy
       - build/env
