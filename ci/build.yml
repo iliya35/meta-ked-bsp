@@ -4,16 +4,22 @@ include:
 .build-matrix: &build-matrix
   - PLATFORM: mx8mm
     YOCTO_SERIES: dunfell
+    TARGETS: "image-ked-qt"
   - PLATFORM: mx6ul
     YOCTO_SERIES: dunfell
+    TARGETS: "image-ked"
   - PLATFORM: mp1
     YOCTO_SERIES: dunfell
+    TARGETS: "image-ked"
   - PLATFORM: mx8mm
     YOCTO_SERIES: kirkstone
+    TARGETS: "image-ked-qt"
   - PLATFORM: mx6ul
     YOCTO_SERIES: kirkstone
+    TARGETS: "image-ked"
   - PLATFORM: mp1
     YOCTO_SERIES: kirkstone
+    TARGETS: "image-ked"
 
 bsp:build:
   extends: .yocto-build-template

@@ -50,6 +50,7 @@ workflow:
   # runs bitbake for the given targets.
   #
   kas:
+    - export KAS_TARGET="$TARGETS"
     - kas build $KAS_CONFIG:kas/dev/shared-cache.yml
     - |
       if test "$BUILD_SDK" == "yes"; then
