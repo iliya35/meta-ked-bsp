@@ -50,6 +50,7 @@ workflow:
   # runs bitbake for the given targets.
   #
   kas:
+    - mkdir -p build/tmp/deploy/bbenv
     - export KAS_TARGET="$TARGETS"
     - kas build $KAS_CONFIG:kas/dev/shared-cache.yml
     - |
@@ -57,6 +58,14 @@ workflow:
         export KAS_TASK="$BUILD_SDK_TASK"
         kas build $KAS_CONFIG:kas/dev/shared-cache.yml
       fi
+    - |
+      for TARGET in $TARGETS
+      do
+        kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake $TARGET -e" > build/tmp/deploy/bbenv/$TARGET.env
+      done
+    - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/bootloader -e" > build/tmp/deploy/bbenv/bootloader.env
+    - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/kernel -e" > build/tmp/deploy/bbenv/kernel.env
+
 #
 # This is a template for the build job that runs the build for the requested
 # targets. The resulting artifacts expire after some time.
@@ -81,4 +90,5 @@ workflow:
     name: "$CI_PROJECT_NAME $CI_COMMIT_REF_NAME $MACHINE"
     paths:
       - build/tmp/deploy
+      - build/env
     expire_in: 3 days
