@@ -44,8 +44,9 @@ RDEPENDS:${PN}-autostart = "${PN}"
 FILES:${PN} = "/bin /usr /etc/sparkle.cfg "
 FILES:${PN}-autostart += " /etc "
 
-INITSCRIPT_NAME = "sparklesrv.sh"
-INITSCRIPT_PARAMS = "start 50 5 2 . "
+INITSCRIPT_PACKAGES = "${PN}-autostart"
+INITSCRIPT_NAME_${PN}-autostart = "sparklesrv.sh"
+INITSCRIPT_PARAMS_${PN}-autostart = "start 50 5 2 . "
 
 SYSTEMD_SERVICE:${PN} = "sparklesrv.service"
 

@@ -63,6 +63,7 @@ start_eglfs ()
 	elif test -z "${QT_QPA_PLATFORM}"; then
 		echo "Falling back to default platform (linuxfb)"
 		export QT_QPA_PLATFORM=linuxfb
+		export QT_QPA_FB_DRM=1
 	fi
 
 	if test "${QT_QPA_PLATFORM}" = "linuxfb"; then

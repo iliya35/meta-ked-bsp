@@ -12,7 +12,7 @@ BOOT_CONFIG2=0x03000010		# Use SPI NOR as fallback (eCSPI1, CS0)
 
 #Image Files
 SPL_BIN=flash.bin
-UBOOT_ENV=uboot-env-mx8mm.txt
+UBOOT_ENV=u-boot-initial-env-kontron-mx8mm
 ROOTFS_IMG=image-ktn-kontron-mx8mm.tar.gz
 BOOTFS_IMG=image-ktn-bootfs-kontron-mx8mm-ktn-dunfell.tar.gz	
 USERFS_IMG=image-ktn-userfs-kontron-mx8mm-ktn-dunfell.tar.gz

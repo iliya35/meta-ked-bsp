@@ -1,0 +1,10 @@
+# Configure which Qt application should be started
+
+# Simple Qt demo application
+APPLICATION=/usr/bin/gallery
+
+# Use software rendering (default)
+#QT_QPA_PLATFORM=linuxfb
+
+# Use GPU rendering
+#QT_QPA_PLATFORM=eglfs
