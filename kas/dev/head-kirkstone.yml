@@ -10,7 +10,7 @@ repos:
   meta-openembedded:
     refspec: kirkstone
   meta-qt5:
-    refspec: kirkstone
+    refspec: master
   meta-swupdate:
     refspec: kirkstone
   meta-python2:

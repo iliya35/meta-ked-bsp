@@ -10,7 +10,7 @@ repos:
   meta-openembedded:
     refspec: dunfell
   meta-qt5:
-    refspec: dunfell
+    refspec: master
   meta-swupdate:
     refspec: dunfell
   meta-python2:
