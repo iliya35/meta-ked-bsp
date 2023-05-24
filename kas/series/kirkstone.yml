@@ -13,18 +13,18 @@ defaults:
 
 repos:
   poky:
-    refspec: d3e378397395542179a8497fbff4b610f6f7e802
+    refspec: f53ab3a2ff206a130cdc843839dd0ea5ec4ad02f
   meta-openembedded:
-    refspec: 1f31570d0795da90083d1dbf28127c90908e30ee
+    refspec: 5f120a926b0fcd55cfe7565bb7ddf23661cad498
   meta-qt5:
-    refspec: 44d44933200287f7d17cf6981af4b4a0961c308d
+    refspec: cf6ffcbad5275a3428f6046468a0c9d572e813d1
   meta-swupdate:
-    refspec: f27a63f42d124676a07401462b1c4a64f38b768b
+    refspec: 22e9aee741bbeffe05dd942212f26d2cb9f5f5b7
   meta-python2:
     refspec: f02882e2aa9279ca7becca8d0cedbffe88b5a253
   meta-arm:
-    refspec: 904f8e82c2772986fad500af4f72f5211a7ff831
+    refspec: 96aad3b29aa7a5ee4df5cf617a6336e5218fa9bd
   meta-freescale:
-    refspec: a2881a7a5d9ed753f53c7721cc2e7bb9ba637bcd
+    refspec: 00b357a78a53de19e8fe44c0f2af710e993bc2e7
   meta-st-stm32mp:
     refspec: ca501bd7dbe023682903ceedddaacd940b0898f4
