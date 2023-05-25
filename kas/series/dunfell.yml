@@ -15,8 +15,10 @@ repos:
   poky:
     refspec: a540df3791eab49bbe3a2eee2647606f0b115039
     patches:
-      license-compat:
-        path: patches/poky/license-compat.patch
+      license-compat-1:
+        path: patches/poky/0001-licenses-Update-license-file-to-match-current-SPDX-n.patch
+      license-compat-2:
+        path: patches/poky/0002-licenses-Add-legacy-license-files-to-prevent-QA-erro.patch
   meta-openembedded:
     refspec: 116bfe8d5e5851e7fc5424f40da8691a19c5b5ee
   meta-qt5:
