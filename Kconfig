@@ -35,8 +35,8 @@ config PRODUCTION
 
 config KAS_INCLUDE_HW
     string
-    default "kas/ktn-mx6ul.yml" if HW_IMX6UL
-    default "kas/ktn-mx8mm.yml" if HW_IMX8MM
+    default "kas/ked-mx6ul.yml" if HW_IMX6UL
+    default "kas/ked-mx8mm.yml" if HW_IMX8MM
 
 config KAS_INCLUDE_SERIES
     string

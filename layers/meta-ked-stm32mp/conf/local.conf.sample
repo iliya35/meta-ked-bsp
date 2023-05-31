@@ -1,0 +1,230 @@
+#
+# This file is your local configuration file and is where all local user settings
+# are placed. The comments in this file give some guide to the options a new user
+# to the system might want to change but pretty much any configuration option can
+# be set in this file.
+#
+# This file sources some other configuration files:
+#
+# - sourcecode-version.conf
+#   This file is intended to set a common human readable version for the entire
+#   sourcecode configuration 
+# - user.conf
+#   This file can be used to set user specific settings like hostname or package
+#   repository URLs which might be different for each developer while working.
+#
+# Besides this, there is a file named EULA.conf which contains appropriate
+# variables to accept the EULA. This file is not included automatically to assure
+# the EULA acceptance is a dedicated action.
+#
+# Lines starting with the '#' character are commented out and in some cases the
+# default values are provided as comments to show people example syntax. Enabling
+# the option is a question of removing the # character and making any change to the
+# variable as required.
+
+CONF_VERSION = "1"
+
+# include version variables for source code
+include sourcecode-version.conf
+
+# =============================================
+# ######### MACHINE ###########################
+# =============================================
+# set a default MACHINE to build for
+# usually this is overriden by the environment variable MACHINE
+# (-m parameter of init-env exports MACHINE)
+
+MACHINE ?= "stm32mp-t1000-multi"
+#MACHINE ?= "stm32mp-t1000"
+#MACHINE ?= "stm32mp-t1001"
+#MACHINE ?= "stm32mp-t1002"
+#MACHINE ?= "stm32mp-t1004"
+#MACHINE ?= "stm32mp-t1005"
+#MACHINE ?= "stm32mp-t1006"
+#MACHINE ?= "stm32mp-t1007"
+
+# =============================================
+# ######### DISTRO ############################
+# =============================================
+# use our distro configuration from
+# layers/meta-ked/conf/distro/ktn.conf
+
+DISTRO = "ktn"
+
+# Package Management configuration
+PACKAGE_CLASSES ?= "package_deb"
+
+# Where to find the debian package server
+#DISTRO_FEED_URI = "http://192.168.1.1:8000/"
+
+# =============================================
+# ######### EXTRA FEATURES / ROOT PWD #########
+# =============================================
+# The EXTRA_IMAGE_FEATURES variable allows extra packages to be added to the generated
+# images. Some of these options are added to certain image types automatically. The
+# variable can contain the following options:
+#  "dbg-pkgs"       - add -dbg packages for all installed packages
+#                     (adds symbol information for debugging/profiling)
+#  "dev-pkgs"       - add -dev packages for all installed packages
+#                     (useful if you want to develop against libs in the image)
+#  "ptest-pkgs"     - add -ptest packages for all ptest-enabled packages
+#                     (useful if you want to run the package test suites)
+#  "tools-sdk"      - add development tools (gcc, make, pkgconfig etc.)
+#  "tools-debug"    - add debugging tools (gdb, strace)
+#  "eclipse-debug"  - add Eclipse remote debugging support
+#  "tools-profile"  - add profiling tools (oprofile, lttng, valgrind)
+#  "tools-testapps" - add useful testing tools (ts_print, aplay, arecord etc.)
+#  "debug-tweaks"   - make an image suitable for development
+#                     e.g. ssh root access has a blank password
+# There are other application targets that can be used here too, see
+# meta/classes/image.bbclass and meta/classes/core-image.bbclass for more details.
+# We default to enabling the debugging tweaks.
+
+EXTRA_IMAGE_FEATURES ?= "debug-tweaks tools-debug"
+
+# the default is to use the image feature `debug-tweaks` to remove the
+# root password and add some packages (gdbserver, ptool, nano, etc.)
+# remove it if you build a release image and set a root password
+# by setting ROOT_PWD to a hashed password (`openssl passwd -1 password`)
+# Note: you need to escape all '$' characters with '\' manually
+# Note: the default value below is 'root'
+
+#ROOT_PWD ?= "\$1\$/nrGReFp\$Emef9p70yRoahjHctKZ2p0"
+
+# =============================================
+# ######### SDK MACHINE #######################
+# =============================================
+# set a default SDKMACHINE
+# possible values are "i686" and "x86_64" to build an SDK for
+# 32-bit or 64-bit hosts respectively
+
+SDKMACHINE ?= "x86_64"
+
+# =============================================
+# ######### SPECIAL OPTIONS/OVERRIDES #########
+# =============================================
+# set special options via MACHINEOVERRIDES
+
+#MACHINEOVERRIDES .= ":option"
+
+# =============================================
+# ######### LICENSE / EULA RESTRICTIONS #######
+# =============================================
+# block/allow packages with certain licenses
+# (e.g. commercial)
+
+# Allowed license types
+LICENSE_FLAGS_WHITELIST += " non-commercial "
+LICENSE_FLAGS_WHITELIST += " commercial_gstreamer1.0-plugins-ugly commercial_gstreamer1.0-libav commercial_faac commercial_mpeg2dec "
+
+# Accept license agreement
+# Read the license files in conf/eula directory in meta-st-stm32mp layer before
+# accepting the license
+#ACCEPT_EULA_stm32mp-t1000-multi = "1"
+#ACCEPT_EULA_stm32mp-t1000 = "1"
+#ACCEPT_EULA_stm32mp-t1001 = "1"
+
+# =============================================
+# ######### CACHE / DOWNLOAD PATHS ############
+# =============================================
+# set default locations for downloads and the sstate cache
+
+DL_DIR ?= "${TOPDIR}/../downloads"
+SSTATE_DIR ?= "${TOPDIR}/../sstate-cache"
+
+# =============================================
+# ######### PARALLEL TASKS / THREADING ########
+# =============================================
+# depending on your build host you might want to tweak
+# the number of bitbake threads and parallel make tasks
+
+BB_NUMBER_THREADS ?= "${@oe.utils.cpu_count()*2}"
+PARALLEL_MAKE ?= "-j ${@oe.utils.cpu_count()}"
+
+# =============================================
+# ######### DISC SPACE MANAGEMENT #############
+# =============================================
+
+# Remove the old image before the new one generated to save disk space
+RM_OLD_IMAGE = "1"
+
+# Clean up working directory after build
+INHERIT += "rm_work"
+
+# Don't remove source of these recipes
+#RM_WORK_EXCLUDE += " linux-stm32mp "
+#RM_WORK_EXCLUDE += " u-boot-stm32mp "
+#RM_WORK_EXCLUDE += " tf-a-stm32mp "
+
+# Disk Space Monitoring during the build
+# Monitor the disk space during the build. If there is less that 1GB of space or less
+# than 100K inodes in any key build location (TMPDIR, DL_DIR, SSTATE_DIR), gracefully
+# shutdown the build. If there is less that 100MB or 1K inodes, perform a hard abort
+# of the build. The reason for this is that running completely out of space can corrupt
+# files and damages the build in ways which may not be easily recoverable.
+# It's necesary to monitor /tmp, if there is no space left the build will fail
+# with very exotic errors.
+BB_DISKMON_DIRS = "\
+    STOPTASKS,${TMPDIR},1G,100K \
+    STOPTASKS,${DL_DIR},1G,100K \
+    STOPTASKS,${SSTATE_DIR},1G,100K \
+    STOPTASKS,/tmp,100M,100K \
+    ABORT,${TMPDIR},100M,1K \
+    ABORT,${DL_DIR},100M,1K \
+    ABORT,${SSTATE_DIR},100M,1K \
+    ABORT,/tmp,10M,1K"
+
+# =============================================
+# ######### BSP DEVELOPMENT ###################
+# =============================================
+
+# Nice debug data
+#INHERIT += "buildhistory"
+#BUILDHISTORY_COMMIT = "1"
+
+# Support of devshell
+INHERIT += "devshell"
+
+# Additional image features
+# The following is a list of additional classes to use when building images which
+# enable extra features. Some available options which can be included in this variable
+# are:
+#   - 'buildstats' collect build statistics
+#   - 'image-mklibs' to reduce shared library files size for an image
+#   - 'image-prelink' in order to prelink the filesystem image
+# NOTE: if listing mklibs & prelink both, then make sure mklibs is before prelink
+# NOTE: mklibs also needs to be explicitly enabled for a given image, see local.conf.extended
+USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+
+# By default disable interactive patch resolution (tasks will just fail instead):
+PATCHRESOLVE = "noop"
+
+# Qemu configuration
+# By default qemu will build with a builtin VNC server where graphical output can be
+# seen. The two lines below enable the SDL backend too. By default libsdl-native will
+# be built, if you want to use your host's libSDL instead of the minimal libsdl built
+# by libsdl-native then uncomment the ASSUME_PROVIDED line below.
+PACKAGECONFIG:append:pn-qemu-native = " sdl"
+PACKAGECONFIG:append:pn-nativesdk-qemu = " sdl"
+#ASSUME_PROVIDED += "libsdl-native"
+
+# To generate debug image with all symbol
+#IMAGE_GEN_DEBUGFS = "1"
+
+# =============================================
+# ######### MISC ##############################
+# =============================================
+
+# Set GLIBC_GENERATE_LOCALES to the locales you wish to generate should you not
+# wish to perform the time-consuming step of generating all LIBC locales.
+# NOTE: If removing en_US.UTF-8 you will also need to uncomment, and set
+# appropriate value for IMAGE_LINGUAS.
+# WARNING: this may break localisation!
+GLIBC_GENERATE_LOCALES = "en_GB.UTF-8 en_US.UTF-8"
+IMAGE_LINGUAS ?= "en-gb"
+
+# Additional packages to install in image
+CORE_IMAGE_EXTRA_INSTALL = ""
+
+# include local user configuration
+include user.conf
