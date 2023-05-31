@@ -3,13 +3,13 @@
 ## Clone the BSP Repository
 
 First of all you need a local copy of the BSP repository. This can be either
-`meta-kontron` or a custom layer. This guide will use the public `meta-kontron`
+`meta-ked-bsp` or a custom layer. This guide will use the public `meta-ked-bsp`
 BSP repository to build images for our standard and demo hardware.
 
 ```
 cd ~
-git clone https://git.kontron-electronics.de/sw/ked/meta-kontron.git
-cd meta-kontron
+git clone https://git.kontron-electronics.de/sw/ked/meta-ked-bsp.git
+cd meta-ked-bsp
 ```
 
 ## Use the Menu to Configure (Recommended)
@@ -60,7 +60,7 @@ The following command produces the same result as when selecting the options
 "Kontron Electronics SL/BL/OSM i.MX8MM" and "Yocto Kirkstone" via the menu.
 
 ```
-kas-container build kas/ktn-mx8mm.yml:kas/series/kirkstone.yml
+kas-container build kas/ked-mx8mm.yml:kas/series/kirkstone.yml
 ```
 
 ## Using the `shell` Command

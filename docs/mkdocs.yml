@@ -1,6 +1,6 @@
 site_name: Kontron Electronics Docs - Meta Kontron
 
-repo_url: 'https://git.kontron-electronics.de/sw/ked/meta-kontron'
+repo_url: 'https://git.kontron-electronics.de/sw/ked/meta-ked-bsp'
 docs_dir: src
 
 theme:

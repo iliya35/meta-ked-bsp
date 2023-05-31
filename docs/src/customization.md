@@ -1,6 +1,6 @@
 # Customization
 
-If you develop your own BSP using `meta-kontron` as a base, it is recommended to
+If you develop your own BSP using `meta-ked-bsp` as a base, it is recommended to
 setup your own Git repository to track all changes.
 
 !!! note "Layer Naming"
@@ -19,22 +19,22 @@ git init
 ## Custom `kas` Configuration
 
 The first part of you new custom BSP repository should be a `kas` configuration
-file. A minimal example for a BSP based on `meta-kontron` looks like this:
+file. A minimal example for a BSP based on `meta-ked-bsp` looks like this:
 
 ```yaml title="custom.yaml"
 header:
   version: 12
   includes:
-    - repo: meta-kontron
+    - repo: meta-ked-bsp
       file: kas/inc/imx.yml
-    - repo: meta-kontron
+    - repo: meta-ked-bsp
       file: kas/series/kirkstone.yml
 
 repos:
-  meta-kontron:
-    url: https://git.kontron-electronics.de/sw/ked/meta-kontron.git
+  meta-ked-bsp:
+    url: https://git.kontron-electronics.de/sw/ked/meta-ked-bsp.git
     refspec: 6.0.0
-    path: layers/meta-kontron
+    path: layers/meta-ked-bsp
 
 machine: kontron-mx8mm
 target:
@@ -65,15 +65,15 @@ bitbake-layers create-layer /repo/layers/meta-custom
 
 The `bitbake-layers create-layer` command will tell you to use `bitbake-layers
 add-layer` to add an entry for your new layer in `bblayers.conf`. As we are
-letting `kas` manage the `bblayers-conf`, we will skip this step and instead
+letting `kas` manage the `bblayers.conf`, we will skip this step and instead
 edit our `kas` configuration.
 
 ```diff
  repos:
-   meta-kontron:
-     url: https://git.kontron-electronics.de/sw/ked/meta-kontron.git
+   meta-ked-bsp:
+     url: https://git.kontron-electronics.de/sw/ked/meta-ked-bsp.git
      refspec: 6.0.0
-     path: layers/meta-kontron
+     path: layers/meta-ked-bsp
 +  meta-custom:
 +    layers:
 +      layers/meta-custom:
