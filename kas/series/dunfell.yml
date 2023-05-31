@@ -13,21 +13,23 @@ defaults:
 
 repos:
   poky:
-    refspec: fcaac4852d849692c4500a32d75df3aba984859b
+    refspec: a540df3791eab49bbe3a2eee2647606f0b115039
     patches:
-      license-compat:
-        path: patches/poky/license-compat.patch
+      license-compat-1:
+        path: patches/poky/0001-licenses-Update-license-file-to-match-current-SPDX-n.patch
+      license-compat-2:
+        path: patches/poky/0002-licenses-Add-legacy-license-files-to-prevent-QA-erro.patch
   meta-openembedded:
-    refspec: 7952135f650b4a754e2255f5aa03973a32344123
+    refspec: 116bfe8d5e5851e7fc5424f40da8691a19c5b5ee
   meta-qt5:
-    refspec: 1d1b19ff577835bf847152eed44d52e8267d9093
+    refspec: cf6ffcbad5275a3428f6046468a0c9d572e813d1
   meta-swupdate:
-    refspec: c08ae4b515538baf7d07aa0c152ad78e482ecc3c
+    refspec: f996a2394822123e824149c28d29f7782518d9b8
   meta-python2:
     refspec: b901080cf57d9a7f5476ab4d96e56c30db8170a8
   meta-arm:
-    refspec: d13be36099aff7ea2975a1a197564e2e801707a3
+    refspec: b1fe8443a7a72c65fa0fc3371f607c6671b3a882
   meta-freescale:
-    refspec: 325c08c0773a2f1c54d28ea8aeda7c3d110d88a3
+    refspec: f66fdef1c2dc735690a7ec7dd44a534d69ea3918
   meta-st-stm32mp:
     refspec: 73632fb844b6ebbef2a9d2acc7cc4783083a14a3
