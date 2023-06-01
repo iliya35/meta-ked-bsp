@@ -1,0 +1,16 @@
+# Copyright (C) 2022 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+  includes:
+    - kas/inc/stm32mp.yml
+
+machine: stm32mp-t1000-multi
+target:
+  - image-ked
+  - image-ked-swu
+  - swupdate-img
+  - image-ked-qt
+  - image-ked-qt-swu
+  - swupdate-img-qt

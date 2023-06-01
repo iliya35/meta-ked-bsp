@@ -1,6 +1,6 @@
 layers/*
-!layers/meta-ktn
-!layers/meta-ktn-imx
-!layers/meta-ktn-stm32mp
+!layers/meta-ked
+!layers/meta-ked-imx
+!layers/meta-ked-stm32mp
 .config.yaml*
 build/

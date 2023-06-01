@@ -6,7 +6,7 @@ header:
   includes:
     - kas/inc/localbase.yml
 
-distro: ktn
+distro: ked
 
 env:
   SEMVER: 0.0.0-dev
@@ -14,7 +14,7 @@ env:
 defaults:
   repos:
     patches:
-      repo: meta-kontron
+      repo: meta-ked-bsp
 
 local_conf_header:
   dev-build: |

@@ -1,0 +1,15 @@
+# image directory set by recipe
+FW_DIR="./.."
+PROD_IMG="y"
+
+TFA_IMG="arm-trusted-firmware/tf-a-stm32mp-t1000-trusted.stm32"
+UBOOT_IMG="u-boot/u-boot-stm32mp-t1000-k-trusted.stm32"
+UBOOT_IMG_PROD="u-boot/u-boot-stm32mp-t1000-k-trusted.stm32"
+
+# borootfs (boot + rootfs)
+BOROOTFS_IMG="image-ked-stm32mp-t1000-multi.tar.gz"
+BOROOTFS_SIZE="300"
+
+# userfs
+USERFS_IMG="image-ked-userfs-stm32mp-t1000-multi-ked-dunfell.tar.gz"
+USERFS_SIZE="50"

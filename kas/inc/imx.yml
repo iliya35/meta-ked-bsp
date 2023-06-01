@@ -7,9 +7,9 @@ header:
     - kas/inc/common.yml
 
 repos:
-  meta-kontron:
+  meta-ked-bsp:
     layers:
-      layers/meta-ktn-stm32mp: excluded
+      layers/meta-ked-stm32mp: excluded
   meta-st-stm32mp:
     layers:
       .: excluded

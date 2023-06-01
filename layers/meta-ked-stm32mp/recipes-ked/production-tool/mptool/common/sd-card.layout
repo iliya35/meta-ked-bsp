@@ -1,0 +1,76 @@
+##############################################################################
+# st32mp1 config eval board
+#
+# Example config for create-sd-card.sh
+# Commented out values are default values
+# Adapt it to your needs!
+##############################################################################
+
+##############################################################################
+# Input and output location
+##############################################################################
+# Image directory set by recipe - where to find images and where to create
+# sdcard image file
+#FW_DIR="."
+FW_DIR="./.."
+
+# Name of image file. Defaults to name of *.layout file replaced with 
+# '.sdcard' extension
+#IMG_NAME="sd-card.sdcard"
+
+##############################################################################
+# Production image (all tar copied to userfs)
+##############################################################################
+# Place your images also in userfs to ease updating internal flashes of your
+# device with mptool
+#PROD_IMG="y"
+# Increase configured userfs size to provide extra space for the update images
+#PROD_IMG_EXTRA_SIZE="300"
+
+# These are the images copied into userfs. If the variable is not set the
+# contents of the sd card are also copied into userfs. If the variable is set
+# the mentioned file is copied and if the variable is set, but empty ("")
+# copying is skipped
+#TFA_IMG_PROD=""
+#UBOOT_IMG=""
+#BOROOTFS_IMG=""
+#USERFS_IMG=""
+#RESCUEFS_IMG=""
+
+
+##############################################################################
+# Partition layout
+##############################################################################
+# Partition layout - no need to modify
+#PARTITION_LAYOUT="TFA TFA UBOOT BOROOTFS USERFS RESCUEFS"
+
+##############################################################################
+# Images
+##############################################################################
+# Put your images and partition sizes here
+# If the image name is empty the partition is created and formatted, but not
+# filled!
+
+# fist stage bootloader
+TFA_IMG="tf-a-stm32mp-t1000-trusted.stm32"
+#TFA_IMG_SIZE="256"
+
+# second stage bootloader
+# used for sdcard
+UBOOT_IMG="u-boot-stm32mp-t1000-k-sdcard.stm32"
+# used for flash contents
+UBOOT_IMG_PROD="u-boot-stm32mp-t1000-k-trusted.stm32"
+#UBOOT_SIZE="2"
+
+# borootfs (boot + rootfs)
+BOROOTFS_IMG="image-ked-stm32mp-t1000-multi.tar.gz"
+BOROOTFS_SIZE="400"
+
+# userfs
+USERFS_IMG="image-ked-userfs-stm32mp-t1000-multi-thud.tar.gz"
+USERFS_SIZE="50"
+
+# rescuefs
+#RESCUEFS="n"
+RESCUEFS_IMG="rescuefs.tar.gz"
+RESCUEFS_SIZE="45"

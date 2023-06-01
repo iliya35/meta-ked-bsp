@@ -7,9 +7,9 @@ header:
     - kas/inc/common.yml
 
 repos:
-  meta-kontron:
+  meta-ked-bsp:
     layers:
-      layers/meta-ktn-imx: excluded
+      layers/meta-ked-imx: excluded
   meta-arm:
     layers:
       .: excluded

@@ -1,0 +1,88 @@
+CONF_VERSION = "1"
+
+# include version variables for source code
+include sourcecode-version.conf
+
+# =============================================
+# ######### DISTRO ############################
+# =============================================
+# use our distro configuration from
+# layers/meta-ked/conf/distro/ked.conf
+
+DISTRO = "ked"
+
+# =============================================
+# ######### MACHINE ###########################
+# =============================================
+# set a default MACHINE to build for
+# usually this is overriden by the environment variable MACHINE
+# (-m parameter of init-env exports MACHINE)
+
+MACHINE ?= "kontron-mx8mm"
+
+# =============================================
+# ######### EXTRA FEATURES / ROOT PWD #########
+# =============================================
+# the default is to use the image feature `debug-tweaks` to remove the
+# root password and add some packages (gdbserver, ptool, nano, etc.)
+# remove it if you build a release image and set a root password
+# by setting ROOT_PWD to a hashed password (`openssl passwd -1 password`)
+# Note: you need to escape all '$' characters with '\' manually
+# Note: the default value below is 'root'
+
+EXTRA_IMAGE_FEATURES = "debug-tweaks"
+#ROOT_PWD ?= "\$1\$/nrGReFp\$Emef9p70yRoahjHctKZ2p0"
+
+# =============================================
+# ######### SDK MACHINE #######################
+# =============================================
+# set a default SDKMACHINE
+# possible values are "i686" and "x86_64" to build an SDK for
+# 32-bit or 64-bit hosts respectively
+
+SDKMACHINE ?= "x86_64"
+
+# =============================================
+# ######### SPECIAL OPTIONS/OVERRIDES #########
+# =============================================
+# set special options via MACHINEOVERRIDES
+
+#MACHINEOVERRIDES .= ":option"
+
+# =============================================
+# ######### LICENSE / EULA RESTRICTIONS #######
+# =============================================
+# block/allow packages with certain licenses
+# (e.g. commercial)
+
+#LICENSE_FLAGS_WHITELIST = "commercial"
+
+# for builds including software from Freescale/NXP you might
+# need to accept their EULA
+
+#ACCEPT_FSL_EULA = "1"
+
+# =============================================
+# ######### CACHE / DOWNLOAD PATHS ############
+# =============================================
+# set default locations for downloads and the sstate cache
+
+DL_DIR ?= "${TOPDIR}/../downloads"
+SSTATE_DIR ?= "${TOPDIR}/../sstate-cache"
+
+# =============================================
+# ######### PARALLEL TASKS / THREADING ########
+# =============================================
+# depending on your build host you might want to tweak
+# the number of bitbake threads and parallel make tasks
+
+BB_NUMBER_THREADS ?= "${@oe.utils.cpu_count()*2}"
+PARALLEL_MAKE ?= "-j ${@oe.utils.cpu_count()}"
+
+# =============================================
+# ######### MISC ##############################
+# =============================================
+# uncomment to remove all temporary files after each build
+# to save disk space
+
+#INHERIT += "rm_work"

@@ -1,0 +1,7 @@
+Common targets are:
+    image-ked-minimal (no package-manager, no ssh, no Qt)
+    image-ked (default image, no Qt)
+    image-ked-qt (image with Qt and demo apps)
+
+To get further help for the Kontron Electronics Yocto BSPs, visit:
+    https://docs.kontron-electronics.de/
