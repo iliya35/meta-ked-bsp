@@ -13,9 +13,9 @@ BOOT_CONFIG=0x49002040
 
 SPL_BIN=flash.bin
 UBOOT_ENV=u-boot-initial-env-kontron-mx6ul
-ROOTFS_IMG=image-ktn-kontron-mx6ul.tar.gz
-BOOTFS_IMG=image-ktn-bootfs-kontron-mx6ul-ktn-dunfell.tar.gz	
-USERFS_IMG=image-ktn-userfs-kontron-mx6ul-ktn-dunfell.tar.gz
+ROOTFS_IMG=image-ked-kontron-mx6ul.tar.gz
+BOOTFS_IMG=image-ked-bootfs-kontron-mx6ul-ktn-dunfell.tar.gz	
+USERFS_IMG=image-ked-userfs-kontron-mx6ul-ktn-dunfell.tar.gz
 SWU_ARCHIVE="swupdate-img.swu"
 
 MTD_ROOT=/dev/mtd0

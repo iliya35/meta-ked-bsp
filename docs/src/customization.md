@@ -38,7 +38,7 @@ repos:
 
 machine: kontron-mx8mm
 target:
-  - image-ktn-minimal
+  - image-ked-minimal
 ```
 
 ## Custom Yocto Layer

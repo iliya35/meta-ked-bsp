@@ -15,15 +15,15 @@ SRC_URI = "\
 
 # images to build before building swupdate image
 # for now dont build this all the time
-IMAGE_DEPENDS = "image-ktn-swu"
+IMAGE_DEPENDS = "image-ked-swu"
 
 # images and files that will be included in the .swu image
 SWUPDATE_IMAGES = "\
-	image-ktn-swu \
-	image-ktn-swu-bootfiles \
+	image-ked-swu \
+	image-ked-swu-bootfiles \
 	"
 
-SWUPDATE_IMAGES_FSTYPES[image-ktn-swu] = ".tar.gz"
-SWUPDATE_IMAGES_NOAPPEND_MACHINE[image-ktn-swu] = "0"
-SWUPDATE_IMAGES_FSTYPES[image-ktn-swu-bootfiles] = ".tar.gz"
-SWUPDATE_IMAGES_NOAPPEND_MACHINE[image-ktn-swu-bootfiles] = "0"
+SWUPDATE_IMAGES_FSTYPES[image-ked-swu] = ".tar.gz"
+SWUPDATE_IMAGES_NOAPPEND_MACHINE[image-ked-swu] = "0"
+SWUPDATE_IMAGES_FSTYPES[image-ked-swu-bootfiles] = ".tar.gz"
+SWUPDATE_IMAGES_NOAPPEND_MACHINE[image-ked-swu-bootfiles] = "0"

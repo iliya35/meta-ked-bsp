@@ -8,4 +8,4 @@ header:
 
 machine: kontron-mx6ul
 target:
-  - image-ktn
+  - image-ked

@@ -17,20 +17,20 @@ SRC_URI:append = "\
 	file://mptool.config;subdir=git \
 	file://create-sd-card.sh \
 	file://sd-card.layout \
-	file://image-ktn-stm32mp-t1000.layout \
-	file://image-ktn-stm32mp-t1001.layout \
-	file://image-ktn-stm32mp-t1002.layout \
-	file://image-ktn-stm32mp-t1004.layout \
-	file://image-ktn-stm32mp-t1005.layout \
-	file://image-ktn-stm32mp-t1006.layout \
-	file://image-ktn-stm32mp-t1007.layout \
-	file://image-ktn-qt-stm32mp-t1000-multi.layout \
-	file://image-ktn-stm32mp-t1000-multi.layout \
-	file://image-ktn-sparkle-stm32mp-t1000-multi.layout \
-	file://image-ktn-swu-stm32mp-t1000-multi.layout \
-	file://image-ktn-qt-swu-stm32mp-t1000-multi.layout \
-	file://image-ktn-test-stm32mp-t1000-multi.layout \
-	file://image-ktn-stress-stm32mp-t1000-multi.layout \
+	file://image-ked-stm32mp-t1000.layout \
+	file://image-ked-stm32mp-t1001.layout \
+	file://image-ked-stm32mp-t1002.layout \
+	file://image-ked-stm32mp-t1004.layout \
+	file://image-ked-stm32mp-t1005.layout \
+	file://image-ked-stm32mp-t1006.layout \
+	file://image-ked-stm32mp-t1007.layout \
+	file://image-ked-qt-stm32mp-t1000-multi.layout \
+	file://image-ked-stm32mp-t1000-multi.layout \
+	file://image-ked-sparkle-stm32mp-t1000-multi.layout \
+	file://image-ked-swu-stm32mp-t1000-multi.layout \
+	file://image-ked-qt-swu-stm32mp-t1000-multi.layout \
+	file://image-ked-test-stm32mp-t1000-multi.layout \
+	file://image-ked-stress-stm32mp-t1000-multi.layout \
 	"
 
 # Add extra EMMC configuration for Eval-Kits

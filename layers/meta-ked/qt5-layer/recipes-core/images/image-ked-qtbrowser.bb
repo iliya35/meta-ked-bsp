@@ -1,6 +1,6 @@
 SUMMARY = "A demo image including QtWebBrowser"
 
-require recipes-core/images/image-ktn.bb
+require recipes-core/images/image-ked.bb
 
 inherit populate_sdk_qt5
 inherit image-configuration

@@ -9,17 +9,17 @@ TFA_IMG="arm-trusted-firmware/tf-a-stm32mp-t1000-trusted.stm32"
 UBOOT_IMG="u-boot/u-boot-stm32mp-t1000-k-trusted.stm32"
 
 # boot
-BOOT_IMG="image-ktn-qt-swu-bootfs-stm32mp-t1000-multi.tar.gz"
+BOOT_IMG="image-ked-swu-bootfs-stm32mp-t1000-multi.tar.gz"
 BOOT_SIZE="50"
 
 # root A
-ROOT_A_IMG="image-ktn-qt-swu-stm32mp-t1000-multi.tar.gz"
-ROOT_A_SIZE="600"
+ROOT_A_IMG="image-ked-swu-stm32mp-t1000-multi.tar.gz"
+ROOT_A_SIZE="300"
 
 # root B
-ROOT_B_IMG="image-ktn-qt-swu-stm32mp-t1000-multi.tar.gz"
-ROOT_B_SIZE="600"
+ROOT_B_IMG="image-ked-swu-stm32mp-t1000-multi.tar.gz"
+ROOT_B_SIZE="300"
 
 # userfs
-USERFS_IMG="image-ktn-qt-swu-userfs-stm32mp-t1000-multi.tar.gz"
+USERFS_IMG="image-ked-swu-userfs-stm32mp-t1000-multi.tar.gz"
 USERFS_SIZE="50"

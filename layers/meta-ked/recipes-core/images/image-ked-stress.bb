@@ -1,6 +1,6 @@
 SUMMARY = "An image for stress testing KED hardware"
 
-require recipes-core/images/image-ktn.bb
+require recipes-core/images/image-ked.bb
 
 IMAGE_EXTRA_INSTALL += " \
 	devmem2 \

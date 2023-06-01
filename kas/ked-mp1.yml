@@ -8,9 +8,9 @@ header:
 
 machine: stm32mp-t1000-multi
 target:
-  - image-ktn
-  - image-ktn-swu
+  - image-ked
+  - image-ked-swu
   - swupdate-img
-  - image-ktn-qt
-  - image-ktn-qt-swu
+  - image-ked-qt
+  - image-ked-qt-swu
   - swupdate-img-qt

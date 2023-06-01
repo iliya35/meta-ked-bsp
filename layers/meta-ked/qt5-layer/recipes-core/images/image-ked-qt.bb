@@ -1,6 +1,6 @@
 SUMMARY = "The Qt5 Yocto image for the Kontron Electronics hardware"
 
-require recipes-core/images/image-ktn.bb
+require recipes-core/images/image-ked.bb
 
 inherit populate_sdk_qt5
 

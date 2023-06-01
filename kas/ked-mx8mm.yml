@@ -8,4 +8,4 @@ header:
 
 machine: kontron-mx8mm
 target:
-  - image-ktn-qt
+  - image-ked-qt

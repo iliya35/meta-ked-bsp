@@ -1,6 +1,6 @@
 SUMMARY = "An image with additional tests for KED hardware"
 
-require recipes-core/images/image-ktn.bb
+require recipes-core/images/image-ked.bb
 
 IMAGE_EXTRA_INSTALL += " \
 	alsa-utils-alsamixer \

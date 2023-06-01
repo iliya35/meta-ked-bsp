@@ -1,4 +1,4 @@
-require recipes-core/images/image-ktn.bb
+require recipes-core/images/image-ked.bb
 
 IMAGE_FEATURES += "debug-tweaks"
 

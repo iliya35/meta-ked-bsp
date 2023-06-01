@@ -7,9 +7,9 @@ UBOOT_IMG="u-boot/u-boot-stm32mp-t1000-k-trusted.stm32"
 UBOOT_IMG_PROD="u-boot/u-boot-stm32mp-t1000-k-trusted.stm32"
 
 # borootfs (boot + rootfs)
-BOROOTFS_IMG="image-ktn-stm32mp-t1000-multi.tar.gz"
-BOROOTFS_SIZE="300"
+BOROOTFS_IMG="image-ked-qt-stm32mp-t1000-multi.tar.gz"
+BOROOTFS_SIZE="600"
 
 # userfs
-USERFS_IMG="image-ktn-userfs-stm32mp-t1000-multi-ktn-dunfell.tar.gz"
+USERFS_IMG="image-ked-qt-userfs-stm32mp-t1000-multi-ktn-dunfell.tar.gz"
 USERFS_SIZE="50"

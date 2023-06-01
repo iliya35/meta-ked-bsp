@@ -7,9 +7,9 @@ UBOOT_IMG="u-boot-stm32mp-t1007-sdcard.stm32"
 UBOOT_IMG_PROD="u-boot-stm32mp-t1007-trusted.stm32"
 
 # borootfs (boot + rootfs)
-BOROOTFS_IMG="image-ktn-stm32mp-t1007.tar.gz"
+BOROOTFS_IMG="image-ked-stm32mp-t1007.tar.gz"
 BOROOTFS_SIZE="300"
 
 # userfs
-USERFS_IMG="image-ktn-userfs-stm32mp-t1007-thud.tar.gz"
+USERFS_IMG="image-ked-userfs-stm32mp-t1007-thud.tar.gz"
 USERFS_SIZE="50"

@@ -1,9 +1,8 @@
-SUMMARY = "The basic Kontron Yocto image with SWUpdate support"
-
+SUMMARY = "The Qt5 Kontron Yocto image with SWUpdate support"
 # Use the AB boot layout
 inherit abboot
 
-require recipes-core/images/image-ktn.bb
+require qt5-layer/recipes-core/images/image-ked-qt.bb
 
 # /boot and /usr/local contents are located in different partitions
 IMAGE_BOOTFS_NAME = "${IMAGE_BASENAME}-bootfs-${MACHINE}"
