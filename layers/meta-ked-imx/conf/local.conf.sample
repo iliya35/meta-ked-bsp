@@ -7,9 +7,9 @@ include sourcecode-version.conf
 # ######### DISTRO ############################
 # =============================================
 # use our distro configuration from
-# layers/meta-ked/conf/distro/ktn.conf
+# layers/meta-ked/conf/distro/ked.conf
 
-DISTRO = "ktn"
+DISTRO = "ked"
 
 # =============================================
 # ######### MACHINE ###########################

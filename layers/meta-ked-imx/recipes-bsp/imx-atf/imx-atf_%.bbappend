@@ -6,4 +6,4 @@ ATF_PLATFORM = "${TFA_PLATFORM}"
 # Dunfell compat
 PLATFORM = "${TFA_PLATFORM}"
 
-COMPATIBLE_MACHINE = "(ktn-imx|imx-mainline-bsp)"
+COMPATIBLE_MACHINE = "(ked-imx|imx-mainline-bsp)"

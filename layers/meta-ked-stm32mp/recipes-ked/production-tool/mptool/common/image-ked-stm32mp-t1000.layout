@@ -11,5 +11,5 @@ BOROOTFS_IMG="image-ked-stm32mp-t1000.tar.gz"
 BOROOTFS_SIZE="300"
 
 # userfs
-USERFS_IMG="image-ked-userfs-stm32mp-t1000-ktn-dunfell.tar.gz"
+USERFS_IMG="image-ked-userfs-stm32mp-t1000-ked-dunfell.tar.gz"
 USERFS_SIZE="50"

@@ -47,9 +47,9 @@ MACHINE ?= "stm32mp-t1000-multi"
 # ######### DISTRO ############################
 # =============================================
 # use our distro configuration from
-# layers/meta-ked/conf/distro/ktn.conf
+# layers/meta-ked/conf/distro/ked.conf
 
-DISTRO = "ktn"
+DISTRO = "ked"
 
 # Package Management configuration
 PACKAGE_CLASSES ?= "package_deb"

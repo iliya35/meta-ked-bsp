@@ -8,8 +8,8 @@ do_deploy() {
 
 PROVIDES = "virtual/trusted-firmware-a"
 
-SRC_URI:append:ktn-mx8mm = " \
+SRC_URI:append:ked-mx8mm = " \
     file://0001-imx8mm_bl31_setup.c-Assign-UART4-to-A53-instead-of-M.patch \
 "
 
-COMPATIBLE_MACHINE = "(ktn-imx|imx-mainline-bsp)"
+COMPATIBLE_MACHINE = "(ked-imx|imx-mainline-bsp)"

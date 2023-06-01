@@ -32,4 +32,4 @@ DEPENDS += "lzop-native bc-native"
 
 KBRANCH = "${SRCBRANCH}"
 
-COMPATIBLE_MACHINE = "(ktn-imx|imx-mainline-bsp)"
+COMPATIBLE_MACHINE = "(ked-imx|imx-mainline-bsp)"

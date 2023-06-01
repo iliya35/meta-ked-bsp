@@ -1,7 +1,7 @@
 include conf/machine/include/tune-cortexa53.inc
 include conf/machine/include/arm/armv8a/tune-cortexa53.inc
 
-MACHINEOVERRIDES =. "ktn-mx8mm:ktn-mx8m:ktn-imx:mx8mm:mx8m:"
+MACHINEOVERRIDES =. "ked-mx8mm:ked-mx8m:ked-imx:mx8mm:mx8m:"
 
 # Mainline BSP defaults to "generic" cortexa53 configuration,
 # adjust it here to include crypto extension which enables
@@ -24,7 +24,7 @@ DDR_FIRMWARE_NAME = "lpddr4_pmu_train_1d_imem.bin \
 UBOOT_EXTLINUX_CONSOLE = "console=ttymxc2,115200"
 UBOOT_EXTLINUX_ROOT = "root=/dev/mmcblk1p2"
 
-WKS_FILE = "image-imx-ktn.wks"
+WKS_FILE = "image-imx-ked.wks"
 IMX_BOOT_SEEK = "33"
 WICVARS:append = " IMX_BOOT_SEEK UBOOT_BINARY"
 WKS_FILE_DEPENDS:remove = "imx-boot"

@@ -17,11 +17,11 @@ SRC_URI:append = " \
 "
 
 # Overwrite the default environment
-SRC_URI:append:ktn-mx8mm = " \
+SRC_URI:append:ked-mx8mm = " \
     file://sl-mx8mm.env;subdir=git/board/kontron/sl-mx8mm/ \
 "
 
-SRC_URI:append:ktn-mx6ul = " \
+SRC_URI:append:ked-mx6ul = " \
     file://sl-mx6ul.env;subdir=git/board/kontron/sl-mx6ul/ \
 "
 

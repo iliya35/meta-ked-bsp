@@ -6,7 +6,7 @@ header:
   includes:
     - kas/inc/localbase.yml
 
-distro: ktn
+distro: ked
 
 env:
   SEMVER: 0.0.0-dev
