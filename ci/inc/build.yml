@@ -2,6 +2,7 @@ variables:
   BUILD_IMAGE: "registry.kontron-electronics.de/sw/ked/meta-ked-bsp/kas-ktn:latest"
   BUILD_SDK_TASK: populate_sdk
   GIT_DEPTH: 0 # in order to use GitVersion we need the full history available
+  REL_TAG_PATTERN: /^\d+\.\d+(?:\.\d+)?.*/
 
 workflow:
   rules:
@@ -87,7 +88,7 @@ workflow:
   rules:
     - if: '$BUILD_DISABLED'
       when: never
-    - if: '$CI_COMMIT_TAG =~ /^rel_.*/'
+    - if: '$CI_COMMIT_TAG =~ $REL_TAG_PATTERN'
       when: never
     - when: on_success
   script:
@@ -103,3 +104,16 @@ workflow:
     reports:
        dotenv: ci.env
     expire_in: 3 days
+
+#
+# This is a template for the build release job that runs the build for the
+# requested targets. The resulting artifacts expire after some time.
+#
+.yocto-build-release-template:
+  extends: .yocto-build-template
+  rules:
+    - if: '$BUILD_DISABLED'
+      when: never
+    - if: '$CI_COMMIT_TAG !~ $REL_TAG_PATTERN'
+      when: never
+    - when: on_success
