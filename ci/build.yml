@@ -21,12 +21,23 @@ include:
     YOCTO_SERIES: kirkstone
     TARGETS: "image-ked"
 
+.common-vars: &common-vars
+  KAS_CONFIG: "kas/ked-${PLATFORM}.yml:kas/series/${YOCTO_SERIES}.yml"
+  KAS_CONFIG_HEAD: "kas/dev/head-${YOCTO_SERIES}.yml"
+  BUILD_NAME: "${PLATFORM}-${YOCTO_SERIES}"
+
 bsp:build:
   extends: .yocto-build-template
   parallel:
     matrix:
       *build-matrix
   variables:
-    KAS_CONFIG: "kas/ked-${PLATFORM}.yml:kas/series/${YOCTO_SERIES}.yml"
-    KAS_CONFIG_HEAD: "kas/dev/head-${YOCTO_SERIES}.yml"
-    BUILD_NAME: "${PLATFORM}-${YOCTO_SERIES}"
+    *common-vars
+
+bsp:build:release:
+  extends: .yocto-build-release-template
+  parallel:
+    matrix:
+      *build-matrix
+  variables:
+    *common-vars
