@@ -53,6 +53,7 @@ workflow:
       fi
       echo "  Finally using version string: ${SEMVER}"
       export SEMVER=$SEMVER
+      echo "SEMVER=$SEMVER" >> ci.env
 
   #
   # This scripts sets some options required for building in local.conf and then
@@ -100,4 +101,6 @@ workflow:
     paths:
       - build/tmp/deploy
       - build/env
+    reports:
+       dotenv: ci.env
     expire_in: 3 days
