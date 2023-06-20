@@ -38,20 +38,6 @@ bsp:build:
         KAS_CONFIG: "${KAS_CONFIG}:kas/dev/head-${YOCTO_SERIES}.yml"
     - when: always
 
-# Build Container Image
-.container-vars: &container-vars
-  variables:
-    CONTAINERFILE: Containerfile
-    TAG: kas-ked
-
-container:build:
-  extends: .build-container
-  <<: *container-vars
-
-container:build-deploy:
-  extends: .build-deploy-container
-  <<: *container-vars
-
 # Build Documentation
 docs:build:
   extends: .docs:build
