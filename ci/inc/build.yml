@@ -56,8 +56,7 @@ workflow:
       echo "SEMVER=$SEMVER" >> ci.env
 
   #
-  # This scripts sets some options required for building in local.conf and then
-  # runs bitbake for the given targets.
+  # This script uses kas to run the bitbake builds
   #
   kas:
     - mkdir -p build/tmp/deploy/bbenv
