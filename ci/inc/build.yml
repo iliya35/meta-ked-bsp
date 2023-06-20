@@ -75,6 +75,12 @@ workflow:
       done
     - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/bootloader -e" > build/tmp/deploy/bbenv/bootloader.env
     - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/kernel -e" > build/tmp/deploy/bbenv/kernel.env
+    - |
+      # Strip unused files to reduce the size of the artifacts
+      if test "$RELEASE" == ""; then
+        rm -rf build/tmp/deploy/ipk
+        rm -rf build/tmp/deploy/licenses
+      fi
 
 #
 # This is a template for the build job that runs the build for the requested
@@ -111,6 +117,8 @@ workflow:
 #
 .yocto-build-release-template:
   extends: .yocto-build-template
+  variables:
+    RELEASE: "1"
   rules:
     - if: '$BUILD_DISABLED'
       when: never
