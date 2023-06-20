@@ -41,9 +41,18 @@ workflow:
   # exports it to the environment.
   #
   gitversion:
-    - SEMVER=$(gitversion /output json /showvariable SemVer)
-    - export SEMVER=$SEMVER
-    - 'echo "SemVer from GitVersion is: ${SEMVER}"'
+    - |
+      SEMVER=$(gitversion /output json /showvariable SemVer)
+      echo "SemVer from GitVersion is: ${SEMVER}"
+      if test -n "${CI_COMMIT_TAG}"; then
+        echo "CI commit tag is         : ${CI_COMMIT_TAG}"
+        SEMVER=$(python3 -c 'import re,sys; m=re.search("([0-9]+\.[0-9]+.*)", sys.argv[1]); print(m.group(0) if m else "")' "${CI_COMMIT_TAG}");
+        if test -z "${SEMVER}"; then
+          SEMVER=${CI_COMMIT_TAG};
+        fi
+      fi
+      echo "  Finally using version string: ${SEMVER}"
+      export SEMVER=$SEMVER
 
   #
   # This scripts sets some options required for building in local.conf and then
