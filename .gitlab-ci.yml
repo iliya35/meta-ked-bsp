@@ -1,22 +1,9 @@
 include:
   - '/ci/build.yml'
   - '/ci/container-build.yml'
-  - project: 'sw/ked/docs/mkdocs-ked'
-    ref: main
-    file: '/ci/docs-build.yml'
+  - '/ci/docs.yml'
 
 stages:
   - build-container
   - build
   - deploy
-
-# Build Documentation
-docs:build:
-  extends: .docs:build
-  variables:
-    DOCS_SUBDIR: docs
-
-docs:trigger:
-  extends: .docs:trigger
-  variables:
-    DOCS_SUBDIR: docs
