@@ -39,9 +39,11 @@ start_eglfs ()
 		soc_model="mx6ul"
 		;;
 	*i.MX8MM* )
-		if test -d /sys/class/drm/card0/card0-DSI-1; then
+		if [ -d /sys/class/drm/card0/card0-LVDS-1 ] ||
+		   [ -d /sys/class/drm/card0/card0-HDMI-A-1 ]; then
 			echo '{"device": "/dev/dri/card0","hwcursor":false}' > /tmp/.eglfs/kms.json
-		elif test -d /sys/class/drm/card1/card1-DSI-1; then
+		elif [ -d /sys/class/drm/card1/card1-LVDS-1 ] ||
+		     [ -d /sys/class/drm/card1/card1-HDMI-A-1 ]; then
 			echo '{"device": "/dev/dri/card1","hwcursor":false}' > /tmp/.eglfs/kms.json
 		fi
 		soc_model="mx8m"

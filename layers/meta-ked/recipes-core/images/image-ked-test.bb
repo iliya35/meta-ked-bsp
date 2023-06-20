@@ -7,6 +7,7 @@ IMAGE_EXTRA_INSTALL += " \
 	alsa-utils-amixer \
 	alsa-utils-aplay \
 	alsa-utils-speakertest \
+	bmap-tools \
 	devmem2 \
 	fb-test \
 	glmark2 \
@@ -26,6 +27,7 @@ IMAGE_EXTRA_INSTALL += " \
 	libgles2-mesa \
 	lmbench \
 	memtester \
+	mmc-utils \
 	mtd-utils-tests \
 	nano \
 	neard \
