@@ -1,5 +1,5 @@
 include:
-  - '/ci/inc/build.yml'
+  - '/ci/build.yml'
   - '/ci/container-build.yml'
   - project: 'sw/ked/docs/mkdocs-ked'
     ref: main
@@ -9,34 +9,6 @@ stages:
   - build-container
   - build
   - deploy
-
-# Build Yocto BSPs
-.build-matrix: &build-matrix
-  - PLATFORM: mx8mm
-    YOCTO_SERIES: dunfell
-  - PLATFORM: mx6ul
-    YOCTO_SERIES: dunfell
-  - PLATFORM: mp1
-    YOCTO_SERIES: dunfell
-  - PLATFORM: mx8mm
-    YOCTO_SERIES: kirkstone
-  - PLATFORM: mx6ul
-    YOCTO_SERIES: kirkstone
-  - PLATFORM: mp1
-    YOCTO_SERIES: kirkstone
-
-bsp:build:
-  extends: .yocto-build-template
-  parallel:
-    matrix:
-      *build-matrix
-  variables:
-    KAS_CONFIG: "kas/ked-${PLATFORM}.yml:kas/series/${YOCTO_SERIES}.yml"
-  rules:
-    - if: $HEAD_BUILD == "1"
-      variables:
-        KAS_CONFIG: "${KAS_CONFIG}:kas/dev/head-${YOCTO_SERIES}.yml"
-    - when: always
 
 # Build Documentation
 docs:build:
