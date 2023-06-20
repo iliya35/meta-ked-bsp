@@ -28,8 +28,5 @@ bsp:build:
       *build-matrix
   variables:
     KAS_CONFIG: "kas/ked-${PLATFORM}.yml:kas/series/${YOCTO_SERIES}.yml"
-  rules:
-    - if: $HEAD_BUILD == "1"
-      variables:
-        KAS_CONFIG: "${KAS_CONFIG}:kas/dev/head-${YOCTO_SERIES}.yml"
-    - when: always
+    KAS_CONFIG_HEAD: "kas/dev/head-${YOCTO_SERIES}.yml"
+    BUILD_NAME: "${PLATFORM}-${YOCTO_SERIES}"

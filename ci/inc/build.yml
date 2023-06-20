@@ -81,6 +81,8 @@ workflow:
         rm -rf build/tmp/deploy/ipk
         rm -rf build/tmp/deploy/licenses
       fi
+    - mkdir -p deploy
+    - mv build/tmp/deploy deploy/${BUILD_NAME}
 
 #
 # This is a template for the build job that runs the build for the requested
@@ -96,6 +98,9 @@ workflow:
       when: never
     - if: '$CI_COMMIT_TAG =~ $REL_TAG_PATTERN'
       when: never
+    - if: $HEAD_BUILD
+      variables:
+        KAS_CONFIG: "${KAS_CONFIG}:${KAS_CONFIG_HEAD}"
     - when: on_success
   script:
     - !reference [.scripts, ci-prep]
@@ -103,10 +108,9 @@ workflow:
     - !reference [.scripts, cache]
     - !reference [.scripts, kas]
   artifacts:
-    name: "$CI_PROJECT_NAME $CI_COMMIT_REF_NAME $PLATFORM $YOCTO_SERIES"
+    name: "$CI_PROJECT_NAME $CI_COMMIT_REF_NAME $BUILD_NAME"
     paths:
-      - build/tmp/deploy
-      - build/env
+      - deploy
     reports:
        dotenv: ci.env
     expire_in: 3 days
