@@ -1,0 +1,7 @@
+include:
+  - '/ci/inc/deploy.yml'
+
+bsp:deploy:
+  extends: .deploy-packages
+  variables:
+    TITLE: "KED_Yocto_Reference_BSP"

@@ -2,8 +2,13 @@ include:
   - '/ci/build.yml'
   - '/ci/container-build.yml'
   - '/ci/docs.yml'
+  - '/ci/package.yml'
+  - '/ci/deploy.yml'
+  - '/ci/release.yml'
 
 stages:
   - build-container
   - build
+  - package
   - deploy
+  - release

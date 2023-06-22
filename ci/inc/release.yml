@@ -1,0 +1,40 @@
+.create-release:
+  tags:
+    - server
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: '$BUILD_DISABLED'
+      when: never
+    - if: '$CI_COMMIT_TAG !~ $REL_TAG_PATTERN'
+      when: never
+    - when: on_success
+  script:
+    - |
+      cd package
+
+      preamble="
+      <details><summary><h1>Release Notes</h1></summary>
+
+      **Changes since version 0.0.0:**
+
+      "
+      echo "$preamble" > NOTES.md
+      echo "</details>" >> NOTES.md
+
+      ASSETS=""
+      for m in $(find . -type f -name "*.manifest"); do
+        source $m
+        ASSETS="$ASSETS \
+            --assets-link '{ \
+            \"name\":\"${DESCRIPTION}\", \
+            \"url\":\"$PACKAGE_REGISTRY_URL/$TITLE/$SEMVER/$ARCHIVE\", \
+            \"filepath\":\"/${NAME}\" \
+            }'"
+      done
+
+      eval "release-cli create \
+        --name \"$SEMVER\" \
+        --tag-name \"$CI_COMMIT_TAG\" \
+        --description \"./NOTES.md\" \
+        $ASSETS"

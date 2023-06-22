@@ -1,0 +1,14 @@
+include:
+  - '/ci/inc/package.yml'
+
+.package-matrix: &package-matrix
+  - NAME: firmware-ked-mx8mm
+    BUILD_NAME: mx8mm-kirkstone
+    TARGETS: "image-ked-qt u-boot spl kernel licenses"
+    DESCRIPTION: "KED Yocto Reference Firmware for i.MX8MM Hardware"
+
+bsp:package:
+  extends: .create-package
+  parallel:
+    matrix:
+      *package-matrix
