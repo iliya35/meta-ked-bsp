@@ -1,8 +1,10 @@
+include:
+  - '/ci/inc/common.yml'
+
 variables:
   BUILD_IMAGE: "registry.kontron-electronics.de/sw/ked/meta-ked-bsp/kas-ktn:latest"
   BUILD_SDK_TASK: populate_sdk
   GIT_DEPTH: 0 # in order to use GitVersion we need the full history available
-  REL_TAG_PATTERN: /^\d+\.\d+(?:\.\d+)?.*/
 
 workflow:
   rules:
@@ -94,11 +96,11 @@ workflow:
   stage: build
   image: $BUILD_IMAGE
   rules:
-    - if: '$BUILD_DISABLED'
+    - if: $BUILD_DISABLED == "true"
       when: never
     - if: '$CI_COMMIT_TAG =~ $REL_TAG_PATTERN'
       when: never
-    - if: $HEAD_BUILD
+    - if: $HEAD_BUILD == "true"
       variables:
         KAS_CONFIG: "${KAS_CONFIG}:${KAS_CONFIG_HEAD}"
     - when: on_success
@@ -122,9 +124,9 @@ workflow:
 .yocto-build-release-template:
   extends: .yocto-build-template
   variables:
-    RELEASE: "1"
+    RELEASE: "true"
   rules:
-    - if: '$BUILD_DISABLED'
+    - if: $BUILD_DISABLED == "true"
       when: never
     - if: '$CI_COMMIT_TAG !~ $REL_TAG_PATTERN'
       when: never
