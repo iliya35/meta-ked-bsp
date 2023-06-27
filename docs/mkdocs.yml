@@ -20,6 +20,7 @@ extra_css:
 markdown_extensions:
  - admonition
  - attr_list
+ - footnotes
  - pymdownx.details
  - pymdownx.highlight
  - pymdownx.keys
@@ -30,3 +31,4 @@ nav:
  - Prerequisites: prerequisites.md
  - Build: build.md
  - Customization: customization.md
+ - Release Information: release.md
