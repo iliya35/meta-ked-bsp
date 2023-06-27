@@ -1,0 +1,14 @@
+include:
+  - project: 'sw/ked/docs/mkdocs-ked'
+    ref: main
+    file: '/ci/docs-build.yml'
+
+docs:build:
+  extends: .docs:build
+  variables:
+    DOCS_SUBDIR: docs
+
+docs:trigger:
+  extends: .docs:trigger
+  variables:
+    DOCS_SUBDIR: docs

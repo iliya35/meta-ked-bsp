@@ -1,83 +1,43 @@
-variables:
-  BUILD_IMAGE: "registry.kontron-electronics.de/sw/ked/meta-ked-bsp/kas-ktn:latest"
-  BUILD_SDK_TASK: populate_sdk
-  GIT_DEPTH: 0 # in order to use GitVersion we need the full history available
+include:
+  - '/ci/inc/build.yml'
 
-workflow:
-  rules:
-    #
-    # Do not run branch pipelines when there is an open MR for this branch.
-    # This prevents duplicate piplines (MR & push) for those cases.
-    # See: https://docs.gitlab.com/ee/ci/yaml/workflow.html#switch-between-branch-pipelines-and-merge-request-pipelines
-    #
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
-      when: never
-    - when: always
+.build-matrix: &build-matrix
+  - PLATFORM: mx8mm
+    YOCTO_SERIES: dunfell
+    TARGETS: "image-ked-qt"
+  - PLATFORM: mx6ul
+    YOCTO_SERIES: dunfell
+    TARGETS: "image-ked"
+  - PLATFORM: mp1
+    YOCTO_SERIES: dunfell
+    TARGETS: "image-ked"
+  - PLATFORM: mx8mm
+    YOCTO_SERIES: kirkstone
+    TARGETS: "image-ked-qt"
+  - PLATFORM: mx6ul
+    YOCTO_SERIES: kirkstone
+    TARGETS: "image-ked"
+  - PLATFORM: mp1
+    YOCTO_SERIES: kirkstone
+    TARGETS: "image-ked"
 
-.scripts:
-  #
-  # This script does preparation work for the CI jobs.
-  #
-  ci-prep:
-    # For private repos with SSH access, replace the remote URLs to use HTTP with CI token
-    - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@git.kontron-electronics.de/".insteadOf "git@git.kontron-electronics.de:"
-    - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@git.kontron-electronics.de".insteadOf "ssh://git@git.kontron-electronics.de"
+.common-vars: &common-vars
+  KAS_CONFIG: "kas/ked-${PLATFORM}.yml:kas/series/${YOCTO_SERIES}.yml"
+  KAS_CONFIG_HEAD: "kas/dev/head-${YOCTO_SERIES}.yml"
+  BUILD_NAME: "${PLATFORM}-${YOCTO_SERIES}"
 
-  #
-  # This script mounts the public NFS storage that contains source and cache
-  # mirrors and links the directories inside the build directory.
-  # This should be used in cases where reading and writing back from/to the
-  # mirrors is desired.
-  #
-  cache:
-    - sudo mkdir /mirrors
-    - sudo mount -t cifs -o username=ked-ci,password=${CI_SMB_PWD},vers=3.1.1,port=446,uid=30000,gid=30000 //10.0.0.2/mirrors/develop /mirrors
-    - mkdir -p build
-    - ln -s /mirrors/sources build/downloads
-    - ln -s /mirrors/sstate build/sstate-cache
+bsp:build:
+  extends: .yocto-build-template
+  parallel:
+    matrix:
+      *build-matrix
+  variables:
+    *common-vars
 
-  #
-  # This script runs GitVersion to determine a semantic versioning string and
-  # exports it to the environment.
-  #
-  gitversion:
-    - SEMVER=$(gitversion /output json /showvariable SemVer)
-    - export SEMVER=$SEMVER
-    - 'echo "SemVer from GitVersion is: ${SEMVER}"'
-
-  #
-  # This scripts sets some options required for building in local.conf and then
-  # runs bitbake for the given targets.
-  #
-  kas:
-    - kas build $KAS_CONFIG:kas/dev/shared-cache.yml
-    - |
-      if test "$BUILD_SDK" == "yes"; then
-        export KAS_TASK="$BUILD_SDK_TASK"
-        kas build $KAS_CONFIG:kas/dev/shared-cache.yml
-      fi
-#
-# This is a template for the build job that runs the build for the requested
-# targets. The resulting artifacts expire after some time.
-#
-.yocto-build-template:
-  tags:
-    - server-autoscale
-  stage: build
-  image: $BUILD_IMAGE
-  rules:
-    - if: '$BUILD_DISABLED'
-      when: never
-    - if: '$CI_COMMIT_TAG =~ /^rel_.*/'
-      when: never
-    - when: always
-  script:
-    - !reference [.scripts, ci-prep]
-    - !reference [.scripts, gitversion]
-    - !reference [.scripts, cache]
-    - !reference [.scripts, kas]
-  artifacts:
-    name: "$CI_PROJECT_NAME $CI_COMMIT_REF_NAME $MACHINE"
-    paths:
-      - build/tmp/deploy
-    expire_in: 3 days
+bsp:build:release:
+  extends: .yocto-build-release-template
+  parallel:
+    matrix:
+      *build-matrix
+  variables:
+    *common-vars

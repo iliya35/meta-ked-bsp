@@ -1,64 +1,14 @@
 include:
   - '/ci/build.yml'
   - '/ci/container-build.yml'
-  - project: 'sw/ked/docs/mkdocs-ked'
-    ref: main
-    file: '/ci/docs-build.yml'
+  - '/ci/docs.yml'
+  - '/ci/package.yml'
+  - '/ci/deploy.yml'
+  - '/ci/release.yml'
 
 stages:
   - build-container
   - build
+  - package
   - deploy
-
-# Build Yocto BSPs
-.build-matrix: &build-matrix
-  - PLATFORM: mx8mm
-    YOCTO_SERIES: dunfell
-  - PLATFORM: mx6ul
-    YOCTO_SERIES: dunfell
-  - PLATFORM: mp1
-    YOCTO_SERIES: dunfell
-  - PLATFORM: mx8mm
-    YOCTO_SERIES: kirkstone
-  - PLATFORM: mx6ul
-    YOCTO_SERIES: kirkstone
-  - PLATFORM: mp1
-    YOCTO_SERIES: kirkstone
-
-bsp:build:
-  extends: .yocto-build-template
-  parallel:
-    matrix:
-      *build-matrix
-  variables:
-    KAS_CONFIG: "kas/ked-${PLATFORM}.yml:kas/series/${YOCTO_SERIES}.yml"
-  rules:
-    - if: $HEAD_BUILD == "1"
-      variables:
-        KAS_CONFIG: "${KAS_CONFIG}:kas/dev/head-${YOCTO_SERIES}.yml"
-    - when: always
-
-# Build Container Image
-.container-vars: &container-vars
-  variables:
-    CONTAINERFILE: Containerfile
-    TAG: kas-ked
-
-container:build:
-  extends: .build-container
-  <<: *container-vars
-
-container:build-deploy:
-  extends: .build-deploy-container
-  <<: *container-vars
-
-# Build Documentation
-docs:build:
-  extends: .docs:build
-  variables:
-    DOCS_SUBDIR: docs
-
-docs:trigger:
-  extends: .docs:trigger
-  variables:
-    DOCS_SUBDIR: docs
+  - release

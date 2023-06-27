@@ -1,0 +1,38 @@
+variables:
+  PACKAGE_REGISTRY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic
+
+.deploy-packages:
+  tags:
+    - server
+  stage: deploy
+  image: ubuntu:22.04
+  rules:
+    - if: '$BUILD_DISABLED'
+      when: never
+    - if: '$CI_COMMIT_TAG !~ $REL_TAG_PATTERN'
+      when: never
+    - when: on_success
+  script:
+    - echo "SEMVER=$SEMVER" >> ci.env
+    - echo "TITLE=$TITLE" >> ci.env
+    - apt -y update; apt -y install curl
+    - |
+      upload_file () {
+          RESPONSE=$(curl --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+               --upload-file "$1" \
+               "$PACKAGE_REGISTRY_URL/$TITLE/$SEMVER/$1")
+          return $?
+      }
+
+      cd package
+
+      for m in $(find . -type f -name "*.manifest"); do
+        source $m
+        upload_file "$ARCHIVE"
+        rm -f "$ARCHIVE"
+      done
+  artifacts:
+    paths:
+      - package/
+    reports:
+       dotenv: ci.env

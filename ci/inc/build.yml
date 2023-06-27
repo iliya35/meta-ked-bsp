@@ -1,0 +1,131 @@
+variables:
+  BUILD_IMAGE: "registry.kontron-electronics.de/sw/ked/meta-ked-bsp/kas-ktn:latest"
+  BUILD_SDK_TASK: populate_sdk
+  GIT_DEPTH: 0 # in order to use GitVersion we need the full history available
+  REL_TAG_PATTERN: /^\d+\.\d+(?:\.\d+)?.*/
+
+workflow:
+  rules:
+    #
+    # Do not run branch pipelines when there is an open MR for this branch.
+    # This prevents duplicate piplines (MR & push) for those cases.
+    # See: https://docs.gitlab.com/ee/ci/yaml/workflow.html#switch-between-branch-pipelines-and-merge-request-pipelines
+    #
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
+      when: never
+    - when: always
+
+.scripts:
+  #
+  # This script does preparation work for the CI jobs.
+  #
+  ci-prep:
+    # For private repos with SSH access, replace the remote URLs to use HTTP with CI token
+    - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@git.kontron-electronics.de/".insteadOf "git@git.kontron-electronics.de:"
+    - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@git.kontron-electronics.de".insteadOf "ssh://git@git.kontron-electronics.de"
+
+  #
+  # This script mounts the public NFS storage that contains source and cache
+  # mirrors and links the directories inside the build directory.
+  # This should be used in cases where reading and writing back from/to the
+  # mirrors is desired.
+  #
+  cache:
+    - sudo mkdir /mirrors
+    - sudo mount -t cifs -o username=ked-ci,password=${CI_SMB_PWD},vers=3.1.1,port=446,uid=30000,gid=30000 //10.0.0.2/mirrors/develop /mirrors
+    - mkdir -p build
+    - ln -s /mirrors/sources build/downloads
+    - ln -s /mirrors/sstate build/sstate-cache
+
+  #
+  # This script runs GitVersion to determine a semantic versioning string and
+  # exports it to the environment.
+  #
+  gitversion:
+    - |
+      SEMVER=$(gitversion /output json /showvariable SemVer)
+      echo "SemVer from GitVersion is: ${SEMVER}"
+      if test -n "${CI_COMMIT_TAG}"; then
+        echo "CI commit tag is         : ${CI_COMMIT_TAG}"
+        SEMVER=$(python3 -c 'import re,sys; m=re.search("([0-9]+\.[0-9]+.*)", sys.argv[1]); print(m.group(0) if m else "")' "${CI_COMMIT_TAG}");
+        if test -z "${SEMVER}"; then
+          SEMVER=${CI_COMMIT_TAG};
+        fi
+      fi
+      echo "  Finally using version string: ${SEMVER}"
+      export SEMVER=$SEMVER
+      echo "SEMVER=$SEMVER" >> ci.env
+
+  #
+  # This script uses kas to run the bitbake builds
+  #
+  kas:
+    - mkdir -p build/tmp/deploy/bbenv
+    - export KAS_TARGET="$TARGETS"
+    - kas build $KAS_CONFIG:kas/dev/shared-cache.yml
+    - |
+      if test "$BUILD_SDK" == "yes"; then
+        export KAS_TASK="$BUILD_SDK_TASK"
+        kas build $KAS_CONFIG:kas/dev/shared-cache.yml
+      fi
+    - |
+      for TARGET in $TARGETS
+      do
+        kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake $TARGET -e" > build/tmp/deploy/bbenv/$TARGET.env
+      done
+    - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/bootloader -e" > build/tmp/deploy/bbenv/bootloader.env
+    - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/kernel -e" > build/tmp/deploy/bbenv/kernel.env
+    - |
+      # Strip unused files to reduce the size of the artifacts
+      if test "$RELEASE" == ""; then
+        rm -rf build/tmp/deploy/ipk
+        rm -rf build/tmp/deploy/licenses
+      fi
+    - mkdir -p deploy
+    - mv build/tmp/deploy deploy/${BUILD_NAME}
+
+#
+# This is a template for the build job that runs the build for the requested
+# targets. The resulting artifacts expire after some time.
+#
+.yocto-build-template:
+  tags:
+    - server-autoscale
+  stage: build
+  image: $BUILD_IMAGE
+  rules:
+    - if: '$BUILD_DISABLED'
+      when: never
+    - if: '$CI_COMMIT_TAG =~ $REL_TAG_PATTERN'
+      when: never
+    - if: $HEAD_BUILD
+      variables:
+        KAS_CONFIG: "${KAS_CONFIG}:${KAS_CONFIG_HEAD}"
+    - when: on_success
+  script:
+    - !reference [.scripts, ci-prep]
+    - !reference [.scripts, gitversion]
+    - !reference [.scripts, cache]
+    - !reference [.scripts, kas]
+  artifacts:
+    name: "$CI_PROJECT_NAME $CI_COMMIT_REF_NAME $BUILD_NAME"
+    paths:
+      - deploy
+    reports:
+       dotenv: ci.env
+    expire_in: 3 days
+
+#
+# This is a template for the build release job that runs the build for the
+# requested targets. The resulting artifacts expire after some time.
+#
+.yocto-build-release-template:
+  extends: .yocto-build-template
+  variables:
+    RELEASE: "1"
+  rules:
+    - if: '$BUILD_DISABLED'
+      when: never
+    - if: '$CI_COMMIT_TAG !~ $REL_TAG_PATTERN'
+      when: never
+    - when: on_success

@@ -1,0 +1,114 @@
+.create-package:
+  tags:
+    - server
+  stage: package
+  image: ubuntu:22.04
+  rules:
+    - if: '$BUILD_DISABLED'
+      when: never
+    - if: '$CI_COMMIT_TAG !~ $REL_TAG_PATTERN'
+      when: never
+    - when: on_success
+  variables:
+    TYPES: "wic.gz tar.gz swu"
+    PRODUCT: "no-product"
+    DESCRIPTION: ""
+    ARCHIVE_FILENAME: ${PRODUCT}_${NAME}_${CI_COMMIT_REF_SLUG}
+    ARCHIVE: $ARCHIVE_FILENAME.zip
+  script:
+    - |
+      apt -y update
+      apt -y install zip
+      BASE_DIR=$(pwd)
+      TMPDIR="/tmp/$NAME/"
+      PACKAGE_DIR="$BASE_DIR/package/"
+
+      parse_bitbake_env () {
+        echo $(cat "$BASE_DIR/deploy/$BUILD_NAME/bbenv/$1.env" | grep -oP '(?<=^'"$2"'\=").*(?=")')
+      }
+
+      if ! test -d "$BASE_DIR/deploy/$BUILD_NAME"; then
+        echo "Failed to find build directory $BASE_DIR/deploy/$BUILD_NAME"
+        exit 1
+      fi
+
+      DEPLOY_DIR_IMAGE=$(parse_bitbake_env bootloader DEPLOY_DIR_IMAGE)
+      DEPLOY_DIR=$(parse_bitbake_env bootloader DEPLOY_DIR)
+      DEPLOY_DIR_REL=${DEPLOY_DIR_IMAGE#*"$DEPLOY_DIR/"}
+
+      copy_file () {
+        if test "$1" != "" && test -f "$DEPLOY_DIR_REL/$1"; then
+          cp -L $DEPLOY_DIR_REL/$1 "$TMPDIR"
+        else
+          echo "Package target $1 not available, skipping."
+        fi
+      }
+
+      mkdir -p "$TMPDIR"
+      mkdir -p "$PACKAGE_DIR"
+
+      cd deploy/$BUILD_NAME
+
+      for TARGET in $TARGETS
+      do
+        case $TARGET in
+        u-boot)
+          UBOOT_IMAGE=$(parse_bitbake_env bootloader UBOOT_IMAGE)
+          copy_file "$UBOOT_IMAGE"
+          ;;
+        spl)
+          SPL_BINARY=$(parse_bitbake_env bootloader SPL_BINARY)
+          copy_file "$SPL_BINARY"
+          ;;
+        kernel)
+          KERNEL_IMAGETYPES=$(parse_bitbake_env kernel KERNEL_IMAGETYPES)
+          for KERNEL_IMAGE in $KERNEL_IMAGETYPES
+          do
+            copy_file "$KERNEL_IMAGE"
+          done
+          ;;
+        licenses)
+          if test -d ./licenses/; then
+            tar -czf $DEPLOY_DIR_REL/licenses.tar.gz licenses
+          fi
+          copy_file "licenses.tar.gz"
+          ;;
+        *)
+          TARGET_BASENAME=$(parse_bitbake_env $TARGET IMAGE_LINK_NAME)
+          TARGET_TYPES=$(parse_bitbake_env $TARGET IMAGE_FSTYPES)
+          for TARGET_TYPE in $TARGET_TYPES swu
+          do
+            for TYPE in $TYPES
+            do
+              case $TARGET_TYPE in
+              $TYPE)
+                IMAGE_FILE="$TARGET_BASENAME.$TARGET_TYPE"
+                if [[ ! -f $DEPLOY_DIR_REL/$IMAGE_FILE ]]; then
+                  echo "Image file $IMAGE_FILE not available, skipping..."
+                  continue
+                fi
+                copy_file "$IMAGE_FILE"
+                ;;
+              esac
+            done
+          done
+          ;;
+        esac
+      done
+
+      echo "Create zip archive ${ARCHIVE} out of $TMPDIR"
+      (
+          cd $TMPDIR
+          rm -f ${PACKAGE_DIR}${ARCHIVE}
+          zip ${PACKAGE_DIR}${ARCHIVE} *
+          echo "ARCHIVE=\"${ARCHIVE}\"" > ${PACKAGE_DIR}${ARCHIVE_FILENAME}.manifest
+          echo "NAME=\"${NAME}\"" >> ${PACKAGE_DIR}${ARCHIVE_FILENAME}.manifest
+          echo "DESCRIPTION=\"${DESCRIPTION}\"" >> ${PACKAGE_DIR}${ARCHIVE_FILENAME}.manifest
+      )
+
+      echo "SEMVER=$SEMVER" >> $BASE_DIR/ci.env
+  artifacts:
+    paths:
+      - package/
+    reports:
+       dotenv: ci.env
