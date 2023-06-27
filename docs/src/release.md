@@ -1,0 +1,65 @@
+# Release Information
+
+!!! info "Prebuilt Image Download"
+
+    On the ["Releases" page in the GitLab
+    project](https://git.kontron-electronics.de/sw/ked/meta-ked-bsp/-/releases)
+    you can find download links for prebuilt binary images for our reference
+    hardware.
+
+## v6.0.0
+
+!!! note "Version Number"
+
+    The v6.0 release is the first version of the BSP. We are using this
+    version number to indicate that this is the successor of the legacy
+    i.MX Dunfell BSP with version number v5.0.
+
+### General
+
+* Usage of `kas` integration tool, replacing the custom scripts used in previous
+  BSPs
+* Usage of a new monorepo `meta-ked-bsp`, replacing the build and meta layer
+  repositories used in previous BSPs
+
+### Components
+
+* Yocto 4.0 LTS "Kirkstone" (layers compatible with 3.1 LTS "Dunfell")
+* Linux 6.1 LTS with KED backports and patches
+* U-Boot 2023.04 with KED backports and patches
+
+### Hardware
+
+| Product Numbers | Product Name | Product Type | Status |
+| --------------- | ------------ | ------------ | ------ |
+| 40099 122 | SL i.MX6 UL | SoM | Not Supported (Unverified) |
+| 40099 145 | SL i.MX6 ULL | SoM | Not Supported (Unverified) |
+| 40099 167 | SL STM32 MP157 | SoM | Not Supported (Planned) |
+| 40099 175<br>40099 185<br>40099 242<br>40099 212 | SL i.MX8M Mini Quad | SoM | Supported |
+| 40099 227<br>40099 229<br>40099 239<br>40099 231 | OSM-S i.MX8M Mini Quad | SoM | Supported |
+| 41099 248 | OSM-S i.MX8M Plus | SoM | Not Supported (Planned) |
+| 40099 148 | BL i.MX6 ULL | Board | Not Supported (Unverified) |
+| 40099 176 | BL STM32 MP157 | Board | Not Supported (Planned) |
+| 40099 187<br>40099 220 | BL i.MX8M-Mini Quad | Board | Supported (Basic[^1]) |
+
+### Breaking Changes compared to Dunfell BSP (5.0)
+
+* SPL and U-Boot proper images are now merged into a single `flash.bin` instead
+  of two separate images.
+* SPI NOR partitioning and offsets have been altered:
+  * single partition for U-Boot and SPL
+  * changed offset for environment to the end of the SPI NOR
+  * changed offset for U-Boot proper to be the same on SPI NOR and eMMC
+* U-Boot environment was reworked
+* SWUpdate configuration was optimized
+* Naming of layers, distro, images, etc. has been changed from `ktn` to `ked`
+
+### Known Issues
+
+* The onboard USB hub on the BL i.MX8MM doesn't work in U-Boot.
+* The A/B boot scheme can be bricked by multiple updates with a broken kernel
+  image.
+
+[^1]: Basic support doesn't include all features of the board. Especially
+      advanced peripherals like display, graphics, hardware acceleration units,
+      camera interfaces, etc. might not be supported or tested yet.
