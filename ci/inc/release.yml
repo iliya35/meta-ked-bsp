@@ -32,7 +32,7 @@ include:
             --assets-link '{ \
             \"name\":\"${DESCRIPTION}\", \
             \"url\":\"$PACKAGE_REGISTRY_URL/$TITLE/$SEMVER/$ARCHIVE\", \
-            \"filepath\":\"/${NAME}\" \
+            \"filepath\":\"/$ARCHIVE\" \
             }'"
       done
 
