@@ -8,8 +8,8 @@ do_bootfs() {
 		mkdir ${IMAGE_BOOTFS}
 	fi
 
-	cp -L ${DEPLOY_DIR_IMAGE}/fitImage ${IMAGE_BOOTFS}/fitImage_active
-	cp -L ${DEPLOY_DIR_IMAGE}/fitImage ${IMAGE_BOOTFS}/fitImage_inactive
+	cp -L ${DEPLOY_DIR_IMAGE}/fitImage ${IMAGE_BOOTFS}/fitImage_A
+	cp -L ${DEPLOY_DIR_IMAGE}/fitImage ${IMAGE_BOOTFS}/fitImage_B
 	echo "AB" > ${IMAGE_BOOTFS}/sys_active
 
 	if [ -e ${IMGDEPLOYDIR}/${IMAGE_BOOTFS_NAME}.tar.gz ];then
