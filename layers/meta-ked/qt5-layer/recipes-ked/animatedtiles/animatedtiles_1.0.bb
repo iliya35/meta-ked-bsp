@@ -19,7 +19,7 @@ SRCBRANCH = "master"
 SRCREV = "972776a3c57673311c05f6a5f941d531b268fcda"
 
 SRC_URI = " \
-	git://${KED_GIT_APPS}/widgets-demo.git;protocol=https;branch=${SRCBRANCH};subpath=${PN} \
+	git://${KED_GIT_APPS}/widgets-demo.git;protocol=https;branch=${SRCBRANCH};subpath=${BPN} \
 	file://autostart-eglfs.env \
 "
 

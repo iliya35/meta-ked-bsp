@@ -16,7 +16,7 @@ include:
     TARGETS: "image-ked-qt"
   - PLATFORM: mx6ul
     YOCTO_SERIES: kirkstone
-    TARGETS: "image-ked"
+    TARGETS: "image-ked-qt"
   - PLATFORM: mp1
     YOCTO_SERIES: kirkstone
     TARGETS: "image-ked"
