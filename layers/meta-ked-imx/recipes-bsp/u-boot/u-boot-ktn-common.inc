@@ -26,3 +26,13 @@ do_compile:prepend:ked-mx8m() {
 # For i.MX8M, we need to pass the correct load address for the ATF to the
 # mkimage_fit_atf.sh script, by setting the ATF_LOAD_ADDR environment variable.
 EXTRA_OEMAKE:append:ked-mx8m = " 'ATF_LOAD_ADDR=0x00920000'"
+
+# Code snippet from poky linux-yocto.inc to fix menuconfig presentation
+do_devshell:prepend() {
+    # setup native pkg-config variables (kconfig scripts call pkg-config directly, cannot generically be overriden to pkg-config-native)
+    d.setVar("PKG_CONFIG_DIR", "${STAGING_DIR_NATIVE}${libdir_native}/pkgconfig")
+    d.setVar("PKG_CONFIG_PATH", "${PKG_CONFIG_DIR}:${STAGING_DATADIR_NATIVE}/pkgconfig")
+    d.setVar("PKG_CONFIG_LIBDIR", "${PKG_CONFIG_DIR}")
+    d.setVarFlag("PKG_CONFIG_SYSROOT_DIR", "unexport", "1")
+    d.appendVar("OE_TERMINAL_EXPORTS", " PKG_CONFIG_DIR PKG_CONFIG_PATH PKG_CONFIG_LIBDIR PKG_CONFIG_SYSROOT_DIR")
+}
