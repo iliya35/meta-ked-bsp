@@ -1,0 +1,15 @@
+variables:
+  PACKAGE_REGISTRY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic
+  REL_TAG_PATTERN: /^\d+\.\d+(?:\.\d+)?.*/
+  BUILD_DISABLED:
+    value: "false"
+    options:
+      - "false"
+      - "true"
+    description: "Disable the build job and all subsequent jobs depending on it."
+  HEAD_BUILD:
+    value: "false"
+    options:
+      - "false"
+      - "true"
+    description: "Use the HEADs for all OE layers instead of the checked-in refspecs."

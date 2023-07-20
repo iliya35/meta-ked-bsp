@@ -1,10 +1,13 @@
+include:
+  - '/ci/inc/common.yml'
+
 .create-package:
   tags:
     - server
   stage: package
   image: ubuntu:22.04
   rules:
-    - if: '$BUILD_DISABLED'
+    - if: $BUILD_DISABLED == "true"
       when: never
     - if: '$CI_COMMIT_TAG !~ $REL_TAG_PATTERN'
       when: never
