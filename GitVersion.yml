@@ -1,0 +1,28 @@
+branches:
+  main:
+    regex: ^main$|^master$
+    tag: dev
+    source-branches: []
+    increment: Minor
+    mode: ContinuousDeployment
+    #mode: ContinuousDelivery
+  emc:
+    regex: ^emc$
+    tag: emc-dev
+    source-branches: [main]
+    increment: Minor
+    mode: ContinuousDeployment
+    #mode: ContinuousDelivery
+  production:
+    regex: ^production$|^testlinux$
+    tag: testlinux-dev
+    source-branches: [main]
+    increment: Minor
+    mode: ContinuousDeployment
+  support:
+    regex: ^support.*$
+    tag: dev
+    source-branches: [main]
+    mode: ContinuousDeployment
+  feature:
+    mode: ContinuousDeployment
