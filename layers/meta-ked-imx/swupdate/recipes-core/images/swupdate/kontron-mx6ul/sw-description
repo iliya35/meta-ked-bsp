@@ -20,7 +20,7 @@ software =
 					{
 						filename = "fitImage";
 						device = "/dev/ubi0_0";
-						path = "/fitImage_active";
+						path = "/fitImage_A";
 						filesystem = "ubifs";
 					}
 				);
@@ -40,7 +40,7 @@ software =
 					{
 						filename = "fitImage";
 						device = "/dev/ubi0_0";
-						path = "/fitImage_active" ;
+						path = "/fitImage_B" ;
 						filesystem = "ubifs";
 					}
 				);

@@ -78,12 +78,6 @@ do_switch_fitImage() {
 		set_sys_active "BB"
 	fi
 
-	#move active kernel to inactive
-	if [ -e ${mnt_dir}/fitImage_active ]; then
-		echo "Moving fitImage_active to inactive"
-		mv ${mnt_dir}/fitImage_active ${mnt_dir}/fitImage_inactive
-	fi
-
 	#set active partition
 	if test "${cur_par}" == ${rootfs_a};then
 		echo "Set active root partition to B with Fallback on A"

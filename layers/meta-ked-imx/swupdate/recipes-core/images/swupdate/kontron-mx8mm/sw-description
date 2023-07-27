@@ -19,7 +19,7 @@ software =
 					{
 						filename = "fitImage";
 						device = "/dev/mmcblk0p1";
-						path = "/fitImage_active" ;
+						path = "/fitImage_A" ;
 						filesystem = "ext4";
 					}
 				);
@@ -39,7 +39,7 @@ software =
 					{
 						filename = "fitImage";
 						device = "/dev/mmcblk0p1";
-						path = "/fitImage_active" ;
+						path = "/fitImage_B" ;
 						filesystem = "ext4";
 					}
 				);
