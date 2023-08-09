@@ -18,8 +18,7 @@ SRC_URI = " \
      file://sparkle-dut-mx6ul-combox.cfg \
 "
 
-#SRCREV = "0b2fc0466aa05626e6721d8942b5e0b35cb1b062"
-SRCREV = "rel_1.9.0"
+SRCREV = "0b2fc0466aa05626e6721d8942b5e0b35cb1b062"
 SRCBRANCH = "master"
 
 SRC_URI[md5sum] = "8d340c2a203dc3a2a3e912a9d681b311"
