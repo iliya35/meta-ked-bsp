@@ -3,8 +3,6 @@ HOMEPAGE = "https://git.kontron-electronics.de/apps/sparkle"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d6e8e6dc7b4865368a048aef36b0676e"
 
-FILES:${PN} = "/usr/share/sparkle/* /etc/init.d/* /usr/bin/* "
- 
 S = "${WORKDIR}/git"
 
 SRC_URI = " \
@@ -42,8 +40,8 @@ RDEPENDS:${PN} = " \
 "
 RDEPENDS:${PN}-autostart = "${PN}"
 
-FILES:${PN} = "/bin /usr /etc/sparkle.cfg "
-FILES:${PN}-autostart += " /etc "
+FILES:${PN} = "/usr /etc/default /etc/*.cfg"
+FILES:${PN}-autostart += "/etc/init.d"
 
 INITSCRIPT_PACKAGES = "${PN}-autostart"
 INITSCRIPT_NAME_${PN}-autostart = "sparklesrv.sh"
