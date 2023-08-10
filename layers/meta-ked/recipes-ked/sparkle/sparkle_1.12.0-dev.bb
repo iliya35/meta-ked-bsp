@@ -44,8 +44,8 @@ FILES:${PN} = "/usr /etc/default /etc/*.cfg"
 FILES:${PN}-autostart += "/etc/init.d"
 
 INITSCRIPT_PACKAGES = "${PN}-autostart"
-INITSCRIPT_NAME_${PN}-autostart = "sparklesrv.sh"
-INITSCRIPT_PARAMS_${PN}-autostart = "start 50 5 2 . "
+INITSCRIPT_NAME:${PN}-autostart = "sparklesrv.sh"
+INITSCRIPT_PARAMS:${PN}-autostart = "start 50 5 2 . "
 
 SYSTEMD_SERVICE:${PN} = "sparklesrv.service"
 
