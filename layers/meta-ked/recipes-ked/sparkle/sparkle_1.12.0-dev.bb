@@ -33,8 +33,6 @@ RDEPENDS:${PN} = " \
      python3-websockets \
      python3-pyserial \
      python3-can \
-     python3-wrapt \ 
-     python3-setuptools \
      libgpiod \
      libgpiod-python \
 "
