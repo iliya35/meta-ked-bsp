@@ -18,17 +18,21 @@ SRC_URI = " \
      file://sparkle-dut-mx6ul-combox.cfg \
 "
 
-SRCREV = "0b2fc0466aa05626e6721d8942b5e0b35cb1b062"
+SRCREV = "9ef635aab9dbdc557b5612f0873301e45314758f"
 SRCBRANCH = "master"
 
 SRC_URI[md5sum] = "8d340c2a203dc3a2a3e912a9d681b311"
 SRC_URI[sha256sum] = "54672b7af153479e586ef1c48dc1514695e36fc98781bd4a52b44edcbe471dd5"
 
-inherit setuptools3 update-rc.d systemd
+SETUPTOOLS = "setuptools3_legacy"
+SETUPTOOLS:dunfell = "setuptools3"
+
+inherit ${SETUPTOOLS}
+inherit update-rc.d systemd
 
 PACKAGES += "${PN}-autostart"
 
-DEPENDS = "python3"
+DEPENDS = "python3 python3-setuptools-native"
 RDEPENDS:${PN} = " \
      python3-websockets \
      python3-pyserial \
