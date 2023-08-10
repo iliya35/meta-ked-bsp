@@ -3,8 +3,6 @@ HOMEPAGE = "https://git.kontron-electronics.de/apps/sparkle"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d6e8e6dc7b4865368a048aef36b0676e"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-
 FILES:${PN} = "/usr/share/sparkle/* /etc/init.d/* /usr/bin/* "
  
 S = "${WORKDIR}/git"
