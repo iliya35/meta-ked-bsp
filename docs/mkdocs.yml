@@ -31,4 +31,6 @@ nav:
  - Prerequisites: prerequisites.md
  - Build: build.md
  - Customization: customization.md
- - Release Information: release.md
+ - Release Information:
+     - v6.1.0-dev: release/6.1.0.md
+     - v6.0.0: release/6.0.0.md
