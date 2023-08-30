@@ -25,7 +25,6 @@ IMAGE_INSTALL += " \
         nfs-utils \
         os-release \
         packagegroup-base \
-        production-tool \
         rng-tools \
         u-boot-default-env \
 "
