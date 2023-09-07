@@ -1,0 +1,11 @@
+# Copyright (C) 2023 Kontron Electronics GmbH
+# SPDX-License-Identifier: MIT
+
+header:
+  version: 12
+  includes:
+    - kas/inc/imx.yml
+
+machine: kontron-mx8mp
+target:
+  - image-ked-test
