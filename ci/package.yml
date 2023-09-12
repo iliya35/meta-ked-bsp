@@ -6,6 +6,10 @@ include:
     BUILD_NAME: mx8mm-kirkstone
     TARGETS: "image-ked-qt u-boot spl kernel licenses"
     DESCRIPTION: "KED Yocto Reference Firmware for i.MX8MM Hardware"
+  - NAME: firmware-ked-mx8mp
+    BUILD_NAME: mx8mp-kirkstone
+    TARGETS: "image-ked-qt u-boot spl kernel licenses"
+    DESCRIPTION: "KED Yocto Reference Firmware for i.MX8MP Hardware"
 
 bsp:package:
   extends: .create-package
