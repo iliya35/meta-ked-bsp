@@ -28,6 +28,7 @@ markdown_extensions:
  - pymdownx.superfences
 
 nav:
+ - Overview: index.md
  - Prerequisites: prerequisites.md
  - Build: build.md
  - Customization: customization.md
