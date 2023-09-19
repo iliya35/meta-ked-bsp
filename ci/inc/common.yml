@@ -18,7 +18,7 @@ workflow:
   script:
     - |
       parse_bitbake_env () {
-        echo $(cat "$BASE_DIR/deploy/$BUILD_NAME/bbenv/$1.env" | grep -oP '(?<=^'"$2"'\=").*(?=")')
+        echo $(cat "$BASE_DIR/deploy/$BUILD_NAME/bbenv/$(echo ${1////_}).env" | grep -oP '(?<=^'"$2"'\=").*(?=")')
       }
 
 variables:

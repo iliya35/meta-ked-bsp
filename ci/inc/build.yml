@@ -66,7 +66,7 @@ variables:
     - |
       for TARGET in $TARGETS
       do
-        kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake $TARGET -e" > build/tmp/deploy/bbenv/$TARGET.env
+        kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake $TARGET -e" > build/tmp/deploy/bbenv/$(echo ${TARGET////_}).env
       done
     - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/bootloader -e" > build/tmp/deploy/bbenv/bootloader.env
     - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/kernel -e" > build/tmp/deploy/bbenv/kernel.env
