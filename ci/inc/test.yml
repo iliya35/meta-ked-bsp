@@ -24,11 +24,14 @@ variables:
     - DEPLOY_DIR=$(parse_bitbake_env $TEST_TARGET DEPLOY_DIR)
     - DEPLOY_DIR_REL=${DEPLOY_DIR_IMAGE#*"$DEPLOY_DIR/"}
     - !reference [.test-image-prepare, script]
-    - labgrid-client -p $LG_PLACE acquire
-    - labgrid-client -p $LG_PLACE sd-mux host
-    - labgrid-client -p $LG_PLACE write-image $WRITE_IMAGE_ARGS $IMAGE_FILE
-    - labgrid-client -p $LG_PLACE ssh sudo rm -r /var/cache/labgrid/root/
-    - labgrid-client -p $LG_PLACE sd-mux dut
+    - eval `labgrid-client reserve --shell name=$LG_PLACE`
+    - echo $LG_TOKEN > lg.env
+    - labgrid-client wait > /dev/null
+    - labgrid-client -p + acquire
+    - labgrid-client -p + sd-mux host
+    - labgrid-client -p + write-image $WRITE_IMAGE_ARGS $IMAGE_FILE
+    - labgrid-client -p + ssh sudo rm -r /var/cache/labgrid/root/
+    - labgrid-client -p + sd-mux dut
     - mkdir reports
     - mkdir logs
     - cd tests/
@@ -36,7 +39,8 @@ variables:
     - echo "Printing test log to the console:"
     - cat ../logs/console_main
   after_script:
-    - labgrid-client -p $LG_PLACE release
+    - export LG_TOKEN=$(cat lg.env)
+    - labgrid-client -p + release
   artifacts:
     paths:
       - reports/
