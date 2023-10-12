@@ -27,6 +27,7 @@ IMAGE_INSTALL += " \
         packagegroup-base \
         rng-tools \
         u-boot-default-env \
+        u-boot-fw-utils \
 "
 
 # If U-Boot is not included into the rootfs itself, we still need it for
