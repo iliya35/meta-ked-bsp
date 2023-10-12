@@ -12,6 +12,8 @@
   # In case we are not on the main branch, we only want to do build testing for
   # the image, without pushing anything to the registry.
   rules:
+    - if: $CONTAINER_BUILD_DISABLED == "true"
+      when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: never
     - changes:
@@ -30,6 +32,8 @@
     - podman push $CI_REGISTRY_IMAGE/$TAG
   # In case we are on the main branch, we want to build and push the image.
   rules:
+    - if: $CONTAINER_BUILD_DISABLED == "true"
+      when: never
     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
       when: never
     - changes:

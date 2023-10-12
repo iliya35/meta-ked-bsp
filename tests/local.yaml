@@ -1,0 +1,23 @@
+targets:
+  main:
+    resources:
+      RemotePlace:
+        name: imx8mm
+    drivers:
+      GpioDigitalOutputDriver:
+        index: 44
+      DigitalOutputPowerDriver:
+        delay: 5.0
+      SerialDriver: {}
+      ShellDriver:
+        prompt: 'root@\w+[^ ]+'
+        login_prompt: 'login:'
+        username: 'root'
+        login_timeout: 40
+        await_login_timeout: 2
+      UBootDriver:
+        prompt: '=>'
+      UBootStrategy: {}
+      USBStorageDriver: {}
+      USBSDMuxDriver: {}
+      ShellStrategy: {}

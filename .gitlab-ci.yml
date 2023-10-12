@@ -4,6 +4,7 @@ include:
   - '/ci/docs.yml'
   - '/ci/package.yml'
   - '/ci/deploy.yml'
+  - '/ci/test.yml'
   - '/ci/release.yml'
 
 stages:
@@ -11,4 +12,5 @@ stages:
   - build
   - package
   - deploy
+  - test
   - release

@@ -1,5 +1,6 @@
 include:
   - '/ci/inc/build.yml'
+  - '/ci/inc/test.yml'
 
 .build-matrix: &build-matrix
   - PLATFORM: mx8mm
@@ -34,6 +35,12 @@ bsp:build:
   parallel:
     matrix:
       *build-matrix
+  variables:
+    *common-vars
+
+bsp:build:testing:
+  extends: .yocto-build-testing-template
+  parallel: !reference [.test-build-matrix, parallel]
   variables:
     *common-vars
 

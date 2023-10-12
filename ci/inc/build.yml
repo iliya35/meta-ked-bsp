@@ -9,17 +9,6 @@ variables:
     value: ""
     description: "Specify extra bitbake targets in a space-separated list."
 
-workflow:
-  rules:
-    #
-    # Do not run branch pipelines when there is an open MR for this branch.
-    # This prevents duplicate piplines (MR & push) for those cases.
-    # See: https://docs.gitlab.com/ee/ci/yaml/workflow.html#switch-between-branch-pipelines-and-merge-request-pipelines
-    #
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
-      when: never
-    - when: always
-
 .scripts:
   #
   # This script does preparation work for the CI jobs.
@@ -77,7 +66,7 @@ workflow:
     - |
       for TARGET in $TARGETS
       do
-        kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake $TARGET -e" > build/tmp/deploy/bbenv/$TARGET.env
+        kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake $TARGET -e" > build/tmp/deploy/bbenv/$(echo ${TARGET////_}).env
       done
     - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/bootloader -e" > build/tmp/deploy/bbenv/bootloader.env
     - kas shell $KAS_CONFIG:kas/dev/shared-cache.yml -c "bitbake virtual/kernel -e" > build/tmp/deploy/bbenv/kernel.env
@@ -107,6 +96,8 @@ workflow:
     - if: $HEAD_BUILD == "true"
       variables:
         KAS_CONFIG: "${KAS_CONFIG}:${KAS_CONFIG_HEAD}"
+    - if: $TESTING == "true"
+      when: never
     - when: on_success
   script:
     - !reference [.scripts, ci-prep]
@@ -120,6 +111,19 @@ workflow:
     reports:
        dotenv: ci.env
     expire_in: 3 days
+
+#
+# This is a template for the build release job that runs the build for the
+# requested targets. The resulting artifacts expire after some time.
+#
+.yocto-build-testing-template:
+  extends: .yocto-build-template
+  rules:
+    - if: $BUILD_DISABLED == "true"
+      when: never
+    - if: $TESTING != "true"
+      when: never
+    - when: on_success
 
 #
 # This is a template for the build release job that runs the build for the
