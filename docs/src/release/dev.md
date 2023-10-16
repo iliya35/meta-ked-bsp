@@ -1,7 +1,7 @@
 ---
-date: "2023-09-13"
+date: "2023-10-12"
 ---
-## Changes from 6.0.0 to 6.1.0
+## Changes from 6.1.0 to Dev (Work In Progress)
 
 ### Integrated Components
 
@@ -26,38 +26,17 @@ date: "2023-09-13"
 
 ### Core/Distro Changes (all HW Platforms)
 
-* Deactivate start of virtual terminal on `tty0` in `ked` distro (`USE_VT =
-  "0"`)
-* Improve CI configuration
-* Fix `xxd` host tool dependency (move to `goodix-touchconfig` recipe)
-* Update to Yocto 4.0.12 and 3.1.27
-* Update all meta layers
+* Add CI jobs for test builds and test execution
 
 ### Changes for i.MX Platforms
 
-* Improve devshell settings for `u-boot-ktn` and `linux-ktn`
-* Enable `CONFIG_DYNAMIC_DEBUG` in `linux-ktn`
-* Fix an issue with fitImage selection in A/B boot flow
-* Update to Linux 6.1.45
-* Update U-Boot patches
-
 #### Changes for i.MX8 Platform
 
-* Add support for OSM-S/BL i.MX8MP hardware
-* Add a solution for `fw_getenv/setenv` to automatically use the environment
-  on the device that is used by the bootloader.
-* Move the U-Boot environment on the eMMC hardware partition (`boot0`) to the
-  end of the partition.
+* Fix access to UART4 from A53 domain on i.MX8MM hardware
 
 #### Changes for i.MX6 Platform
 
-* Add support for DPI display interface on BL boards (configuration
-  `imx6ull-kontron-dl`)
-* U-Boot: Change default device tree boot configuration from `imx6ul-kontron-bl`
-  to `imx6ull-kontron-dl`
-* Linux: Changes in kernel config
-  * Virtual terminals deactivated (`CONFIG_VT`)
-  * Most resistive touch drivers removed
+* none
 
 ### Changes for STM32MP1 Platform
 
@@ -65,20 +44,13 @@ date: "2023-09-13"
 
 ### Breaking Changes
 
-* i.MX6: Default u-boot configuration changed from SOC `ul` variant to `ull`
-  variant. So for `ul` variants the boot config has to be adapted manually in
-  u-boot environment now!
-* The location of the environment on the eMMC of i.MX8MM devices is moved to
-  the end of the `boot0` hardware partition.
+* none
 
 ### Known Issues
 
 * Regression: SWUpdate can fail with the error message:
   `Configuration file /etc/fw_env.config wrong or corrupted`
 * The onboard USB hub on the BL i.MX8MM doesn't work in U-Boot.
-* On i.MX8MM hardware UART4 is assigned to the M4 domain by default and can not
-  be used from the A53 domain (Linux). Enabling it in the Linux DT causes a
-  crash.
 * Devices connected to the USB-C connector of the BL i.MX8MP before booting up
   the board are not detected and need to be reconnected after booting.
 
