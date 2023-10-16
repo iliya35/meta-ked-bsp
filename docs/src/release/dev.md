@@ -27,6 +27,10 @@ date: "2023-10-12"
 ### Core/Distro Changes (all HW Platforms)
 
 * Add CI jobs for test builds and test execution
+* Add support for libubootenv YAML config in SWUpdate (backport)
+* Upgrade libubootenv to v0.3.5 to support common implementation of `libuboot_namespace_from_dt()``
+* Set provider for `u-boot-fw-utils` to `libubootenv-bin` on distro level
+* Install `u-boot-fw-utils` by default in `image-ked*` images
 
 ### Changes for i.MX Platforms
 
@@ -48,8 +52,6 @@ date: "2023-10-12"
 
 ### Known Issues
 
-* Regression: SWUpdate can fail with the error message:
-  `Configuration file /etc/fw_env.config wrong or corrupted`
 * The onboard USB hub on the BL i.MX8MM doesn't work in U-Boot.
 * Devices connected to the USB-C connector of the BL i.MX8MP before booting up
   the board are not detected and need to be reconnected after booting.

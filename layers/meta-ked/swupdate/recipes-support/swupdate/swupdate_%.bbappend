@@ -4,7 +4,7 @@ PACKAGECONFIG_CONFARGS = ""
 
 SWUPDATE_EXTRA_ARGS = ""
 
-DEPENDS += "zeromq openssl json-c libarchive curl lua mtd-utils"
+DEPENDS += "zeromq openssl json-c libarchive curl lua mtd-utils libubootenv"
 
 SRC_URI += " \
      file://default_swupdate.cfg \
