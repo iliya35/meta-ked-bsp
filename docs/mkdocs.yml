@@ -33,6 +33,6 @@ nav:
  - Build: build.md
  - Customization: customization.md
  - Release Information:
-     - Dev: release/dev.md
+     - v6.1.1: release/6.1.1.md
      - v6.1.0: release/6.1.0.md
      - v6.0.0: release/6.0.0.md
