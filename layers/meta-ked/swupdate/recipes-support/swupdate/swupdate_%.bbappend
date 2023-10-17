@@ -7,13 +7,15 @@ SWUPDATE_EXTRA_ARGS = ""
 DEPENDS += "zeromq openssl json-c libarchive curl lua mtd-utils libubootenv"
 
 SRC_URI += " \
-     file://default_swupdate.cfg \
-     file://default_hwrevision \
-     file://default_sw-versions \
-     file://fragment_webserver.cfg \
-     file://locale-fix.sh \
-     file://09-swupdate-args \
-     "
+    file://0001-libubootenv-support-newer-yaml-config.patch \
+    file://0002-Always-link-libubootenv.patch \
+    file://09-swupdate-args \
+    file://default_hwrevision \
+    file://default_sw-versions \
+    file://default_swupdate.cfg \
+    file://fragment_webserver.cfg \
+    file://locale-fix.sh \
+"
 
 do_install:append() {
     install -d ${D}${sysconfdir}
