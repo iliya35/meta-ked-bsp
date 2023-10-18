@@ -20,7 +20,7 @@ S = "${WORKDIR}/git"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRCBRANCH = "master"
-SRCREV = "0450237684cdd7333c113ee7e0bc7558e81c6b29"
+SRCREV = "097b95907809427f6ec9e62f9be6f4a4e8ca3a89"
 
 SRC_URI = " \
 	git://${KED_GIT_APPS}/kontron-demo.git;protocol=https;branch=${SRCBRANCH} \
