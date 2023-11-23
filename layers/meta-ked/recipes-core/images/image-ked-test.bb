@@ -9,10 +9,10 @@ require recipes-core/images/image-ked.bb
 PACKAGES_BASIC = "\
 	bmap-tools \
 	devmem2 \
+	fbida \
 	fb-test \
 	gdb \
 	gdbserver \
-	htop \
 	i2c-tools \
 	iotop \
 	iperf3 \
@@ -22,7 +22,6 @@ PACKAGES_BASIC = "\
 	memtester \
 	mmc-utils \
 	mtd-utils-tests \
-	nano \
 	neard \
 	net-tools \
 	pciutils \
@@ -33,6 +32,14 @@ PACKAGES_BASIC = "\
 	stress-ng \
 	sysbench \
 	"
+
+PACKAGES_CONVENIENCE = "\
+	htop \
+	nano \
+	screen \
+	tmux \
+	tree \
+"
 
 PACKAGES_MULTIMEDIA = "\
 	alsa-utils-alsamixer \
@@ -64,6 +71,7 @@ PACKAGES_PYTHON = "\
 
 IMAGE_EXTRA_INSTALL = "\
 	${PACKAGES_BASIC} \
-	${PACKAGES_MULTIMEDIA} \
+	${PACKAGES_CONVENIENCE} \
 	${PACKAGES_PYTHON} \
+	${PACKAGES_MULTIMEDIA} \
 	"
