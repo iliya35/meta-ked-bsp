@@ -6,3 +6,7 @@ __pycache__
 .config.yaml*
 build/
 tests/*.xml
+doksh-site.cfg
+.vscode-ctags
+.bash_history
+kas/site/

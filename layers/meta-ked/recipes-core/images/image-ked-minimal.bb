@@ -4,7 +4,7 @@ require recipes-core/images/core-image-minimal.bb
 include recipes-core/images/image-ked-platform.inc
 include ${@bb.utils.contains('BBFILE_COLLECTIONS', 'swupdate', 'swupdate/recipes-core/images/image-ked-swupdate.inc', '', d)}
 
-inherit extrausers userfs
+inherit extrausers userfs image-ci-buildinfo
 
 IMAGE_FEATURES ?= ""
 IMAGE_LINGUAS = "en-us"
