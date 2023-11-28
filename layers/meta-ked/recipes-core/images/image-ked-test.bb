@@ -51,6 +51,17 @@ PACKAGES_MULTIMEDIA = "\
 	v4l-utils \
 	"
 
+PACKAGES_PYTHON = "\
+	libgpiod-python \
+	python3 \
+	python3-can \
+	python3-numpy \
+	python3-pip \
+	python3-pymodbus \
+	python3-pyserial \
+	python3-setuptools \
+"
+
 IMAGE_EXTRA_INSTALL = "\
 	${PACKAGES_BASIC} \
 	${PACKAGES_MULTIMEDIA} \
