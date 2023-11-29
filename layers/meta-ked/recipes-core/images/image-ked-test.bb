@@ -1,9 +1,5 @@
 SUMMARY = "An image with additional tests for KED hardware"
 
-inherit image-configuration
-
-SRC_URI += "file://configuration/"
-
 require recipes-core/images/image-ked.bb
 
 PACKAGES_BASIC = "\
